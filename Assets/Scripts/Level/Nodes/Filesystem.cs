@@ -15,7 +15,8 @@ public class Filesystem : Node {
 	
 	}
 
-	public void Generate(LevelSettings settings) {
+	public new void Generate(LevelSettings settings) {
+		cube = gameObject;
 		var cube1 = CreateCube (settings);
 		var cube2 = CreateCube (settings);
 		var margin = 0.25f;

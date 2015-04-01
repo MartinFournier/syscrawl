@@ -16,10 +16,10 @@ public class Generator : MonoBehaviour {
 	}
 
 	public void GenerateLevel() {
-		if (isGenerating)
+		/*if (isGenerating)
 			return;
 		isGenerating = true;
-
+*/
 		if (levelObject != null) {
 			Object.DestroyImmediate(levelObject);
 		}

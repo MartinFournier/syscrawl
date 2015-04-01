@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using NGenerics.DataStructures.General;
 
+[ExecuteInEditMode()]
 public class Level : MonoBehaviour {
-	//change to graph type
-	//http://www.vcskicks.com/representing-graphs.php
-	private List<GameObject> nodes = new List<GameObject>();
 
+	private Graph<Node> nodesGraph = null;
+	private Dictionary<Node, Vector3> nodesPositions = null;
+	
 	// Use this for initialization
 	void Start () {
 	}
@@ -18,8 +19,123 @@ public class Level : MonoBehaviour {
 	
 	}
 
-	//from https://gist.github.com/radiatoryang/5682034
-	IEnumerator ForceDirectGraph<T>( Graph<T> graph, Dictionary<T, Vector3> graphPositions ) {
+
+
+	public void Generate(LevelSettings settings) {
+		Debug.ClearDeveloperConsole ();
+
+		Debug.Log ("Start Generation");
+
+		nodesGraph = new Graph<Node> (false);
+		nodesPositions = new Dictionary<Node, Vector3>();
+
+		var test = new GameObject ("FS");
+		test.transform.parent = transform;
+		var fs = test.AddComponent<Filesystem> ();
+		fs.Generate (settings);
+		var vertex = nodesGraph.AddVertex (fs);
+
+
+		InstanciateNodes (settings, vertex);
+		AddRedundantEdges (settings);
+
+		var index = 0;
+		foreach (var node in nodesGraph.Vertices.Select (v => v.Data)) {
+			nodesPositions.Add (node, new Vector3(index + 1,0,1));
+			index++;
+		}
+
+		var positionCoroutine = PositionNodes (settings);
+		var graphCoroutine = ForceDirectGraph<Node> (nodesGraph, nodesPositions, positionCoroutine);
+
+		StartCoroutine (graphCoroutine);
+		//
+		//StartCoroutine (positionCoroutine);
+	}
+
+	private void InstanciateNodes(LevelSettings settings, Vertex<Node> startVertex) {
+		var nbOfNodes = Random.Range (settings.minimumNodes, settings.maximumNodes + 1);
+		var previousVertex = startVertex;
+		for (var x = 0; x < nbOfNodes; x++) {
+			var nodeObject = new GameObject("Node " + x);
+			nodeObject.transform.parent = transform;
+			var node = nodeObject.AddComponent<Node>();
+
+			node.Generate(settings);
+
+			var newVertex = nodesGraph.AddVertex(node);
+			var edge = new Edge<Node>(previousVertex, newVertex, false);
+			nodesGraph.AddEdge(edge);
+			previousVertex = newVertex;
+		};
+	}
+
+	private void AddRedundantEdges(LevelSettings settings) {
+		var vertices = nodesGraph.Vertices.ToList ();
+		var nbVertices = vertices.Count;
+		var attempt = 0;
+		var maximumEdges = settings.nodeExtraEdges + nbVertices;
+
+
+		while (
+			attempt < settings.nodeExtraEdgesAttempts && 
+			nodesGraph.Edges.Count < maximumEdges) {
+
+			Debug.Log (
+				maximumEdges + " MaxEdges ; " + 
+				nodesGraph.Edges.Count + " NbEdges ; " + 
+				attempt + " attempt ; " + 
+				nbVertices + " vertices");
+
+			var vertexFrom = vertices[Random.Range (0, nbVertices)];
+			var vertexTo = vertices[Random.Range (0, nbVertices)];
+			if (vertexFrom.Equals(vertexTo)) continue;
+			var existingEdge = nodesGraph.GetEdge(vertexFrom, vertexTo);
+			if (existingEdge != null) continue;
+			var edge = new Edge<Node>(vertexFrom, vertexTo, false);
+			if (nodesGraph.ContainsEdge(edge)) continue;
+
+			nodesGraph.AddEdge(edge);
+		}
+	}
+
+	 IEnumerator PositionNodes(LevelSettings settings) {
+		Debug.Log ("Position nodes start");
+		yield return 0;
+		foreach (var key in nodesPositions.Keys) {
+			var position = nodesPositions[key];
+			key.transform.localPosition = position;
+			var scaleFactor = 5f;
+			key.transform.localPosition = new Vector3(position.x * scaleFactor, position.y * scaleFactor, position.z * scaleFactor);
+			Debug.Log ("Positioned a node");
+			yield return 0;
+		}
+		Debug.Log ("Done positioning");
+	}
+
+	private bool RandomBool() {
+		return Random.Range (0, 2) == 0;
+	}
+
+	void OnDrawGizmos() {
+		if (nodesGraph == null || !nodesGraph.Edges.Any())
+			return;
+		foreach (var edge in nodesGraph.Edges) {
+			var v1 = edge.FromVertex;
+			var v2 = edge.ToVertex;
+
+			var cube1 = v1.Data.cube;
+
+
+			var pos1 = v1.Data.cube.transform.localPosition;
+			var pos2 = v2.Data.cube.transform.localPosition;
+			Debug.Log (pos1.ToString () + pos2.ToString ());
+			Gizmos.DrawLine(pos1, pos2);
+		}
+	}
+			//from https://gist.github.com/radiatoryang/5682034
+	IEnumerator ForceDirectGraph<T>( Graph<T> graph, Dictionary<T, Vector3> graphPositions, IEnumerator positionCoroutine) {
+		Debug.Log ("Graph");
 		// settings
 		float attractToCenter = 15f;
 		float repulsion = 10f;
@@ -42,8 +158,9 @@ public class Level : MonoBehaviour {
 			}
 			position.Add( vert, new Vector2( bestGuess.x, bestGuess.z ) );
 		}
-		
-		float totalEnergy = 10f; // initial
+
+
+		float totalEnergy = 4f; // initial
 		while ( totalEnergy > 1f ) {
 			totalEnergy = 0f;
 			foreach ( Vertex<T> thisVert in graph.Vertices ) {
@@ -79,110 +196,8 @@ public class Level : MonoBehaviour {
 			Debug.Log( "TOTAL ENERGY: " + totalEnergy.ToString() );
 			yield return 0;
 		}
+		Debug.Log ("Done");
+		StartCoroutine (positionCoroutine);
 	}
 
-
-	public void Generate(LevelSettings settings) {
-		var test = new GameObject ("FS");
-		test.transform.parent = transform;
-		var fs = test.AddComponent<Filesystem> ();
-		fs.Generate (settings);
-		nodes.Add (test);
-
-		InstanciateNodes (settings,fs);
-
-		AddRedundantConnections2 (settings);
-
-		PositionNodes (settings);
-	}
-
-	private void InstanciateNodes(LevelSettings settings, Node startingNode) {
-		var nbOfNodes = Random.Range (settings.minimumNodes, settings.maximumNodes + 1);
-		Node previousNode = startingNode;
-		for (var x = 0; x < nbOfNodes; x++) {
-			var nodeObject = new GameObject("Node " + x);
-			nodeObject.transform.parent = transform;
-			var node = nodeObject.AddComponent<Node>();
-			node.Generate(settings);
-
-			if (previousNode != null) {
-				node.AddConnection(previousNode);
-			}
-			previousNode = node;
-			nodes.Add (nodeObject);
-		};
-	}
-
-	
-	private void AddRedundantConnections(LevelSettings settings) {
-		var nbNodes = nodes.Count;
-		
-		for (var x = 0; x < nbNodes; x++) {
-			
-			if (Random.value > 0.5) { // add connection
-				var nodeObject = nodes[x];
-				var node = nodeObject.GetComponent<Node>();
-				//random node
-				var randomIndex = x;
-				var attempts = 0;
-				var maxAttempts = 10;
-				while(randomIndex != x && attempts < maxAttempts) {
-					randomIndex = Random.Range (0, nbNodes);
-				}
-				var randomNodeObject = nodes[randomIndex].GetComponent<Node>();
-				node.AddConnection(randomNodeObject);
-			}
-		}
-	}
-
-	
-	private void AddRedundantConnections2(LevelSettings settings) {
-		var nbNodes = nodes.Count;
-		var attempt = 0;
-		var extraConnections = 0;
-
-		while (
-			attempt < settings.nodeExtraConnectionsAttempts && 
-			extraConnections < settings.nodeExtraConnections) {
-		
-			var randomNode = 
-				nodes[Random.Range (0, nbNodes)].GetComponent<Node>();
-			var randomConnection = 
-				nodes[Random.Range (0, nbNodes)].GetComponent<Node>();
-			if (randomNode != randomConnection) {
-				randomNode.AddConnection(randomConnection);
-				extraConnections++;
-			}
-		}
-	}
-
-	private void PositionNodes(LevelSettings settings) {
-		GameObject previousNode = null;
-		foreach (var node in nodes) {
-			if (previousNode == null) {
-				previousNode = node;
-				continue;
-			}
-
-			Vector3 translationVector;
-			var xAxis = RandomBool();
-			var negate = RandomBool();
-			var translation = Random.Range (settings.minimumNodeDistance, settings.maximumNodeDistance + 1);
-			if (negate) translation = -translation;
-			if (xAxis) {
-				translationVector = new Vector3(translation, 0, 0);
-			}else{
-				translationVector = new Vector3(0, 0, translation);
-			}
-
-			node.transform.localPosition = previousNode.transform.position + translationVector;
-			//node.transform.Translate(translationVector);
-
-			previousNode = node;
-		}
-	}
-
-	private bool RandomBool() {
-		return Random.Range (0, 2) == 0;
-	}
 }
