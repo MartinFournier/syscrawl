@@ -9,14 +9,31 @@ public class Level : MonoBehaviour {
 
 	private Graph<Node> nodesGraph = null;
 	private Dictionary<Node, Vector3> nodesPositions = null;
-	
+
+	private Vector3 GetActualNodePosition(Node node) {
+		if (nodesPositions == null) return new Vector3(1,0,1);
+		var position = nodesPositions[node];
+		var scaleFactor = 4f;
+		return new Vector3(position.x * scaleFactor, position.y * scaleFactor, position.z * scaleFactor);
+	}
+
 	// Use this for initialization
 	void Start () {
 	}
 
 	// Update is called once per frame
 	void Update () {
-	
+		if (nodesGraph == null || !nodesGraph.Edges.Any())
+			return;
+		foreach (var edge in nodesGraph.Edges) {
+			var v1 = edge.FromVertex;
+			var v2 = edge.ToVertex;
+
+			var pos1 = GetActualNodePosition(v1.Data);
+			var pos2 = GetActualNodePosition(v2.Data);
+
+			Debug.DrawLine(pos1, pos2);
+		}
 	}
 
 
@@ -49,8 +66,6 @@ public class Level : MonoBehaviour {
 		var graphCoroutine = ForceDirectGraph<Node> (nodesGraph, nodesPositions, positionCoroutine);
 
 		StartCoroutine (graphCoroutine);
-		//
-		//StartCoroutine (positionCoroutine);
 	}
 
 	private void InstanciateNodes(LevelSettings settings, Vertex<Node> startVertex) {
@@ -81,12 +96,6 @@ public class Level : MonoBehaviour {
 			attempt < settings.nodeExtraEdgesAttempts && 
 			nodesGraph.Edges.Count < maximumEdges) {
 
-			Debug.Log (
-				maximumEdges + " MaxEdges ; " + 
-				nodesGraph.Edges.Count + " NbEdges ; " + 
-				attempt + " attempt ; " + 
-				nbVertices + " vertices");
-
 			var vertexFrom = vertices[Random.Range (0, nbVertices)];
 			var vertexTo = vertices[Random.Range (0, nbVertices)];
 			if (vertexFrom.Equals(vertexTo)) continue;
@@ -103,10 +112,8 @@ public class Level : MonoBehaviour {
 		Debug.Log ("Position nodes start");
 		yield return 0;
 		foreach (var key in nodesPositions.Keys) {
-			var position = nodesPositions[key];
+			var position = GetActualNodePosition(key);
 			key.transform.localPosition = position;
-			var scaleFactor = 5f;
-			key.transform.localPosition = new Vector3(position.x * scaleFactor, position.y * scaleFactor, position.z * scaleFactor);
 			Debug.Log ("Positioned a node");
 			yield return 0;
 		}
@@ -117,31 +124,15 @@ public class Level : MonoBehaviour {
 		return Random.Range (0, 2) == 0;
 	}
 
-	void OnDrawGizmos() {
-		if (nodesGraph == null || !nodesGraph.Edges.Any())
-			return;
-		foreach (var edge in nodesGraph.Edges) {
-			var v1 = edge.FromVertex;
-			var v2 = edge.ToVertex;
-
-			var cube1 = v1.Data.cube;
-
-
-			var pos1 = v1.Data.cube.transform.localPosition;
-			var pos2 = v2.Data.cube.transform.localPosition;
-			Debug.Log (pos1.ToString () + pos2.ToString ());
-			Gizmos.DrawLine(pos1, pos2);
-		}
-	}
 			//from https://gist.github.com/radiatoryang/5682034
 	IEnumerator ForceDirectGraph<T>( Graph<T> graph, Dictionary<T, Vector3> graphPositions, IEnumerator positionCoroutine) {
 		Debug.Log ("Graph");
 		// settings
 		float attractToCenter = 15f;
 		float repulsion = 10f;
-		float spacing = 0.1f;
-		float stiffness = 100f;
-		float damping = 0.9f;
+		float spacing = 0.4f;
+		float stiffness = 10f;
+		float damping = 0.7f;
 		
 		// initialize velocities and positions
 		Dictionary<Vertex<T>, Vector2> velocity = new Dictionary<Vertex<T>, Vector2>();
@@ -160,7 +151,7 @@ public class Level : MonoBehaviour {
 		}
 
 
-		float totalEnergy = 4f; // initial
+		float totalEnergy = 10f; // initial
 		while ( totalEnergy > 1f ) {
 			totalEnergy = 0f;
 			foreach ( Vertex<T> thisVert in graph.Vertices ) {

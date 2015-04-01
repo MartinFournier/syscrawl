@@ -4,7 +4,6 @@ using System.Collections;
 public class Generator : MonoBehaviour {
 
 	GameObject levelObject = null;
-	bool isGenerating = false;
 	
 	public string seed;
 
@@ -16,10 +15,6 @@ public class Generator : MonoBehaviour {
 	}
 
 	public void GenerateLevel() {
-		/*if (isGenerating)
-			return;
-		isGenerating = true;
-*/
 		if (levelObject != null) {
 			Object.DestroyImmediate(levelObject);
 		}
@@ -33,7 +28,5 @@ public class Generator : MonoBehaviour {
 		levelObject = new GameObject ("Level");
 		var level = levelObject.gameObject.AddComponent<Level> ();
 		level.Generate (settings);
-
-		isGenerating = false;
 	}
 }
