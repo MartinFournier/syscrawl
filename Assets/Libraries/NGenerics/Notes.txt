@@ -1,0 +1,2 @@
+Compiled in monodevelop as 3.5 framework
+from https://github.com/ngenerics/ngenerics

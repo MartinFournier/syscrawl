@@ -11,6 +11,9 @@ public class LevelSettings : MonoBehaviour {
 
 	public float minimumNodeDistance = 8;
 	public float maximumNodeDistance = 20;
+	
+	public int nodeExtraConnections = 10;
+	public int nodeExtraConnectionsAttempts = 100; 
 
 	// Use this for initialization
 	void Start () {

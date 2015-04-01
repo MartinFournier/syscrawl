@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+[ExecuteInEditMode()]
 public class Node : MonoBehaviour {
+
+	private IList<Node> Connections = new List<Node>();
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +14,13 @@ public class Node : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+	}
+
+	void OnDrawGizmos() {
+		foreach (var node in Connections) {
+			Gizmos.DrawLine(transform.position, node.transform.position);
+		}
 	}
 
 	public void Generate(LevelSettings settings) {
@@ -27,5 +37,9 @@ public class Node : MonoBehaviour {
 		var y = Random.Range (minimum.y, maximum.y + 1);
 		var z = Random.Range (minimum.z, maximum.z + 1);
 		return new Vector3(x,y,z);
+	}
+
+	public void AddConnection(Node node) {
+		Connections.Add (node);
 	}
 }
