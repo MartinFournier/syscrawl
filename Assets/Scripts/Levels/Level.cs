@@ -4,45 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using NGenerics.DataStructures.General;
 using syscrawl.Levels.Nodes;
+using syscrawl.Levels.Graph;
 
 namespace syscrawl.Levels
 {
     public class Level : MonoBehaviour
     {
 
-        private Graph<Node> nodesGraph = null;
-        private Dictionary<Node, Vector3> nodesPositions = null;
+        private LevelGraph graph;
         private Dictionary<Edge<Node>, LineRenderer> edgeRenderers = null;
-
-        private Vector3 GetActualNodePosition(Node node)
-        {
-            if (nodesPositions == null)
-                return new Vector3(1, 0, 1);
-            var position = nodesPositions[node];
-            var scaleFactor = 6f;
-            return new Vector3(
-                position.x * scaleFactor, 
-                position.y * scaleFactor, 
-                position.z * scaleFactor);
-        }
-
-        // Use this for initialization
-        void Start()
-        {
-        }
-
-        void Update()
-        {
-        }
 
         void SetLineRenderers()
         {
-            if (nodesGraph == null || !nodesGraph.Edges.Any())
+            if (graph == null || !graph.Edges.Any())
                 return;
             var material = new Material(Shader.Find("Standard"));
             material.color = Color.cyan;
 
-            foreach (var edge in nodesGraph.Edges)
+            foreach (var edge in graph.Edges)
             {
                 var edgeObject = new GameObject("Edge");
                 edgeObject.transform.parent = gameObject.transform;
@@ -54,11 +33,11 @@ namespace syscrawl.Levels
 
                 renderer.material = material;
 
-                var v1 = edge.FromVertex;
-                var v2 = edge.ToVertex;
+                var node1 = edge.FromVertex.Data;
+                var node2 = edge.ToVertex.Data;
 
-                var pos1 = GetActualNodePosition(v1.Data);
-                var pos2 = GetActualNodePosition(v2.Data);
+                var pos1 = graph.NodesPositions[node1].PhysicalPosition;
+                var pos2 = graph.NodesPositions[node2].PhysicalPosition;
 
                 renderer.SetPosition(0, pos1);
                 renderer.SetPosition(1, pos2);
@@ -67,39 +46,37 @@ namespace syscrawl.Levels
 
         public void Generate(LevelSettings settings)
         {
-            nodesGraph = new Graph<Node>(false);
-            nodesPositions = new Dictionary<Node, Vector3>();
+            graph = new LevelGraph();
             edgeRenderers = new Dictionary<Edge<Node>, LineRenderer>();
 
             var test = new GameObject("FS");
             test.transform.parent = transform;
             var fs = test.AddComponent<Filesystem>();
             fs.Generate(settings);
-            var vertex = nodesGraph.AddVertex(fs);
+            var vertex = graph.AddVertex(fs);
 
 
             InstanciateNodes(settings, vertex);
             AddRedundantEdges(settings);
 
-            var index = 0;
-            foreach (var node in nodesGraph.Vertices.Select (v => v.Data))
-            {
-                nodesPositions.Add(node, new Vector3(index + 1, 0, 1));
-                index++;
-            }
+            graph.InitializePositions();
 
             var positionCoroutine = PositionNodes(settings);
-            var graphCoroutine = ForceDirectGraph<Node>(
-                            nodesGraph, nodesPositions, positionCoroutine);
+            var graphCoroutine = 
+                ForceDirectGraph(
+                    graph, positionCoroutine);
 
             //StartCoroutine (positionCoroutine);
             StartCoroutine(graphCoroutine);
         }
 
-        private void InstanciateNodes(
+        void InstanciateNodes(
             LevelSettings settings, Vertex<Node> startVertex)
         {
-            var nbOfNodes = Random.Range(settings.minimumNodes, settings.maximumNodes + 1);
+            var nbOfNodes = 
+                Random.Range(
+                    settings.minimumNodes, 
+                    settings.maximumNodes + 1);
             var previousVertex = startVertex;
             for (var x = 0; x < nbOfNodes; x++)
             {
@@ -114,12 +91,12 @@ namespace syscrawl.Levels
 
                 if (Random.value > 0.2)
                 { // new splitoff
-                    vertexFrom = nodesGraph.Vertices.ToList()[Random.Range(0, nodesGraph.Vertices.Count)];
+                    vertexFrom = graph.GetRandomVertex();
                 } 
 
-                nodesGraph.AddVertex(vertexTo);
+                graph.AddVertex(vertexTo);
                 var edge = new Edge<Node>(vertexFrom, vertexTo, false);
-                nodesGraph.AddEdge(edge);
+                graph.AddEdge(edge);
                 previousVertex = vertexTo;
             }
             ;
@@ -127,7 +104,7 @@ namespace syscrawl.Levels
 
         private void AddRedundantEdges(LevelSettings settings)
         {
-            var vertices = nodesGraph.Vertices.ToList();
+            var vertices = graph.Vertices.ToList();
             var nbVertices = vertices.Count;
             var attempt = 0;
             var maximumEdges = settings.nodeExtraEdges + nbVertices;
@@ -135,42 +112,47 @@ namespace syscrawl.Levels
 
             while (
                 attempt < settings.nodeExtraEdgesAttempts &&
-                nodesGraph.Edges.Count < maximumEdges)
+                graph.Edges.Count < maximumEdges)
             {
 
                 var vertexFrom = vertices[Random.Range(0, nbVertices)];
                 var vertexTo = vertices[Random.Range(0, nbVertices)];
                 if (vertexFrom.Equals(vertexTo))
                     continue;
-                var existingEdge = nodesGraph.GetEdge(vertexFrom, vertexTo);
+                var existingEdge = graph.GetEdge(vertexFrom, vertexTo);
                 if (existingEdge != null)
                     continue;
                 var edge = new Edge<Node>(vertexFrom, vertexTo, false);
-                if (nodesGraph.ContainsEdge(edge))
+                if (graph.ContainsEdge(edge))
                     continue;
 
-                nodesGraph.AddEdge(edge);
+                graph.AddEdge(edge);
             }
         }
 
         IEnumerator PositionNodes(LevelSettings settings)
         {
             yield return 0;
-            foreach (var key in nodesPositions.Keys)
+            foreach (var key in graph.NodesPositions.Keys)
             {
-                var position = GetActualNodePosition(key);
-                key.transform.localPosition = position;
+                key.transform.localPosition = 
+                    graph.NodesPositions[key].PhysicalPosition;
                 yield return 0;
             }
             SetLineRenderers();
         }
 
- 
+        IEnumerator ForceDirectGraph(LevelGraph graph, IEnumerator coroutine)
+        {
+            return ForceDirectGraph(graph, graph.NodesPositions, coroutine);
+        }
 
         //from https://gist.github.com/radiatoryang/5682034
-        IEnumerator ForceDirectGraph<T>(Graph<T> graph, Dictionary<T, Vector3> graphPositions, IEnumerator positionCoroutine)
+        IEnumerator ForceDirectGraph<T>(
+            Graph<T> graph, 
+            Dictionary<T, NodePosition> graphPositions, 
+            IEnumerator positionCoroutine)
         {
-            Debug.Log("Graph");
             // settings
             float attractToCenter = 15f;
             float repulsion = 10f;
@@ -179,8 +161,10 @@ namespace syscrawl.Levels
             float damping = 0.7f;
         
             // initialize velocities and positions
-            Dictionary<Vertex<T>, Vector2> velocity = new Dictionary<Vertex<T>, Vector2>();
-            Dictionary<Vertex<T>, Vector2> position = new Dictionary<Vertex<T>, Vector2>();
+            Dictionary<Vertex<T>, Vector2> velocity = 
+                new Dictionary<Vertex<T>, Vector2>();
+            Dictionary<Vertex<T>, Vector2> position = 
+                new Dictionary<Vertex<T>, Vector2>();
         
             foreach (Vertex<T> vert in graph.Vertices)
             {
@@ -189,11 +173,13 @@ namespace syscrawl.Levels
                 Vector3 bestGuess = Random.onUnitSphere * spacing * 0.5f;
                 if (graphPositions.ContainsKey(vert.Data))
                 {
-                    bestGuess += graphPositions[vert.Data];
+                    bestGuess += graphPositions[vert.Data].LogicalPosition;
                 }
                 else
                 {
-                    bestGuess += graphPositions[vert.IncidentEdges[0].GetPartnerVertex(vert).Data];
+                    bestGuess += graphPositions[
+                        vert.IncidentEdges[0].
+                        GetPartnerVertex(vert).Data].LogicalPosition;
                 }
                 position.Add(vert, new Vector2(bestGuess.x, bestGuess.z));
             }
@@ -231,7 +217,8 @@ namespace syscrawl.Levels
                     velocity[thisVert] = (velocity[thisVert] + (netForce * Time.deltaTime)) * damping;
                     position[thisVert] += velocity[thisVert] * Time.deltaTime;
                     // update running totals too, in case we want to use them outside of this coroutine
-                    graphPositions[thisVert.Data] = new Vector3(position[thisVert].x, 0f, position[thisVert].y);
+                    graphPositions[thisVert.Data].LogicalPosition = 
+                        new Vector3(position[thisVert].x, 0f, position[thisVert].y);
                 
                     // add thisVert's energy to the running total of all kinetic energy
                     totalEnergy += velocity[thisVert].sqrMagnitude;

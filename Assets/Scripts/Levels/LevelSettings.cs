@@ -16,5 +16,6 @@ namespace syscrawl.Levels
 	
         public int nodeExtraEdges = 10;
         public int nodeExtraEdgesAttempts = 100;
+    
     }
 }
