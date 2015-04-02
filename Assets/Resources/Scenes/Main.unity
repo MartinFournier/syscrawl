@@ -907,14 +907,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f694cbcf76c4d96b817824bc7822e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumNodes: 10
-  maximumNodes: 20
-  nodeMinimumScale: {x: 1, y: 1, z: 1}
-  nodeMaximumScale: {x: 4, y: 1, z: 4}
-  minimumNodeDistance: 10
-  maximumNodeDistance: 10
-  nodeExtraEdges: 6
-  nodeExtraEdgesAttempts: 100
+  MinimumNodes: 10
+  MaximumNodes: 20
+  NodeMinimumScale: {x: 2, y: 2, z: 2}
+  NodeMaximumScale: {x: 2, y: 2, z: 2}
+  MinimumNodeDistance: 8
+  MaximumNodeDistance: 20
+  NodeExtraEdges: 10
+  NodeExtraEdgesAttempts: 100
 --- !u!1 &1690882268
 GameObject:
   m_ObjectHideFlags: 0
