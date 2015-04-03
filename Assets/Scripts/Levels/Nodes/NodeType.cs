@@ -4,7 +4,9 @@ namespace syscrawl.Levels.Nodes
     public enum NodeType
     {
         Connector,
-        Filesystem
+        Filesystem,
+        Firewall,
+        EntranceNode
     }
 }
 

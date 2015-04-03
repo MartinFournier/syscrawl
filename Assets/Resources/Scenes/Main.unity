@@ -907,10 +907,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f694cbcf76c4d96b817824bc7822e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinimumNodes: 10
-  MaximumNodes: 20
+  MinimumNodes: 20
+  MaximumNodes: 30
   NodeMinimumScale: {x: 2, y: 2, z: 2}
-  NodeMaximumScale: {x: 2, y: 2, z: 2}
+  NodeMaximumScale: {x: 4, y: 4, z: 4}
   MinimumNodeDistance: 8
   MaximumNodeDistance: 20
   NodeExtraEdges: 10

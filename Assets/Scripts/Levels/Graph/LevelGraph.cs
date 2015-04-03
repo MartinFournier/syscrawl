@@ -45,8 +45,14 @@ namespace syscrawl.Levels.Graph
 
         Vertex<Node> GetRandomVertex()
         {
-            return Vertices.ToList()[
-                Random.Range(0, Vertices.Count)];
+            var v = Vertices.ToList()[
+                        Random.Range(0, Vertices.Count)];
+            if (v.Data.GetType() == typeof(EntranceNode))
+            { 
+                return GetRandomVertex(); 
+                // will stackoverflow is there's only entrance nodes.. BAH
+            }
+            return v;
         }
 
         public Node GetRandomNode()
@@ -67,6 +73,16 @@ namespace syscrawl.Levels.Graph
                 case NodeType.Filesystem:
                     {
                         node = FilesystemNode.Create(Level, name);
+                        break;
+                    }
+                case NodeType.Firewall: 
+                    {
+                        node = FirewallNode.Create(Level, name);
+                        break;
+                    }
+                case NodeType.EntranceNode:
+                    {
+                        node = EntranceNode.Create(Level, name);
                         break;
                     }
                 default:

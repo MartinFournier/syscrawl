@@ -37,7 +37,7 @@ namespace syscrawl.Levels.Nodes
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.SetParent(this.transform);
-            var material = Resources.Load<Material>("Materials/Filecube");
+            var material = Resources.Load<Material>("Materials/Nodes/Filesystem");
             var cubeRenderer = cube.GetComponent<Renderer>();
             cubeRenderer.material = material;
             return cube;

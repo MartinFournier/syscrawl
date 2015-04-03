@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using NGenerics.DataStructures.General;
 using syscrawl.Levels.Nodes;
 using syscrawl.Levels.Graph;
 
@@ -10,7 +7,7 @@ namespace syscrawl.Levels
 {
     public class Level : MonoBehaviour
     {
-        public LevelSettings Settings { get; set; }
+        public LevelSettings Settings { get; private set; }
 
         LevelGraph Graph;
 
@@ -35,9 +32,16 @@ namespace syscrawl.Levels
 
             var filesystemNode = 
                 Graph.CreateNode(
-                    NodeType.Filesystem, 
-                    "Filesystem 1",
+                    NodeType.EntranceNode, 
+                    "Entrance 0",
                     null);
+            nbOfNodes--;
+
+            var connectionNode = 
+                Graph.CreateNode(
+                    NodeType.Connector,
+                    "Entrance Connection",
+                    filesystemNode);
             nbOfNodes--;
 
             var previousNode = filesystemNode;
@@ -50,12 +54,21 @@ namespace syscrawl.Levels
                     neighbourNode = Graph.GetRandomNode();
                 } 
 
-                var node = 
-                    Graph.CreateNode(
-                        NodeType.Connector, 
-                        "Node " + x, 
-                        neighbourNode);
+                var nodeType = NodeType.Connector;
+                var nodeName = "Connector #";
+                var randomValue = Random.value;
+                if (randomValue < 0.3)
+                {
+                    nodeType = NodeType.Firewall;
+                    nodeName = "Firewall #";
+                }
+                else if (randomValue < 0.6)
+                {
+                    nodeType = NodeType.Filesystem;
+                    nodeName = "Filesystem #";
+                }
 
+                var node = Graph.CreateNode(nodeType, nodeName + x, neighbourNode);
                 previousNode = node;
             }
             ;

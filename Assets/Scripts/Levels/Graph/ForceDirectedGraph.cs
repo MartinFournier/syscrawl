@@ -8,6 +8,8 @@ namespace syscrawl.Levels.Graph
 {
     public class ForceDirectedGraph : MonoBehaviour
     {
+        const int maxIters = 200;
+
         public static void DoGraph(GameObject parent, LevelGraph graph, IEnumerator coroutine)
         {
             var forceDirectedGraph = parent.AddComponent<ForceDirectedGraph>();
@@ -16,7 +18,6 @@ namespace syscrawl.Levels.Graph
                 forceDirectedGraph.ForceDirectGraph(
                     graph, coroutine);
 
-            Debug.Log("hi");
             forceDirectedGraph.StartCoroutine(graphCoroutine);
         }
 
@@ -63,14 +64,15 @@ namespace syscrawl.Levels.Graph
                 position.Add(vert, new Vector2(bestGuess.x, bestGuess.z));
             }
 
-
+            var iters = 0;
             float totalEnergy = 10f; // initial
             while (totalEnergy > 1f)
             {
                 totalEnergy = 0f;
                 foreach (Vertex<T> thisVert in graph.Vertices)
                 {
-                    Vector2 netForce = Vector2.zero; // running total of kinetic energy for thisVert
+                    Vector2 netForce = Vector2.zero; 
+                    // running total of kinetic energy for thisVert
 
                     // Coulomb repulsion
                     foreach (Vertex<T> otherVert in graph.Vertices)
@@ -102,7 +104,11 @@ namespace syscrawl.Levels.Graph
                     // add thisVert's energy to the running total of all kinetic energy
                     totalEnergy += velocity[thisVert].sqrMagnitude;
                 }
-                Debug.Log("TOTAL ENERGY: " + totalEnergy.ToString());
+                iters++;
+                Debug.Log("TOTAL ENERGY: " + totalEnergy.ToString() + " iteration #" + iters);
+
+                if (iters > maxIters)
+                    continue;
                 yield return 0;
             }
             StartCoroutine(positionCoroutine);
