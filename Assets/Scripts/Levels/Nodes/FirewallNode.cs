@@ -5,6 +5,15 @@ namespace syscrawl.Levels.Nodes
 {
     public class FirewallNode : Node
     {
+        void Update()
+        {
+            transform.Rotate(0, 30 * Time.deltaTime, 0); 
+            //rotates 50 degrees per second around z axis
+        
+            //transform.Rotate(Vector3.up * (1f * Time.deltaTime));
+
+        }
+
         public static FirewallNode Create(
             Level level, string nodeName)
         {
