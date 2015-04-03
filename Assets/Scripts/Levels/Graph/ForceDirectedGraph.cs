@@ -8,7 +8,7 @@ namespace syscrawl.Levels.Graph
 {
     public class ForceDirectedGraph : MonoBehaviour
     {
-        const int maxIters = 200;
+        const int maxIters = 50;
 
         public static void DoGraph(GameObject parent, LevelGraph graph, IEnumerator coroutine)
         {
@@ -108,7 +108,7 @@ namespace syscrawl.Levels.Graph
                 Debug.Log("TOTAL ENERGY: " + totalEnergy.ToString() + " iteration #" + iters);
 
                 if (iters > maxIters)
-                    continue;
+                    totalEnergy = 0;
                 yield return 0;
             }
             StartCoroutine(positionCoroutine);
