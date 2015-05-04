@@ -22,3 +22,6 @@ sysinfo.txt
 
 # Mac
 *.DS_Store
+
+#VSCode
+.settings/
