@@ -9,12 +9,12 @@ namespace syscrawl.Levels.Nodes
         public static ConnectorNode Create(
             Level level, string nodeName)
         {
-            var nodeObject = new GameObject(nodeName);
-            nodeObject.transform.parent = level.transform;
-            var node = nodeObject.AddComponent<ConnectorNode>();
+            var node = 
+                Node.Create<ConnectorNode>(
+                    level, nodeName, NodeType.Connector);
 
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.SetParent(nodeObject.transform);
+            cube.transform.SetParent(node.Wrapper.transform);
 
             var scale = 
                 RandomUtils.RandomVectorBetweenRange(
@@ -23,7 +23,7 @@ namespace syscrawl.Levels.Nodes
 
             cube.transform.localScale = scale;
 
-            node.Wrapper = nodeObject;
+
             return node;
         }
     }

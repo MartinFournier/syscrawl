@@ -6,7 +6,7 @@ namespace syscrawl.Levels.Nodes
         Connector,
         Filesystem,
         Firewall,
-        EntranceNode
+        Entrance
     }
 }
 

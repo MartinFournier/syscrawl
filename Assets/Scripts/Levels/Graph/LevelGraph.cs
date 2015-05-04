@@ -22,6 +22,14 @@ namespace syscrawl.Levels.Graph
             } 
         }
 
+        Node Entrance
+        {
+            get
+            {
+                return Nodes.First(n => n.Type == NodeType.Entrance);
+            }
+        }
+
         public Dictionary<Node, NodePosition> NodesPositions = 
             new Dictionary<Node, NodePosition>();
 
@@ -80,7 +88,7 @@ namespace syscrawl.Levels.Graph
                         node = FirewallNode.Create(Level, name);
                         break;
                     }
-                case NodeType.EntranceNode:
+                case NodeType.Entrance:
                     {
                         node = EntranceNode.Create(Level, name);
                         break;
@@ -173,6 +181,12 @@ namespace syscrawl.Levels.Graph
                 renderer.SetPosition(0, pos1);
                 renderer.SetPosition(1, pos2);
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "LevelGraph:Nodes = {0}", Nodes.Count());
         }
     }
 }

@@ -11,6 +11,16 @@ namespace syscrawl.Levels
 
         LevelGraph Graph;
 
+        void OnGUI()
+        {
+            if (Graph != null)
+            {
+                GUI.TextArea(
+                    new Rect(10, 10, 200, 200), 
+                    Graph.ToString());
+            }
+        }
+
         public void Generate(LevelSettings settings)
         {
             Settings = settings;
@@ -22,6 +32,9 @@ namespace syscrawl.Levels
             Graph.AddExtraEdges();
             Graph.InitializePositions();
 
+
+
+
             var positionCoroutine = PositionNodes(settings);
             ForceDirectedGraph.DoGraph(gameObject, Graph, positionCoroutine);
         }
@@ -30,9 +43,9 @@ namespace syscrawl.Levels
         {
             var nbOfNodes = Settings.GetRandomNumberOfNodes();
 
-            var filesystemNode = 
+            var entranceNode = 
                 Graph.CreateNode(
-                    NodeType.EntranceNode, 
+                    NodeType.Entrance, 
                     "Entrance 0",
                     null);
             nbOfNodes--;
@@ -41,10 +54,10 @@ namespace syscrawl.Levels
                 Graph.CreateNode(
                     NodeType.Connector,
                     "Entrance Connection",
-                    filesystemNode);
+                    entranceNode);
             nbOfNodes--;
 
-            var previousNode = filesystemNode;
+            var previousNode = entranceNode;
 
             for (var x = 0; x < nbOfNodes; x++)
             {

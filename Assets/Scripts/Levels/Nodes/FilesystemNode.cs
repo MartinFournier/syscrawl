@@ -7,9 +7,10 @@ namespace syscrawl.Levels.Nodes
     {
         public static FilesystemNode Create(Level level, string nodeName)
         {
-            var nodeObject = new GameObject(nodeName);
-            nodeObject.transform.parent = level.transform;
-            var node = nodeObject.AddComponent<FilesystemNode>();
+            var node = 
+                Node.Create<FilesystemNode>(
+                    level, nodeName, NodeType.Filesystem);
+            
 
             var cube1 = node.CreateCube();
             var cube2 = node.CreateCube();
@@ -28,7 +29,6 @@ namespace syscrawl.Levels.Nodes
             cube4.transform.Translate(
                 cube4.transform.localScale.x + margin, 0, 0, cube3.transform);
 
-            node.Wrapper = nodeObject;
             return node;
         }
 

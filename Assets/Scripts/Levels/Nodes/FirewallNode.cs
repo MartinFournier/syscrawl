@@ -17,12 +17,12 @@ namespace syscrawl.Levels.Nodes
         public static FirewallNode Create(
             Level level, string nodeName)
         {
-            var nodeObject = new GameObject(nodeName);
-            nodeObject.transform.parent = level.transform;
-            var node = nodeObject.AddComponent<FirewallNode>();
-
+            var node = 
+                Node.Create<FirewallNode>(
+                    level, nodeName, NodeType.Firewall);
+            
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.SetParent(nodeObject.transform);
+            cube.transform.SetParent(node.Wrapper.transform);
 
             var material = Resources.Load<Material>("Materials/Nodes/Firewall");
             var renderer = cube.GetComponent<Renderer>();
@@ -32,7 +32,6 @@ namespace syscrawl.Levels.Nodes
 
             cube.transform.localScale = scale;
 
-            node.Wrapper = nodeObject;
             return node;
         }
     }
