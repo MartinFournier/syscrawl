@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace syscrawl.Levels.Graph
+namespace syscrawl.Levels.Graph.Generators
 {
     public class ForceDirectedGraph : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace syscrawl.Levels.Graph
         {
             var forceDirectedGraph = parent.AddComponent<ForceDirectedGraph>();
 
-            var graphCoroutine = 
+            var graphCoroutine =
                 forceDirectedGraph.ForceDirectGraph(
                     graph, coroutine);
 
@@ -28,8 +28,8 @@ namespace syscrawl.Levels.Graph
 
         //from https://gist.github.com/radiatoryang/5682034
         IEnumerator ForceDirectGraph<T>(
-            Graph<T> graph, 
-            Dictionary<T, NodePosition> graphPositions, 
+            Graph<T> graph,
+            Dictionary<T, NodePosition> graphPositions,
             IEnumerator positionCoroutine)
         {
             Debug.Log("Graph start");
@@ -41,9 +41,9 @@ namespace syscrawl.Levels.Graph
             float damping = 0.7f;
 
             // initialize velocities and positions
-            Dictionary<Vertex<T>, Vector2> velocity = 
+            Dictionary<Vertex<T>, Vector2> velocity =
                 new Dictionary<Vertex<T>, Vector2>();
-            Dictionary<Vertex<T>, Vector2> position = 
+            Dictionary<Vertex<T>, Vector2> position =
                 new Dictionary<Vertex<T>, Vector2>();
 
             foreach (Vertex<T> vert in graph.Vertices)
@@ -71,7 +71,7 @@ namespace syscrawl.Levels.Graph
                 totalEnergy = 0f;
                 foreach (Vertex<T> thisVert in graph.Vertices)
                 {
-                    Vector2 netForce = Vector2.zero; 
+                    Vector2 netForce = Vector2.zero;
                     // running total of kinetic energy for thisVert
 
                     // Coulomb repulsion
@@ -98,7 +98,7 @@ namespace syscrawl.Levels.Graph
                     velocity[thisVert] = (velocity[thisVert] + (netForce * Time.deltaTime)) * damping;
                     position[thisVert] += velocity[thisVert] * Time.deltaTime;
                     // update running totals too, in case we want to use them outside of this coroutine
-                    graphPositions[thisVert.Data].LogicalPosition = 
+                    graphPositions[thisVert.Data].LogicalPosition =
                         new Vector3(position[thisVert].x, 0f, position[thisVert].y);
 
                     // add thisVert's energy to the running total of all kinetic energy

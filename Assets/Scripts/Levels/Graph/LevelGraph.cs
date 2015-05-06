@@ -22,7 +22,7 @@ namespace syscrawl.Levels.Graph
             } 
         }
 
-        Node Entrance
+        public Node Entrance
         {
             get
             {
@@ -112,7 +112,7 @@ namespace syscrawl.Levels.Graph
             return node;
         }
 
-        bool CreateRandomEdge()
+        public bool CreateRandomEdge()
         {
             var vertexFrom = GetRandomVertex();
             var vertexTo = GetRandomVertex();
@@ -128,23 +128,6 @@ namespace syscrawl.Levels.Graph
 
             AddEdge(edge);
             return true;
-        }
-
-        public void AddExtraEdges()
-        {
-            var vertices = Vertices.ToList();
-            var nbVertices = vertices.Count;
-            var attempt = 0;
-            var maximumEdges = Settings.NodeExtraEdges + nbVertices;
-
-            while (
-                attempt < Settings.NodeExtraEdgesAttempts &&
-                Edges.Count < maximumEdges)
-            {
-                attempt++;
-                CreateRandomEdge(); 
-                // Let's do nothing for now if it fails.
-            }
         }
 
         public void InitializeLineRenderers()
