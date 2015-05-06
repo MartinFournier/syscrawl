@@ -29,6 +29,10 @@ namespace syscrawl.Levels.Nodes
             cube4.transform.Translate(
                 cube4.transform.localScale.x + margin, 0, 0, cube3.transform);
 
+            var collider = node.Wrapper.AddComponent<SphereCollider>();
+            collider.radius = 2;
+            collider.center = new Vector3(0.62f, 0f, 0.62f);
+
             return node;
         }
 
@@ -40,6 +44,9 @@ namespace syscrawl.Levels.Nodes
             var material = Resources.Load<Material>("Materials/Nodes/Filesystem");
             var cubeRenderer = cube.GetComponent<Renderer>();
             cubeRenderer.material = material;
+
+            cube.GetComponent<Collider>().enabled = false;
+
             return cube;
         }
     }

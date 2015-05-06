@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using syscrawl.Levels.Nodes;
 using syscrawl.Levels.Graph;
 using syscrawl.Levels.Graph.Generators;
-using NGenerics.DataStructures.General;
 
 namespace syscrawl.Levels
 {
@@ -12,7 +10,7 @@ namespace syscrawl.Levels
     {
         public LevelSettings Settings { get; private set; }
 
-        LevelGraph Graph;
+        public LevelGraph Graph;
 
         void OnGUI()
         {
@@ -28,7 +26,7 @@ namespace syscrawl.Levels
         {
             Settings = settings;
             
-            Graph = TestGraph.Generate(this, settings);
+//             Graph = TestGraph.Generate(this, settings);
             Graph = SpecificGraph.Generate(this, settings);
            
             Graph.InitializePositions();

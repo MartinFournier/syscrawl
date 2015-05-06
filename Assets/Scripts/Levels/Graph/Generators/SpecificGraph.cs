@@ -33,41 +33,57 @@ namespace syscrawl.Levels.Graph.Generators
                     "fw2c1",
                     c1);
 
+            var fw2c =
+                graph.CreateNode(
+                    NodeType.Connector,
+                    "fwc1",
+                    fw2c1);
+
+//            var fs4 = 
+            graph.CreateNode(
+                NodeType.Filesystem,
+                "fs4",
+                fw2c);
+
+
+
             var fwc1 =
                 graph.CreateNode(
                     NodeType.Firewall,
                     "fwc1",
                     c1);
 
-            var fs1 =
-                graph.CreateNode(
-                    NodeType.Filesystem,
-                    "fs1",
-                    fwc1);
 
-            var fs2 =
-                graph.CreateNode(
-                    NodeType.Filesystem,
-                    "fs2",
-                    fwc1);
 
-            var fs3 =
-                graph.CreateNode(
-                    NodeType.Filesystem,
-                    "fs3",
-                    fwc1);
+//            var fs1 =
+            graph.CreateNode(
+                NodeType.Filesystem,
+                "fs1",
+                fwc1);
 
-            var c2 =
-                graph.CreateNode(
-                    NodeType.Connector,
-                    "c2",
-                    fw1);
+//            var fs2 =
+            graph.CreateNode(
+                NodeType.Filesystem,
+                "fs2",
+                fwc1);
 
-            var c3 =
-                graph.CreateNode(
-                    NodeType.Connector,
-                    "c3",
-                    fw1);
+//            var fs3 =
+            graph.CreateNode(
+                NodeType.Filesystem,
+                "fs3",
+                fwc1);
+
+//            var c2 =
+            graph.CreateNode(
+                NodeType.Connector,
+                "c2",
+                fw1);
+
+//            var c3 =
+            graph.CreateNode(
+                NodeType.Connector,
+                "c3",
+                fw1);
 
             return graph;
         }

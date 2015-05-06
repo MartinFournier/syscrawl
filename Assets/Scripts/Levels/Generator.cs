@@ -6,11 +6,10 @@ namespace syscrawl.Levels
     {
 
         GameObject levelObject = null;
-	
+        
         public string seed;
 
         public LevelSettings settings;
-
 
         void Start()
         {
@@ -36,6 +35,9 @@ namespace syscrawl.Levels
             levelObject = new GameObject("Level");
             var level = levelObject.gameObject.AddComponent<Level>();
             level.Generate(settings);
+            
+            var player = FindObjectOfType<Player.Player>();
+            player.SetLevel(level);
         }
     }
 }

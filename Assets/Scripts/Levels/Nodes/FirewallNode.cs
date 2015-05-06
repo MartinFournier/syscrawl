@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using syscrawl.Utils;
 
 namespace syscrawl.Levels.Nodes
 {
@@ -29,6 +28,10 @@ namespace syscrawl.Levels.Nodes
             renderer.material = material;
 
             var scale = new Vector3(1, 4, 4);
+
+            cube.GetComponent<Collider>().enabled = false;
+            var collider = node.Wrapper.AddComponent<SphereCollider>();
+            collider.radius = 3;
 
             cube.transform.localScale = scale;
 

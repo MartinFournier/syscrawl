@@ -25,5 +25,31 @@ namespace syscrawl.Levels.Nodes
 
             return node;
         }
+
+        public override string ToString()
+        {
+            return string.Format("[Node: Type={0}, Wrapper={1}, Pos={2}]", Type, Wrapper, transform.position);
+        }
+
+        void OnMouseEnter()
+        {
+            Debug.Log("Node: Enter (" + Type + ":" + Wrapper.name + ")");
+        }
+
+
+        void OnMouseExit()
+        {
+            Debug.Log("Node: Node (" + Type + ":" + Wrapper.name + ")");
+        }
+
+        void OnMouseDown()
+        {
+            Debug.Log("Node: MouseDown (" + Type + ":" + Wrapper.name + ")");
+        }
+
+        void OnMouseUp()
+        {
+            Debug.Log("Node: MouseUp (" + Type + ":" + Wrapper.name + ")");
+        }
     }
 }

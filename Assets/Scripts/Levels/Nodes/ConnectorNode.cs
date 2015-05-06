@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using syscrawl.Utils;
+using System.Linq;
 
 namespace syscrawl.Levels.Nodes
 {
@@ -23,6 +24,9 @@ namespace syscrawl.Levels.Nodes
 
             cube.transform.localScale = scale;
 
+            cube.GetComponent<Collider>().enabled = false;
+            var collider = node.Wrapper.AddComponent<SphereCollider>();
+            collider.radius = new [] { scale.x, scale.y, scale.z }.Max() - 0.5f;
 
             return node;
         }

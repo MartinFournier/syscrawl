@@ -6,7 +6,8 @@ namespace syscrawl.Levels.Graph.Generators
 {
     public static class TestGraph
     {
-       public static LevelGraph Generate(Level level, LevelSettings settings) {
+        public static LevelGraph Generate(Level level, LevelSettings settings)
+        {
             var graph = new LevelGraph(level, settings);
             var nbOfNodes = settings.GetRandomNumberOfNodes();
 
@@ -17,11 +18,11 @@ namespace syscrawl.Levels.Graph.Generators
                     null);
             nbOfNodes--;
 
-            var connectionNode = 
-                graph.CreateNode(
-                    NodeType.Connector,
-                    "Entrance Connection",
-                    entranceNode);
+//            var connectionNode = 
+            graph.CreateNode(
+                NodeType.Connector,
+                "Entrance Connection",
+                entranceNode);
             nbOfNodes--;
 
             var previousNode = entranceNode;
@@ -56,7 +57,7 @@ namespace syscrawl.Levels.Graph.Generators
             
             return graph;
         }
-        
+
         private static void AddExtraEdges(LevelGraph graph, LevelSettings settings)
         {
             var vertices = graph.Vertices.ToList();
