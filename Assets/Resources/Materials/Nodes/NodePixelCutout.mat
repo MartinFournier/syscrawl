@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Test
+  m_Name: NodePixelCutout
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_ShaderKeywords: _ALPHATEST_ON
+  m_LightmapFlags: 0
+  m_CustomRenderQueue: 2450
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -18,7 +18,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 3a22ac9ccda1342f6a33911bddadedd8, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -81,7 +81,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: 0
       data:
         first:
           name: _SrcBlend
@@ -93,7 +93,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: .0199999996
+        second: .0381000005
       data:
         first:
           name: _ZWrite
@@ -101,7 +101,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
+        second: .402999997
       data:
         first:
           name: _BumpScale
@@ -109,7 +109,7 @@ Material:
       data:
         first:
           name: _OcclusionStrength
-        second: 1
+        second: .26699999
       data:
         first:
           name: _DetailNormalMapScale
@@ -125,7 +125,7 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
+        second: 1
       data:
         first:
           name: _Metallic
@@ -134,11 +134,11 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 0}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .282223195, g: .498702288, b: .852941155, a: 1}
       data:
         first:
           name: _EmissionColorUI

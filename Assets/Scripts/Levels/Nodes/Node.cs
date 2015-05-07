@@ -23,6 +23,10 @@ namespace syscrawl.Levels.Nodes
             node.Type = type;
             node.Wrapper = nodeObject;
 
+            GameObject sphereFog = Instantiate(Resources.Load("Prefabs/SphereFog")) as GameObject;
+
+            sphereFog.transform.parent = node.Wrapper.transform;
+            sphereFog.transform.localScale = new Vector3(10, 10, 10);
             return node;
         }
 
