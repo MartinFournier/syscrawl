@@ -4,9 +4,11 @@ namespace syscrawl.Levels.Nodes
 {
     public class FirewallNode : Node
     {
+        GameObject Cube { get; set; }
+
         void Update()
         {
-            transform.Rotate(0, 30 * Time.deltaTime, 0); 
+            Cube.transform.Rotate(0, 30 * Time.deltaTime, 0); 
             //rotates 50 degrees per second around z axis
         
             //transform.Rotate(Vector3.up * (1f * Time.deltaTime));
@@ -34,6 +36,8 @@ namespace syscrawl.Levels.Nodes
             collider.radius = 3;
 
             cube.transform.localScale = scale;
+
+            node.Cube = cube;
 
             return node;
         }

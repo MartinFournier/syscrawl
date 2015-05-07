@@ -34,11 +34,11 @@ namespace syscrawl.Levels.Graph.Generators
         {
             Debug.Log("Graph start");
             // settings
-            float attractToCenter = 15f;
-            float repulsion = 10f;
-            float spacing = 0.4f;
-            float stiffness = 10f;
-            float damping = 0.7f;
+            float attractToCenter = 5;
+            float repulsion = 25f;
+            float spacing = 1f;
+            float stiffness = 0.1f;
+            float damping = 0.8f;
 
             // initialize velocities and positions
             Dictionary<Vertex<T>, Vector2> velocity =
