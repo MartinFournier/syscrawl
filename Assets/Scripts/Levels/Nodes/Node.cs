@@ -39,7 +39,7 @@ namespace syscrawl.Levels.Nodes
 
         public void SetVisible(bool isVisible)
         {
-            var renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            var renderers = gameObject.GetComponentsInChildren<MeshRenderer>().Where(x => !x.name.Equals("SphereFog(Clone)"));
             foreach (var r in renderers)
             {
                 r.enabled = isVisible;

@@ -14,10 +14,10 @@ namespace syscrawl.Player
 
         void Start()
         {
-            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.GetComponent<Collider>().enabled = false;
-            cube.transform.SetParent(transform);
-            Entity = cube;
+//            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+//            cube.GetComponent<Collider>().enabled = false;
+//            cube.transform.SetParent(transform);
+//            Entity = cube;
 
             gameObject.AddComponent<BoxCollider>();
         }
