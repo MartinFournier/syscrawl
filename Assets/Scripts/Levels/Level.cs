@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 using syscrawl.Levels.Graph;
 using syscrawl.Levels.Graph.Generators;
-using System.Linq;
-using syscrawl.Levels.Nodes;
-using System.Collections.Generic;
-using syscrawl.Extensions;
 
 namespace syscrawl.Levels
 {
@@ -12,7 +8,7 @@ namespace syscrawl.Levels
     {
         public LevelSettings Settings { get; private set; }
 
-        public LevelGraph Graph;
+        public NodesGraph Graph;
 
         void OnGUI()
         {

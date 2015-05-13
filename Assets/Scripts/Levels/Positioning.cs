@@ -11,8 +11,7 @@ namespace syscrawl.Levels
     public class Positioning
     {
         readonly float angle;
-        readonly float distance;
-
+     
         readonly Vector3 centerNodePosition;
         readonly Vector3 previousNodePosition;
 
@@ -42,17 +41,16 @@ namespace syscrawl.Levels
             }
         }
 
-        LevelGraph graph;
+        NodesGraph graph;
 
         public Positioning(
-            LevelGraph graph, 
+            NodesGraph graph, 
             float angle, 
             float distance)
         {
 
             this.graph = graph;
             this.angle = angle;
-            this.distance = distance;
 
             centerNodePosition = new Vector3(distance, 0, 0);
             previousNodePosition = new Vector3(-distance, 0, 0);
@@ -85,6 +83,7 @@ namespace syscrawl.Levels
 
             foreach (var node in nodes)
             {
+                Debug.Log("Setting visible for node: " + node.ToString());
                 node.SetVisible(true);
             }
         }

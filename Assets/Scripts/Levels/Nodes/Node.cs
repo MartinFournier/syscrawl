@@ -44,7 +44,7 @@ namespace syscrawl.Levels.Nodes
         protected void Start()
         {
             Debug.Log("Start NodeType: " + Type);
-            SetVisible(false);
+//            SetVisible(false);
         }
 
         public override string ToString()

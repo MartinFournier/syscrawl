@@ -5,9 +5,9 @@ namespace syscrawl.Levels.Graph.Generators
 {
     public static class SpecificGraph
     {
-        public static LevelGraph Generate(Level level, LevelSettings settings)
+        public static NodesGraph Generate(Level level, LevelSettings settings)
         {
-            var graph = new LevelGraph(level, settings);
+            var graph = new NodesGraph(level, settings);
 
             var entranceNode =
                 graph.CreateNode(
@@ -27,16 +27,16 @@ namespace syscrawl.Levels.Graph.Generators
                     "c1",
                     fw1);
 
-            var c11 =
-                graph.CreateNode(
-                    NodeType.Connector,
-                    "c11",
-                    fw1);
-            var c12 =
-                graph.CreateNode(
-                    NodeType.Connector,
-                    "c12",
-                    fw1);
+//            var c11 =
+            graph.CreateNode(
+                NodeType.Connector,
+                "c11",
+                fw1);
+//            var c12 =
+            graph.CreateNode(
+                NodeType.Connector,
+                "c12",
+                fw1);
 
             var fw2c1 =
                 graph.CreateNode(

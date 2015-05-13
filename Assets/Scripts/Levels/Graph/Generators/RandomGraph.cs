@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using syscrawl.Levels.Nodes;
 using System.Linq;
+using NGenerics.DataStructures.General;
 
 namespace syscrawl.Levels.Graph.Generators
 {
-    public static class TestGraph
+    public static class RandomGraph
     {
-        public static LevelGraph Generate(Level level, LevelSettings settings)
+        public static NodesGraph Generate(Level level, LevelSettings settings)
         {
-            var graph = new LevelGraph(level, settings);
+            var graph = new NodesGraph(level, settings);
             var nbOfNodes = settings.GetRandomNumberOfNodes();
 
             var entranceNode = 
@@ -32,7 +33,7 @@ namespace syscrawl.Levels.Graph.Generators
                 var neighbourNode = previousNode;
                 if (Random.value > 0.2)
                 { // new splitoff yay
-                    neighbourNode = graph.GetRandomNode();
+                    neighbourNode = GetRandomNode(graph);
                 } 
 
                 var nodeType = NodeType.Connector;
@@ -58,7 +59,7 @@ namespace syscrawl.Levels.Graph.Generators
             return graph;
         }
 
-        private static void AddExtraEdges(LevelGraph graph, LevelSettings settings)
+        static void AddExtraEdges(NodesGraph graph, LevelSettings settings)
         {
             var vertices = graph.Vertices.ToList();
             var nbVertices = vertices.Count;
@@ -70,10 +71,47 @@ namespace syscrawl.Levels.Graph.Generators
                 graph.Edges.Count < maximumEdges)
             {
                 attempt++;
-                graph.CreateRandomEdge(); 
+                CreateRandomEdge(graph); 
                 // Let's do nothing for now if it fails.
             }
         }
+
+        static bool CreateRandomEdge(NodesGraph graph)
+        {
+            var vertexFrom = GetRandomVertex(graph);
+            var vertexTo = GetRandomVertex(graph);
+
+            if (vertexFrom.Equals(vertexTo))
+                return false;
+            var existingEdge = graph.GetEdge(vertexFrom, vertexTo);
+            if (existingEdge != null)
+                return false;
+            var edge = new Edge<Node>(vertexFrom, vertexTo, false);
+            if (graph.ContainsEdge(edge))
+                return false;
+
+            graph.AddEdge(edge);
+            return true;
+        }
+
+        static Vertex<Node> GetRandomVertex(NodesGraph graph)
+        {
+            var v = graph.Vertices.ToList()[
+                        Random.Range(0, graph.Vertices.Count)];
+            if (v.Data.GetType() == typeof(EntranceNode))
+            { 
+                return GetRandomVertex(graph); 
+                // will stackoverflow is there's only entrance nodes.. BAH
+            }
+            return v;
+        }
+
+        static Node GetRandomNode(NodesGraph graph)
+        {
+            return GetRandomVertex(graph).Data;
+        }
+
+
     }
 
 }

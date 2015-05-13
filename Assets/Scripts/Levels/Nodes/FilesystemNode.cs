@@ -37,7 +37,7 @@ namespace syscrawl.Levels.Nodes
             return node;
         }
 
-        void Start()
+        new void Start()
         {
             base.Start();
         }
