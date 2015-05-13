@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 namespace syscrawl.Levels.Nodes
 {
@@ -36,6 +37,10 @@ namespace syscrawl.Levels.Nodes
             return node;
         }
 
+        void Start()
+        {
+            base.Start();
+        }
 
         GameObject CreateCube()
         {

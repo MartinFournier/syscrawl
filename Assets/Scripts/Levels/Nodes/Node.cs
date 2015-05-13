@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using NGenerics.DataStructures.General;
+using System.Linq;
 
 namespace syscrawl.Levels.Nodes
 {
@@ -27,7 +28,23 @@ namespace syscrawl.Levels.Nodes
 
             sphereFog.transform.parent = node.Wrapper.transform;
             sphereFog.transform.localScale = new Vector3(10, 10, 10);
+
             return node;
+        }
+
+        public void SetVisible(bool isVisible)
+        {
+            var renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            foreach (var r in renderers)
+            {
+                r.enabled = isVisible;
+            }
+        }
+
+        protected void Start()
+        {
+            Debug.Log("Start NodeType: " + Type);
+            SetVisible(false);
         }
 
         public override string ToString()

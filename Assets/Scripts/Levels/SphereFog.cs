@@ -22,6 +22,7 @@ public class SphereFog : MonoBehaviour
     void Start()
     {
         sphereRenderer = GetComponent<Renderer>();
+        sphereRenderer.enabled = false;
     }
 
     float CurrentShaderAlpha

@@ -23,6 +23,9 @@ namespace syscrawl.Levels
 	
         public int NodeExtraEdges = 10;
         public int NodeExtraEdgesAttempts = 100;
+
+        public float NodeAngle = 90f;
+        public float NodeDistance = 25f;
     
     }
 }
