@@ -12,6 +12,8 @@ namespace syscrawl.Levels.Nodes
 
         public Vertex<Node> Vertex { get; set; }
 
+        Level Level { get; set; }
+
         protected static T Create<T>(
             Level level, 
             string nodeName,
@@ -20,6 +22,7 @@ namespace syscrawl.Levels.Nodes
             var nodeObject = new GameObject(nodeName);
             nodeObject.transform.parent = level.transform;
             var node = nodeObject.AddComponent<T>();
+            node.Level = level;
 
             node.Type = type;
             node.Wrapper = nodeObject;
@@ -28,6 +31,8 @@ namespace syscrawl.Levels.Nodes
 
             sphereFog.transform.parent = node.Wrapper.transform;
             sphereFog.transform.localScale = new Vector3(10, 10, 10);
+
+            sphereFog.GetComponent<Collider>().enabled = false;
 
             return node;
         }
@@ -43,8 +48,7 @@ namespace syscrawl.Levels.Nodes
 
         protected void Start()
         {
-            Debug.Log("Start NodeType: " + Type);
-//            SetVisible(false);
+//            Debug.Log("Start NodeType: " + Type);
         }
 
         public override string ToString()
@@ -71,6 +75,7 @@ namespace syscrawl.Levels.Nodes
         void OnMouseUp()
         {
             Debug.Log("Node: MouseUp (" + Type + ":" + Wrapper.name + ")");
+            Level.Positioning.MoveTo(this);
         }
     }
 }

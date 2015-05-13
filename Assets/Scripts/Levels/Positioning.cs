@@ -12,6 +12,7 @@ namespace syscrawl.Levels
     {
         readonly float angle;
      
+        readonly Vector3 pivotPosition = new Vector3(0, 0, 0);
         readonly Vector3 centerNodePosition;
         readonly Vector3 previousNodePosition;
         readonly NodesGraph graph;
@@ -70,8 +71,18 @@ namespace syscrawl.Levels
             CurrentNode = graph.Entrance;
         }
 
+        public void MoveTo(Node node)
+        {
+            PreviousNode = CurrentNode;
+            CurrentNode = node;
+            Position();
+            ToggleVisibility();
+        }
+
         public void Position()
         {
+            CurrentNode.transform.localPosition = pivotPosition;
+
             var nodes = PartnerNodes;
             var nodesGroup = new NodePositionGroup(nodes);
             if (nodesGroup.HasCenterNode)
