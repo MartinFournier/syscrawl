@@ -19,7 +19,7 @@ namespace syscrawl.Levels.Graph
 
         public Level Level { get; private set; }
 
-        IEnumerable<Node> Nodes
+        public IEnumerable<Node> Nodes
         { 
             get
             { 

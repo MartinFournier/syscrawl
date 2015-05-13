@@ -9,6 +9,7 @@ namespace syscrawl.Levels
         public LevelSettings Settings { get; private set; }
 
         public NodesGraph Graph;
+        public Positioning Positioning;
 
         void OnGUI()
         {
@@ -27,13 +28,18 @@ namespace syscrawl.Levels
 //             Graph = TestGraph.Generate(this, settings);
             Graph = SpecificGraph.Generate(this, settings);
 
-            var nodePosition = 
+            Positioning = 
                 new Positioning(
-                    Graph, 
-                    settings.NodeAngle, 
-                    settings.NodeDistance);
+                Graph, 
+                settings.NodeAngle, 
+                settings.NodeDistance);
             
-            nodePosition.Position();
+            Positioning.Position();
+        }
+
+        void Start()
+        {
+            Positioning.ToggleVisibility();
         }
     }
 }

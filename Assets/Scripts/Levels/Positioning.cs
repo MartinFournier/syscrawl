@@ -14,6 +14,7 @@ namespace syscrawl.Levels
      
         readonly Vector3 centerNodePosition;
         readonly Vector3 previousNodePosition;
+        readonly NodesGraph graph;
 
         Node PreviousNode { get; set; }
 
@@ -24,7 +25,7 @@ namespace syscrawl.Levels
             get { return CurrentNode.transform.localPosition; }
         }
 
-        public IEnumerable<Node> PartnerNodes
+        IEnumerable<Node> PartnerNodes
         {
             get
             {
@@ -41,7 +42,18 @@ namespace syscrawl.Levels
             }
         }
 
-        NodesGraph graph;
+        IEnumerable<Node> ActiveNodes
+        {
+            get
+            { 
+                var nodes = PartnerNodes.ToList();
+                nodes.Add(CurrentNode);
+                if (PreviousNode != null)
+                    nodes.Add(PreviousNode);
+
+                return nodes;
+            }
+        }
 
         public Positioning(
             NodesGraph graph, 
@@ -85,6 +97,21 @@ namespace syscrawl.Levels
             {
                 Debug.Log("Setting visible for node: " + node.ToString());
                 node.SetVisible(true);
+            }
+        }
+
+        public void ToggleVisibility()
+        {
+            var visibleNodes = ActiveNodes;
+            var hiddenNodes = graph.Nodes.Except(visibleNodes);
+            Debug.Log("Visible: " + visibleNodes.Count() + " | Hidden: " + hiddenNodes.Count());
+            foreach (var node in visibleNodes)
+            {
+                node.SetVisible(true);
+            }
+            foreach (var node in hiddenNodes)
+            {
+                node.SetVisible(false);
             }
         }
 
