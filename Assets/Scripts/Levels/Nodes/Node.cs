@@ -27,12 +27,17 @@ namespace syscrawl.Levels.Nodes
             node.Type = type;
             node.Wrapper = nodeObject;
 
-            GameObject sphereFog = Instantiate(Resources.Load("Prefabs/SphereFog")) as GameObject;
+            var sphereFog = Instantiate(Resources.Load("Prefabs/SphereFog")) as GameObject;
 
             sphereFog.transform.parent = node.Wrapper.transform;
             sphereFog.transform.localScale = new Vector3(10, 10, 10);
 
             sphereFog.GetComponent<Collider>().enabled = false;
+
+            var nodeNamePrefab = Instantiate(Resources.Load("Prefabs/NodeName")) as GameObject;
+            var textMesh = nodeNamePrefab.GetComponent<TextMesh>();
+            textMesh.text = nodeName;
+            nodeNamePrefab.transform.parent = node.Wrapper.transform;
 
             return node;
         }

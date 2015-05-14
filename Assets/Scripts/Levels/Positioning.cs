@@ -102,13 +102,13 @@ namespace syscrawl.Levels
 
         public void Position()
         {
-            CurrentNode.transform.localPosition = Pivot;
+            CurrentNode.Wrapper.transform.localPosition = Pivot;
 
             var nodes = PartnerNodes;
             var nodesGroup = new NodePositionGroup(nodes);
             if (nodesGroup.HasCenterNode)
             {
-                nodesGroup.CenterNode.transform.position = CenterNodePosition;
+                nodesGroup.CenterNode.Wrapper.transform.position = CenterNodePosition;
             }
 
             RotateNodes(
@@ -122,7 +122,7 @@ namespace syscrawl.Levels
 
             if (PreviousNode != null)
             {
-                PreviousNode.transform.position = PreviousNodePosition;
+                PreviousNode.Wrapper.transform.position = PreviousNodePosition;
             }
 
             foreach (var node in nodes)
@@ -164,8 +164,9 @@ namespace syscrawl.Levels
                 var actualAngle = 
                     side == NodePositionSide.Left ? -remainingAngle : remainingAngle;
                 var angles = new Vector3(0, actualAngle, 0);
-                node.transform.position = 
-                    CenterNodePosition.RotatePointAroundPivot(Pivot, angles);
+                var newPosition = CenterNodePosition.RotatePointAroundPivot(Pivot, angles);
+
+                node.Wrapper.transform.position = newPosition;
 
                 remainingAngle += angleDiff;
             }
