@@ -12,20 +12,27 @@ namespace syscrawl.Camera
         Lerp<float> cameraZoomLerp;
         Lerp<float> cameraUnzoomLerp;
        
+        public LerpSettings positionLerpSettings;
+        public LerpSettings zoomLerpSettings;
+        public LerpSettings unzoomLerpSettings;
+
+        public float cameraZoomTo = 1;
+        public float cameraHeight = 25;
+
         // Use this for initialization
         void Start()
         {
             mainCamera = UnityEngine.Camera.main;
 
-            var lerpSettings = new LerpSettings() { Duration = 0.5f };
+            cameraPositionLerp = new VectorLerp(positionLerpSettings);
+            cameraZoomLerp = new FloatLerp(zoomLerpSettings);
+            cameraUnzoomLerp = new FloatLerp(unzoomLerpSettings);
 
-            cameraPositionLerp = new VectorLerp(lerpSettings);
-            cameraZoomLerp = new FloatLerp(lerpSettings);
-            cameraUnzoomLerp = new FloatLerp(lerpSettings);
+            cameraPositionLerp.LerpActivated += () => 
+                cameraZoomLerp.Activate(cameraHeight, cameraZoomTo);
 
-            cameraPositionLerp.LerpActivated += () => cameraZoomLerp.Activate(25, 0);
-            cameraZoomLerp.LerpCompleted += () => cameraUnzoomLerp.Activate(0, 25);
-
+            cameraZoomLerp.LerpCompleted += () => 
+                cameraUnzoomLerp.Activate(cameraZoomTo, cameraHeight);
         }
 
         public void BindPositioning(Positioning positioning)

@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
+using System;
 
 namespace syscrawl.Utils.Lerp
 {
+    [Serializable]
     public class LerpSettings
     {
-        public float PercentThreshold { get; set; }
+        public float PercentThreshold = 0.99f;
 
-        public float Duration { get; set; }
+        public float Duration = 1f;
 
-        public AnimationCurve Curve { get; set; }
-
-        public LerpSettings()
-        {
-            PercentThreshold = 0.99f;
-            Duration = 1f;
-            Curve = AnimationCurve.Linear(0, 0, 1, 1);
-        }
+        public AnimationCurve Curve = AnimationCurve.Linear(0, 0, 1, 1);
     }
 }
 

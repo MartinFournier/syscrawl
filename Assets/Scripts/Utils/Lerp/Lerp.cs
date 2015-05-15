@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace syscrawl.Utils.Lerp
 {
@@ -19,7 +20,7 @@ namespace syscrawl.Utils.Lerp
 
         public bool IsComplete { get; private set; }
 
-        public LerpSettings Settings { get; set; }
+        public LerpSettings settings;
 
         protected Lerp(LerpSettings settings)
         {
@@ -27,11 +28,11 @@ namespace syscrawl.Utils.Lerp
 
             if (settings != null)
             {
-                Settings = settings;
+                this.settings = settings;
             }
             else
             {
-                Settings = new LerpSettings();
+                settings = new LerpSettings();
             }
         }
 
@@ -54,7 +55,7 @@ namespace syscrawl.Utils.Lerp
         public T Evaluate(float deltaTime)
         {
             UpdateProgress(deltaTime);
-            var t = Settings.Curve.Evaluate(progressPercent);
+            var t = settings.Curve.Evaluate(progressPercent);
             var result = Data.Evaluate(t);
             Data.Current = result;
             return result;
@@ -66,13 +67,13 @@ namespace syscrawl.Utils.Lerp
                 return;
             
             currentTime += deltaTime;
-            if (currentTime > Settings.Duration)
+            if (currentTime > settings.Duration)
             {
-                currentTime = Settings.Duration;
+                currentTime = settings.Duration;
             }
 
-            progressPercent = currentTime / Settings.Duration;
-            if (progressPercent >= Settings.PercentThreshold)
+            progressPercent = currentTime / settings.Duration;
+            if (progressPercent >= settings.PercentThreshold)
             {
                 progressPercent = 1f;
 
