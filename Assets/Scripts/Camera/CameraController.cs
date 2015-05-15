@@ -1,65 +1,58 @@
 ﻿using UnityEngine;
+using syscrawl.Utils.Lerp;
+using syscrawl.Levels;
 
 namespace syscrawl.Camera
 {
     public class CameraController : MonoBehaviour
     {
+        UnityEngine.Camera mainCamera;
 
-        // How fast the camera moves
-        public int cameraVelocity = 20;
-        public int zoomVelocity = 3;
-        public int rotateIncrement = 45;
-
+        Lerp<Vector3> cameraPositionLerp;
+        Lerp<float> cameraZoomLerp;
+        Lerp<float> cameraUnzoomLerp;
+       
         // Use this for initialization
         void Start()
         {
-	
+            mainCamera = UnityEngine.Camera.main;
+
+            var lerpSettings = new LerpSettings() { Duration = 0.5f };
+
+            cameraPositionLerp = new VectorLerp(lerpSettings);
+            cameraZoomLerp = new FloatLerp(lerpSettings);
+            cameraUnzoomLerp = new FloatLerp(lerpSettings);
+
+            cameraPositionLerp.LerpActivated += () => cameraZoomLerp.Activate(25, 0);
+            cameraZoomLerp.LerpCompleted += () => cameraUnzoomLerp.Activate(0, 25);
+
+        }
+
+        public void BindPositioning(Positioning positioning)
+        {
+            positioning.MovedToNode += (pos) =>
+                cameraPositionLerp.Activate(mainCamera.transform.position, pos);
         }
 
         void Update()
         {
-            // Left
-            if ((Input.GetKey(KeyCode.A)))
+            if (!cameraPositionLerp.IsComplete)
             {
-                transform.Translate((Vector3.left * cameraVelocity) * Time.deltaTime);
-            }
-            // Right
-            if ((Input.GetKey(KeyCode.D)))
-            {
-                transform.Translate((Vector3.right * cameraVelocity) * Time.deltaTime);
-            }
-            // Up
-            if ((Input.GetKey(KeyCode.W)))
-            {
-                transform.Translate((Vector3.up * cameraVelocity) * Time.deltaTime);
-            }
-            // Down
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate((Vector3.down * cameraVelocity) * Time.deltaTime);
+                var value = cameraPositionLerp.Evaluate(Time.deltaTime);
+                mainCamera.transform.position = value;
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (!cameraZoomLerp.IsComplete)
             {
-                transform.Rotate(0, rotateIncrement, 0, Space.World);
+                var value = cameraZoomLerp.Evaluate(Time.deltaTime);
+                mainCamera.orthographicSize = value;
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (!cameraUnzoomLerp.IsComplete)
             {
-                transform.Rotate(0, -rotateIncrement, 0, Space.World);
+                var value = cameraUnzoomLerp.Evaluate(Time.deltaTime);
+                mainCamera.orthographicSize = value;
             }
-            var mainCamera = UnityEngine.Camera.main;
-            var mouseAxis = Input.GetAxis("Mouse ScrollWheel");
-            if (mouseAxis > 0)
-            {
-                mainCamera.orthographicSize = mainCamera.orthographicSize - zoomVelocity;
-            }
-            else if (mouseAxis < 0)
-            {
-                mainCamera.orthographicSize = mainCamera.orthographicSize + zoomVelocity;
-            }
-
-            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 3, 50);
         }
     }
 }

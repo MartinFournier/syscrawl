@@ -4,6 +4,14 @@ namespace syscrawl.Utils.Lerp
 {
     public abstract class Lerp<T>
     {
+        public delegate void LerpActivatedEventHandler();
+
+        public event LerpActivatedEventHandler LerpActivated;
+
+        public delegate void LerpCompletedEventHandler();
+
+        public event LerpCompletedEventHandler LerpCompleted;
+
         protected ILerpData<T> Data { get; set; }
 
         float currentTime;
@@ -11,18 +19,20 @@ namespace syscrawl.Utils.Lerp
 
         public bool IsComplete { get; private set; }
 
-        public float PercentThreshold { get; set; }
+        public LerpSettings Settings { get; set; }
 
-        public float Duration { get; set; }
-
-        public AnimationCurve Curve { get; set; }
-
-        protected Lerp()
+        protected Lerp(LerpSettings settings)
         {
             IsComplete = true;
-            PercentThreshold = 0.99f;
-            Duration = 1f;
-            Curve = AnimationCurve.Linear(0, 0, 1, 1);
+
+            if (settings != null)
+            {
+                Settings = settings;
+            }
+            else
+            {
+                Settings = new LerpSettings();
+            }
         }
 
         public void Activate(T from, T to)
@@ -34,12 +44,17 @@ namespace syscrawl.Utils.Lerp
             Data.To = to;
 
             IsComplete = false;
+
+            if (LerpActivated != null)
+            {
+                LerpActivated();
+            }
         }
 
         public T Evaluate(float deltaTime)
         {
             UpdateProgress(deltaTime);
-            var t = Curve.Evaluate(progressPercent);
+            var t = Settings.Curve.Evaluate(progressPercent);
             var result = Data.Evaluate(t);
             Data.Current = result;
             return result;
@@ -47,18 +62,26 @@ namespace syscrawl.Utils.Lerp
 
         void UpdateProgress(float deltaTime)
         {
+            if (IsComplete)
+                return;
+            
             currentTime += deltaTime;
-            if (currentTime > Duration)
+            if (currentTime > Settings.Duration)
             {
-                currentTime = Duration;
+                currentTime = Settings.Duration;
             }
 
-            progressPercent = currentTime / Duration;
-            if (progressPercent >= PercentThreshold)
+            progressPercent = currentTime / Settings.Duration;
+            if (progressPercent >= Settings.PercentThreshold)
             {
                 progressPercent = 1f;
 
                 IsComplete = true;
+
+                if (LerpCompleted != null)
+                {
+                    LerpCompleted();
+                }
             }
         }
     }

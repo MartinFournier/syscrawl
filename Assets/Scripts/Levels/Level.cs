@@ -3,6 +3,7 @@ using syscrawl.Levels.Graph;
 using syscrawl.Levels.Graph.Generators;
 using syscrawl.Utils;
 using syscrawl.Utils.Lerp;
+using syscrawl.Camera;
 
 namespace syscrawl.Levels
 {
@@ -23,7 +24,9 @@ namespace syscrawl.Levels
             }
         }
 
-        public void Generate(LevelSettings settings)
+        public void Generate(
+            LevelSettings settings, 
+            CameraController cameraController)
         {
             Settings = settings;
             
@@ -36,8 +39,7 @@ namespace syscrawl.Levels
                 settings.NodeAngle, 
                 settings.NodeDistance);
 
-            Positioning.MovedToNode += 
-                new Positioning.MovedToNodeEventHandler(MovedToNode);
+            cameraController.BindPositioning(Positioning);
 
             Positioning.Position();
         }
@@ -45,28 +47,6 @@ namespace syscrawl.Levels
         void Start()
         {
             Positioning.ToggleVisibility();
-        }
-
-        Lerp<Vector3> cameraLerp = new VectorLerp();
-
-        void MovedToNode(Vector3 newNodePosition)
-        {
-            Debug.Log("Booyah." + newNodePosition);
-
-            cameraLerp.Curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-            cameraLerp.Activate(
-                UnityEngine.Camera.main.transform.position, 
-                newNodePosition);
-        }
-
-        void Update()
-        {
-            
-            if (cameraLerp.IsComplete)
-                return;
-            
-            var value = cameraLerp.Evaluate(Time.deltaTime);
-            UnityEngine.Camera.main.transform.position = value;
         }
     }
 }

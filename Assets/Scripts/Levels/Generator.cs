@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using syscrawl.Camera;
 
 namespace syscrawl.Levels
 {
@@ -10,6 +11,8 @@ namespace syscrawl.Levels
         public string seed;
 
         public LevelSettings settings;
+
+        public CameraController cameraController;
 
         void Start()
         {
@@ -34,7 +37,7 @@ namespace syscrawl.Levels
 
             levelObject = new GameObject("Level");
             var level = levelObject.gameObject.AddComponent<Level>();
-            level.Generate(settings);
+            level.Generate(settings, cameraController);
             
             var player = FindObjectOfType<Player.Player>();
             player.SetLevel(level);
