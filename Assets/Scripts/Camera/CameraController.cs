@@ -28,11 +28,11 @@ namespace syscrawl.Camera
             cameraZoomLerp = new FloatLerp(zoomLerpSettings);
             cameraUnzoomLerp = new FloatLerp(unzoomLerpSettings);
 
-            cameraPositionLerp.LerpActivated += () => 
-                cameraZoomLerp.Activate(cameraHeight, cameraZoomTo);
-
-            cameraZoomLerp.LerpCompleted += () => 
-                cameraUnzoomLerp.Activate(cameraZoomTo, cameraHeight);
+//            cameraPositionLerp.LerpActivated += () => 
+//                cameraZoomLerp.Activate(cameraHeight, cameraZoomTo);
+//
+//            cameraZoomLerp.LerpCompleted += () => 
+//                cameraUnzoomLerp.Activate(cameraZoomTo, cameraHeight);
         }
 
         public void BindPositioning(Positioning positioning)

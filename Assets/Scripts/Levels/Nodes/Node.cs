@@ -1,18 +1,103 @@
 ﻿using UnityEngine;
 using NGenerics.DataStructures.General;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace syscrawl.Levels.Nodes
 {
     public abstract class Node : MonoBehaviour
     {
-        public NodeType Type { get; set; }
+        #region Private & Protected Members
 
-        public GameObject Wrapper { get; set; }
+        protected GameObject Wrapper { get; set; }
+
+        Level Level { get; set; }
+
+        // todo
+        bool IsUncovered { get; set; }
+
+        #endregion
+
+        #region Public Members
 
         public Vertex<Node> Vertex { get; set; }
 
-        Level Level { get; set; }
+        public NodeType Type { get; private set; }
+
+        #endregion
+
+        #region Node Connections
+
+        public IEnumerable<Node> GetConnections()
+        { 
+
+            var nodes = 
+                Vertex.IncidentEdges.
+                Select(
+                    x => x.GetPartnerVertex(Vertex));
+            return nodes.Select(x => x.Data);
+        }
+
+        public IEnumerable<Node> GetConnections(
+            params Node[] excludedConnections)
+        {
+            var nodes = GetConnections();
+            nodes = nodes.Where(x => !excludedConnections.Contains(x));
+            return  nodes;
+        }
+
+        #endregion
+
+        #region Node Wrapper Properties
+
+        /// <summary>
+        /// Uses the wrapper's scale as a helper
+        /// </summary>
+        /// <value>The scale.</value>
+        public Vector3 Scale
+        {
+            get
+            {
+                return Wrapper.transform.localScale;
+            }
+            set
+            {
+                Wrapper.transform.localScale = value;
+            }
+        }
+
+        /// <summary>
+        /// Uses the wrapper's global position as a helper
+        /// </summary>
+        /// <value>The position.</value>
+        public Vector3 Position
+        {
+            get
+            {
+                return Wrapper.transform.position;
+            }
+            set
+            {
+                Wrapper.transform.position = value;
+            }
+        }
+
+        #endregion
+
+        public void SetVisible(bool isVisible)
+        {
+            var renderers = 
+                gameObject.
+                GetComponentsInChildren<MeshRenderer>().
+                Where(x => !x.name.Equals("SphereFog(Clone)"));
+            
+            foreach (var r in renderers)
+            {
+                r.enabled = isVisible;
+            }
+        }
+
+        #region Factory
 
         protected static T Create<T>(
             Level level, 
@@ -42,24 +127,9 @@ namespace syscrawl.Levels.Nodes
             return node;
         }
 
-        public void SetVisible(bool isVisible)
-        {
-            var renderers = gameObject.GetComponentsInChildren<MeshRenderer>().Where(x => !x.name.Equals("SphereFog(Clone)"));
-            foreach (var r in renderers)
-            {
-                r.enabled = isVisible;
-            }
-        }
+        #endregion
 
-        protected void Start()
-        {
-//            Debug.Log("Start NodeType: " + Type);
-        }
-
-        public override string ToString()
-        {
-            return string.Format("[Node: Type={0}, Wrapper={1}, Pos={2}]", Type, Wrapper, transform.position);
-        }
+        #region Mouse Events
 
         void OnMouseEnter()
         {
@@ -81,6 +151,18 @@ namespace syscrawl.Levels.Nodes
         {
             Debug.Log("Node: MouseUp (" + Type + ":" + Wrapper.name + ")");
             Level.Positioning.MoveTo(this);
+        }
+
+        #endregion
+
+        protected void Start()
+        {
+
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[Node: Type={0}, Wrapper={1}, Pos={2}]", Type, Wrapper, transform.position);
         }
     }
 }

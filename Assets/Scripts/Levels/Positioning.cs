@@ -10,63 +10,61 @@ namespace syscrawl.Levels
 {
     public class Positioning
     {
+
+        #region Events
+
         public delegate void MovedToNodeEventHandler(Vector3 newCenterPosition);
 
         public event MovedToNodeEventHandler MovedToNode;
 
-        readonly float angle;
+        #endregion
 
-        Vector3 CenterNodePosition
-        { 
-            get
-            { 
-                return Pivot + Distance;
-            }
-        }
+        #region Members & Properties
 
-        Vector3 PreviousNodePosition
-        { 
-            get
-            { 
-                return Pivot - Distance;
-            }
-        }
-
-        Vector3 Pivot { get; set; }
-
-        readonly Vector3 Distance;
+        readonly PositioningSettings settings;
 
         readonly NodesGraph graph;
 
-        Node PreviousNode { get; set; }
-
         Node CurrentNode { get; set; }
 
-        IEnumerable<Node> PartnerNodes
-        {
-            get
-            {
-                var nodes = 
-                    CurrentNode.Vertex.IncidentEdges.
-                    Select(
-                        x => x.GetPartnerVertex(CurrentNode.Vertex));
+        Node PreviousNode { get; set; }
 
-                if (PreviousNode != null)
-                {
-                    nodes = nodes.Where(x => x != PreviousNode.Vertex);
-                }
-                return nodes.Select(x => x.Data);
-            }
-        }
+        #endregion
 
         IEnumerable<Node> ActiveNodes
         {
             get
             { 
-                var nodes = PartnerNodes.ToList();
+                var nodes = 
+                    CurrentNode.GetConnections().ToList();
+                
                 nodes.Add(CurrentNode);
-                if (PreviousNode != null)
-                    nodes.Add(PreviousNode);
+
+                return nodes;
+            }
+        }
+
+        IEnumerable<Node> ActiveNodesAhead
+        {
+            get
+            {
+                var nodes = new List<Node>();
+                var nodesToCheck = CurrentNode.GetConnections();
+
+                foreach (var node in nodesToCheck)
+                {
+                    var ahead = node.GetConnections(CurrentNode);
+                    nodes.AddRange(
+                        ahead
+                    );
+                }
+
+                nodes = nodes.Distinct().ToList();
+                Debug.Log(nodes.Count);
+                foreach (var entry in nodes)
+                {
+                    Debug.Log(entry.ToString());
+                }
 
                 return nodes;
             }
@@ -77,18 +75,15 @@ namespace syscrawl.Levels
             float angle, 
             float distance)
         {
+            settings = new PositioningSettings(angle, distance);
 
             this.graph = graph;
-            this.angle = angle;
-
-            Distance = new Vector3(distance, 0, 0);
-            Pivot = new Vector3(0, 0, 0);
             CurrentNode = graph.Entrance;
         }
 
         public void MoveTo(Node node)
         {
-            Pivot = node.transform.position;
+            settings.Pivot = node.transform.position;
             PreviousNode = CurrentNode;
             CurrentNode = node;
             Position();
@@ -96,47 +91,63 @@ namespace syscrawl.Levels
 
             if (MovedToNode != null)
             {
-                MovedToNode(Pivot);
+                MovedToNode(settings.Pivot);
             }
         }
 
         public void Position()
         {
-            CurrentNode.Wrapper.transform.localPosition = Pivot;
+            CurrentNode.Position = settings.Pivot;
 
-            var nodes = PartnerNodes;
+            var nodes = CurrentNode.GetConnections(PreviousNode);
             var nodesGroup = new NodePositionGroup(nodes);
-            if (nodesGroup.HasCenterNode)
-            {
-                nodesGroup.CenterNode.Wrapper.transform.position = CenterNodePosition;
-            }
 
-            RotateNodes(
-                nodesGroup.NodesLeftSide, 
-                NodePositionSide.Left, 
-                nodesGroup.HasCenterNode);
-            RotateNodes(
-                nodesGroup.NodesRightSide, 
-                NodePositionSide.Right, 
-                nodesGroup.HasCenterNode);
+            PositionNodesGroup(
+                nodesGroup, 
+                settings.Pivot, 
+                settings.angle, 
+                settings.CenterNodePosition);
 
             if (PreviousNode != null)
             {
-                PreviousNode.Wrapper.transform.position = PreviousNodePosition;
+                PreviousNode.Position = settings.PreviousNodePosition;
             }
 
             foreach (var node in nodes)
             {
-                Debug.Log("Setting visible for node: " + node);
-                node.SetVisible(true);
+                // Will have issue here with nodes that are linked to multiple, 
+                // TODO: Need to clone them
+                var extraNodes = node.GetConnections(CurrentNode);
+                var ng = new NodePositionGroup(extraNodes);
+
+                var pivot = node.Position;
+                var newPoint = pivot + new Vector3(10, 0, 0);
+
+                Debug.Log("Positioning Node " + node);
+                Debug.Log("From " + pivot + " towards " + newPoint);
+
+                PositionNodesGroup(ng, pivot, 90f, newPoint);
+
+                foreach (var extraNode in extraNodes)
+                {
+                    extraNode.Scale = 
+                        new Vector3(0.3f, 0.3f, 0.3f);
+                }
+            }
+
+            foreach (var node in nodes)
+            {
+                node.Scale = new Vector3(1, 1, 1);
             }
         }
 
+
+
         public void ToggleVisibility()
         {
-            var visibleNodes = ActiveNodes;
+            var visibleNodes = ActiveNodes.Union(ActiveNodesAhead);
             var hiddenNodes = graph.Nodes.Except(visibleNodes);
-            Debug.Log("Visible: " + visibleNodes.Count() + " | Hidden: " + hiddenNodes.Count());
+
             foreach (var node in visibleNodes)
             {
                 node.SetVisible(true);
@@ -147,12 +158,96 @@ namespace syscrawl.Levels
             }
         }
 
+        #region Position Settings
+
+        class PositioningSettings
+        {
+            readonly Vector3 distance;
+
+            public readonly float angle;
+
+            public Vector3 Pivot { get; set; }
+
+            public Vector3 CenterNodePosition
+            { 
+                get
+                { 
+                    return Pivot + distance;
+                }
+            }
+
+            public Vector3 PreviousNodePosition
+            { 
+                get
+                { 
+                    return Pivot - distance;
+                }
+            }
+
+            public PositioningSettings(
+                float angle, 
+                float distance)
+            {
+                this.angle = angle;
+                this.distance = new Vector3(distance, 0, 0);
+
+                Pivot = new Vector3(0, 0, 0);
+            }
+        }
+
+        #endregion
+
+        #region Position Rotation
+
+        void PositionNodesGroup(
+            NodePositionGroup nodesGroup,
+            Vector3 pivot, 
+            float maxAngle,
+            Vector3 nodePosition)
+        {
+            
+            if (nodesGroup.HasCenterNode)
+            {
+                nodesGroup.CenterNode.Position = nodePosition;
+            }
+
+            RotateNodesGroup(
+                nodesGroup, 
+                pivot, 
+                maxAngle, 
+                nodePosition);
+
+        }
+
+        void RotateNodesGroup(
+            NodePositionGroup nodesGroup, 
+            Vector3 pivot, 
+            float maxAngle,
+            Vector3 nodePosition
+        )
+        {
+            RotateNodes(
+                nodesGroup.NodesLeftSide, 
+                NodePositionSide.Left, 
+                nodesGroup.HasCenterNode,
+                pivot, maxAngle, nodePosition);
+            RotateNodes(
+                nodesGroup.NodesRightSide, 
+                NodePositionSide.Right, 
+                nodesGroup.HasCenterNode,
+                pivot, maxAngle, nodePosition);
+        }
+
         void RotateNodes(
             IEnumerable<Node> nodes, 
             NodePositionSide side,
-            bool hasCenter)
+            bool hasCenter,
+            Vector3 pivot,
+            float maxAngle,
+            Vector3 nodePosition
+        )
         {
-            var angleDiff = angle / nodes.Count();
+            var angleDiff = maxAngle / nodes.Count();
             var remainingAngle = angleDiff;
             if (!hasCenter)
             {
@@ -164,9 +259,10 @@ namespace syscrawl.Levels
                 var actualAngle = 
                     side == NodePositionSide.Left ? -remainingAngle : remainingAngle;
                 var angles = new Vector3(0, actualAngle, 0);
-                var newPosition = CenterNodePosition.RotatePointAroundPivot(Pivot, angles);
+                var newPosition = 
+                    nodePosition.RotatePointAroundPivot(pivot, angles);
 
-                node.Wrapper.transform.position = newPosition;
+                node.Position = newPosition;
 
                 remainingAngle += angleDiff;
             }
@@ -210,6 +306,8 @@ namespace syscrawl.Levels
                 NodesRightSide = rightNodes;
             }
         }
+
+        #endregion
     }
 }
 

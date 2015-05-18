@@ -43,7 +43,7 @@ namespace syscrawl.Player
 
         void Update()
         {
-            var pos = CurrentNode.Wrapper.transform.position;
+            var pos = CurrentNode.Position;
             transform.position = new Vector3(pos.x, pos.y + 4, pos.z);
         }
 
