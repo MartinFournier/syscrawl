@@ -86,6 +86,7 @@ namespace syscrawl.Levels.Nodes
 
         public void SetVisible(bool isVisible)
         {
+            //TODO: this is a temp hack.
             var renderers = 
                 gameObject.
                 GetComponentsInChildren<MeshRenderer>().
@@ -133,18 +134,18 @@ namespace syscrawl.Levels.Nodes
 
         void OnMouseEnter()
         {
-            Debug.Log("Node: Enter (" + Type + ":" + Wrapper.name + ")");
+//            Debug.Log("Node: Enter (" + Type + ":" + Wrapper.name + ")");
         }
 
 
         void OnMouseExit()
         {
-            Debug.Log("Node: Node (" + Type + ":" + Wrapper.name + ")");
+//            Debug.Log("Node: Node (" + Type + ":" + Wrapper.name + ")");
         }
 
         void OnMouseDown()
         {
-            Debug.Log("Node: MouseDown (" + Type + ":" + Wrapper.name + ")");
+//            Debug.Log("Node: MouseDown (" + Type + ":" + Wrapper.name + ")");
         }
 
         void OnMouseUp()

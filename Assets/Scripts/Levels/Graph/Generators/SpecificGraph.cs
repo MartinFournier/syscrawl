@@ -27,16 +27,24 @@ namespace syscrawl.Levels.Graph.Generators
                     "c1",
                     fw1);
 
-//            var c11 =
+            var c11 =
+                graph.CreateNode(
+                    NodeType.Connector,
+                    "c11",
+                    fw1);
+
             graph.CreateNode(
-                NodeType.Connector,
-                "c11",
-                fw1);
-//            var c12 =
+                NodeType.Filesystem,
+                "system1", c11);
             graph.CreateNode(
-                NodeType.Connector,
-                "c12",
-                fw1);
+                NodeType.Filesystem,
+                "system2", c11);
+
+            var c12 =
+                graph.CreateNode(
+                    NodeType.Connector,
+                    "c12",
+                    fw1);
 
             var fw2c1 =
                 graph.CreateNode(

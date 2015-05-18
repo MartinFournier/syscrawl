@@ -48,25 +48,16 @@ namespace syscrawl.Levels
         {
             get
             {
-                var nodes = new List<Node>();
-                var nodesToCheck = CurrentNode.GetConnections();
+                var nodesAhead = new List<Node>();
+                var currentNodeConnections = CurrentNode.GetConnections();
 
-                foreach (var node in nodesToCheck)
+                foreach (var node in currentNodeConnections)
                 {
-                    var ahead = node.GetConnections(CurrentNode);
-                    nodes.AddRange(
-                        ahead
-                    );
+                    var connectionsAhead = node.GetConnections(CurrentNode);
+                    nodesAhead.AddRange(connectionsAhead);
                 }
-
-                nodes = nodes.Distinct().ToList();
-                Debug.Log(nodes.Count);
-                foreach (var entry in nodes)
-                {
-                    Debug.Log(entry.ToString());
-                }
-
-                return nodes;
+             
+                return nodesAhead.Distinct();
             }
         }
 
@@ -83,7 +74,7 @@ namespace syscrawl.Levels
 
         public void MoveTo(Node node)
         {
-            settings.Pivot = node.transform.position;
+            settings.Pivot = node.Position;
             PreviousNode = CurrentNode;
             CurrentNode = node;
             Position();
@@ -125,6 +116,7 @@ namespace syscrawl.Levels
 
                 Debug.Log("Positioning Node " + node);
                 Debug.Log("From " + pivot + " towards " + newPoint);
+                Debug.Log("NbNodes: " + ng.Count);
 
                 PositionNodesGroup(ng, pivot, 90f, newPoint);
 
@@ -140,8 +132,6 @@ namespace syscrawl.Levels
                 node.Scale = new Vector3(1, 1, 1);
             }
         }
-
-
 
         public void ToggleVisibility()
         {
@@ -283,6 +273,18 @@ namespace syscrawl.Levels
             public bool HasCenterNode
             { 
                 get { return CenterNode != null; }
+            }
+
+            public int Count
+            {
+                get
+                { 
+                    var nb = NodesLeftSide.Count() + NodesRightSide.Count();
+                    if (HasCenterNode)
+                        nb++;
+                    
+                    return nb;
+                }
             }
 
             public NodePositionGroup(IEnumerable<Node> nodes)
