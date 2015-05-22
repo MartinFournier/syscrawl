@@ -10,6 +10,12 @@ namespace syscrawl.Tests
         {
             Assert.IsTrue(true);
         }
+
+        [Test()]
+        public void Err()
+        {
+            Assert.IsTrue(false);
+        }
     }
 }
 
