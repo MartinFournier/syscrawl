@@ -25,3 +25,7 @@ sysinfo.txt
 
 #VSCode
 .settings/
+
+#NuGet
+packages/
+Assets/Libraries/NUnit.*
