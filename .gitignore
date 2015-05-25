@@ -28,4 +28,4 @@ sysinfo.txt
 
 #NuGet
 packages/
-Assets/Libraries/NUnit.*
+.nuget/
