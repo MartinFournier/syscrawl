@@ -28,4 +28,5 @@ sysinfo.txt
 
 #NuGet
 packages/
+!Assets/Packages/
 .nuget/
