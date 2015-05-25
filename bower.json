@@ -1,0 +1,20 @@
+{
+  "name": "syscrawl",
+  "version": "0.0.0",
+  "homepage": "https://github.com/MartinFournier/syscrawl",
+  "authors": [
+    "Martin Fournier <fournier.mart@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "strangeioc": "git@github.com:strangeioc/strangeioc.git#~0.6.1",
+    "ngenerics": "git@github.com:ngenerics/ngenerics.git#~1.4.1"
+  }
+}
