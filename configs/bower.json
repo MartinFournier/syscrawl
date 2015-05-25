@@ -14,6 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "strangeioc": "git@github.com:strangeioc/strangeioc.git#~0.6.1"
+    "strangeioc": "git@github.com:strangeioc/strangeioc.git#master"
   }
 }
