@@ -16,3 +16,4 @@
   ```sh
     $ ./configs/install.sh
   ```
+5. After, sync monodevelop project in unity
