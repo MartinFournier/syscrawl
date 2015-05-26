@@ -9,6 +9,7 @@ using strange.extensions.command.impl;
 using syscrawl.Signals;
 using syscrawl.Services.Levels;
 using syscrawl.Models.Levels;
+using syscrawl.Commands;
 
 namespace syscrawl
 {
@@ -36,8 +37,10 @@ namespace syscrawl
         override public IContext Start()
         {
             base.Start();
+
             var startSignal = injectionBinder.GetInstance<GameStartSignal>();
             startSignal.Dispatch();
+
             return this;
         }
 
@@ -45,24 +48,9 @@ namespace syscrawl
         {
             injectionBinder.Bind<ILevelGenerator>().To<SpecificLevelGenerator>();
             injectionBinder.Bind<ILevel>().To<Level>();
-            //Injection binding.
-            //Map a mock model and a mock service, both as Singletons
-//			injectionBinder.Bind<IExampleModel>().To<ExampleModel>().ToSingleton();
-//			injectionBinder.Bind<IExampleService>().To<ExampleService>().ToSingleton();
-//
-//			//View/Mediator binding
-//			//This Binding instantiates a new ExampleMediator whenever as ExampleView
-//			//Fires its Awake method. The Mediator communicates to/from the View
-//			//and to/from the App. This keeps dependencies between the view and the app
-//			//separated.
-//            mediationBinder.Bind<TestView>().To<TestViewMediator>();
-//
-//			//Event/Command binding
-//			commandBinder.Bind(ExampleEvent.REQUEST_WEB_SERVICE).To<CallWebServiceCommand>();
-//			//The START event is fired as soon as mappings are complete.
-//			//Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
-
+          
             commandBinder.Bind<GameStartSignal>().To<GenerateLevelCommand>().Once();
+            commandBinder.Bind<LevelGeneratedSignal>().To<InitializePlayerCommand>();
 
         }
 

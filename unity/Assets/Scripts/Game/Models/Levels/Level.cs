@@ -5,7 +5,7 @@ namespace syscrawl.Models.Levels
 {
     public interface ILevel
     {
-        
+        GameLevelGraph GetGraph();
     }
 
     public class Level : ILevel
@@ -18,9 +18,13 @@ namespace syscrawl.Models.Levels
         public Level(ILevelGenerator levelGenerator)
         {
             this.levelGenerator = levelGenerator;
-            this.levelGenerator.Generate();
+            Graph = this.levelGenerator.Generate();
         }
 
+        public GameLevelGraph GetGraph()
+        {
+            return Graph;
+        }
 
         //            Positioning =
         //                new Positioning(
