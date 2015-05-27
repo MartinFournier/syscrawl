@@ -6,9 +6,9 @@ using System;
 
 namespace syscrawl.Models.Levels
 {
-    public class GameLevelGraph : Graph<Node>
+    public class LevelGraph : Graph<Node>
     {
-        public GameLevelGraph()
+        public LevelGraph()
             : base(false)
         {
 
@@ -65,16 +65,17 @@ namespace syscrawl.Models.Levels
             node.Name = name;
             node.Vertex = vertex;
 
-            if (neighbourNode != null)
-            {
-                var edge = 
-                    new Edge<Node>(
-                        vertex, 
-                        neighbourNode.Vertex, 
-                        false
-                    );
-                AddEdge(edge);
-            }
+            if (neighbourNode == null)
+                return node;
+
+            var edge = 
+                new Edge<Node>(
+                    vertex, 
+                    neighbourNode.Vertex, 
+                    false
+                );
+            AddEdge(edge);
+
             return node;
         }
 

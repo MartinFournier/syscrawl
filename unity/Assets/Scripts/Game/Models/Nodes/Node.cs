@@ -38,4 +38,3 @@ namespace syscrawl.Models.Levels
         }
     }
 }
-

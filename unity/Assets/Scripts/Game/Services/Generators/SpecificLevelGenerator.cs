@@ -7,9 +7,9 @@ namespace syscrawl.Services.Levels
 {
     public class SpecificLevelGenerator : ILevelGenerator
     {
-        public GameLevelGraph Generate()
+        public LevelGraph Generate()
         {
-            var graph = new GameLevelGraph();
+            var graph = new LevelGraph();
 
             var entranceNode =
                 graph.CreateNode<EntranceNode>(

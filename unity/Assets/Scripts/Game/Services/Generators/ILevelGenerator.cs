@@ -4,6 +4,6 @@ namespace syscrawl.Services.Levels
 {
     public interface ILevelGenerator
     {
-        GameLevelGraph Generate();
+        LevelGraph Generate();
     }
 }

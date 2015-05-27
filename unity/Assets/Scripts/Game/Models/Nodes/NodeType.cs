@@ -1,5 +1,4 @@
-﻿
-namespace syscrawl.Models.Levels
+﻿namespace syscrawl.Models.Levels
 {
     public enum NodeType
     {
@@ -9,4 +8,3 @@ namespace syscrawl.Models.Levels
         Entrance
     }
 }
-

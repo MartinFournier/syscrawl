@@ -18,16 +18,16 @@ namespace syscrawl.Services.Levels
             this.levelGeneratorConfigurations = levelGeneratorConfigurations;
         }
 
-        public GameLevelGraph Generate()
+        public LevelGraph Generate()
         {
             return Generate(levelGeneratorConfigurations);
         }
 
         #region TODO CLEAN
 
-        static GameLevelGraph Generate(LevelGeneratorConfiguration settings)
+        static LevelGraph Generate(LevelGeneratorConfiguration settings)
         {
-            var graph = new GameLevelGraph();
+            var graph = new LevelGraph();
             var nbOfNodes = settings.GetRandomNumberOfNodes();
 
             var entranceNode = 
@@ -75,7 +75,7 @@ namespace syscrawl.Services.Levels
             return graph;
         }
 
-        static void AddExtraEdges(GameLevelGraph graph, LevelGeneratorConfiguration settings)
+        static void AddExtraEdges(LevelGraph graph, LevelGeneratorConfiguration settings)
         {
             var vertices = graph.Vertices.ToList();
             var nbVertices = vertices.Count;
@@ -92,7 +92,7 @@ namespace syscrawl.Services.Levels
             }
         }
 
-        static bool CreateRandomEdge(GameLevelGraph graph)
+        static bool CreateRandomEdge(LevelGraph graph)
         {
             var vertexFrom = GetRandomVertex(graph);
             var vertexTo = GetRandomVertex(graph);
@@ -110,7 +110,7 @@ namespace syscrawl.Services.Levels
             return true;
         }
 
-        static Vertex<Node> GetRandomVertex(GameLevelGraph graph)
+        static Vertex<Node> GetRandomVertex(LevelGraph graph)
         {
             var v = graph.Vertices.ToList()[
                         Random.Range(0, graph.Vertices.Count)];
@@ -122,7 +122,7 @@ namespace syscrawl.Services.Levels
             return v;
         }
 
-        static Node GetRandomNode(GameLevelGraph graph)
+        static Node GetRandomNode(LevelGraph graph)
         {
             return GetRandomVertex(graph).Data;
         }

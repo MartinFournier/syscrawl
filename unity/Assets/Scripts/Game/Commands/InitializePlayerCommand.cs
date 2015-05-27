@@ -14,6 +14,8 @@ namespace syscrawl.Commands
         {
             Debug.Log("Hello from the player thing!");
             Debug.Log(level.ToString());
+
+
         }
     }
 }
