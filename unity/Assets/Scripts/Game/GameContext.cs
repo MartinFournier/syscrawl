@@ -10,6 +10,7 @@ using syscrawl.Signals;
 using syscrawl.Services.Levels;
 using syscrawl.Models.Levels;
 using syscrawl.Commands;
+using syscrawl.Models;
 
 namespace syscrawl
 {
@@ -47,11 +48,12 @@ namespace syscrawl
         protected override void mapBindings()
         {
             injectionBinder.Bind<ILevelGenerator>().To<SpecificLevelGenerator>();
-            injectionBinder.Bind<ILevel>().To<Level>();
-          
-            commandBinder.Bind<GameStartSignal>().To<GenerateLevelCommand>().Once();
-            commandBinder.Bind<LevelGeneratedSignal>().To<InitializePlayerCommand>();
 
+            injectionBinder.Bind<ILevel>().To<Level>().ToSingleton();
+            injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
+
+            commandBinder.Bind<GameStartSignal>().To<GenerateLevelCommand>();
+            commandBinder.Bind<LevelGeneratedSignal>().To<InitializePlayerCommand>();
         }
 
     }

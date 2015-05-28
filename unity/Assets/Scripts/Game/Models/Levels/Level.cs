@@ -6,6 +6,10 @@ namespace syscrawl.Models.Levels
     public interface ILevel
     {
         LevelGraph GetGraph();
+
+        void Generate(string levelName);
+
+        string GetName();
     }
 
     public class Level : ILevel
@@ -15,15 +19,27 @@ namespace syscrawl.Models.Levels
         public LevelGraph Graph;
         //        public Positioning Positioning;
 
+        string LevelName { get; set; }
+
         public Level(ILevelGenerator levelGenerator)
         {
             this.levelGenerator = levelGenerator;
-            Graph = this.levelGenerator.Generate();
         }
 
         public LevelGraph GetGraph()
         {
             return Graph;
+        }
+
+        public void Generate(string levelName)
+        {
+            Graph = levelGenerator.Generate();
+            LevelName = levelName;
+        }
+
+        public string GetName()
+        {
+            return LevelName;
         }
 
         //            Positioning =
@@ -39,5 +55,10 @@ namespace syscrawl.Models.Levels
         //        {
         //            Positioning.ToggleVisibility();
         //        }
+
+        public override string ToString()
+        {
+            return string.Format("Level: " + LevelName);
+        }
     }
 }
