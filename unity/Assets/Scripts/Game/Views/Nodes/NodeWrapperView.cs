@@ -55,22 +55,29 @@ namespace syscrawl.Views.Nodes
         //            }
         //        }
 
-        GameObject wrapper;
+        internal GameObject wrapper;
+        internal GameObject fog;
+        internal GameObject nodeName;
+        internal TextMesh nodeNameMesh;
 
-        internal void init()
+        internal void Init()
         {
             wrapper = Prefabs.Instantiate("NodeWrapper");
             wrapper.transform.parent = gameObject.transform;
 
-            var sphereFog = Prefabs.Instantiate("SphereFog");
-            sphereFog.transform.parent = wrapper.transform;
-            sphereFog.transform.localScale = new Vector3(10, 10, 10);
-            sphereFog.GetComponent<Collider>().enabled = false;
+            fog = Prefabs.Instantiate("SphereFog");
+            fog.transform.parent = wrapper.transform;
+            fog.transform.localScale = new Vector3(10, 10, 10);
+            fog.GetComponent<Collider>().enabled = false;
 
-            var nodeNamePrefab = Prefabs.Instantiate("NodeName");
-            var textMesh = nodeNamePrefab.GetComponent<TextMesh>();
-            textMesh.text = "nodeName";
-            nodeNamePrefab.transform.parent = wrapper.transform;
+            nodeName = Prefabs.Instantiate("NodeName");
+            nodeNameMesh = nodeName.GetComponent<TextMesh>();
+            nodeName.transform.parent = wrapper.transform;
+        }
+
+        public void SetName(string name)
+        {
+            nodeNameMesh.text = name;
         }
 
 

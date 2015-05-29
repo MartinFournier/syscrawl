@@ -1,32 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
 using strange.extensions.command.impl;
-using syscrawl.Models.Levels;
-using syscrawl.Signals;
 using strange.extensions.context.api;
-using syscrawl.Views.Nodes;
+using UnityEngine;
 using syscrawl.Views.Levels;
 using syscrawl.Extensions;
+using syscrawl.Signals;
 
 namespace syscrawl.Commands
 {
-    public class GenerateLevelCommand : Command
+    public class GameStartCommand : Command
     {
-        
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject ContextView{ get; set; }
 
         [Inject]
-        public ILevel Level { get; set; }
-
-        [Inject]
         public GenerateLevelSignal GenerateLevelSignal { get; set; }
-
 
         public override void Execute()
         {
-            Level.Generate("Level1");
-
-            Debug.Log("Command: Level has been generated");
+            ContextView.AttachSubcomponent<LevelView>("Level");
             GenerateLevelSignal.Dispatch();
         }
     }

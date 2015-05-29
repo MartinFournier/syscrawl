@@ -54,8 +54,9 @@ namespace syscrawl
             injectionBinder.Bind<ILevel>().To<Level>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
 
-            commandBinder.Bind<GameStartSignal>().To<GenerateLevelCommand>();
-            commandBinder.Bind<LevelGeneratedSignal>().To<InitializePlayerCommand>();
+            commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
+            commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
+
 
             mediationBinder.Bind<NodeWrapperView>().To<NodeWrapperMediator>();
             mediationBinder.Bind<LevelView>().To<LevelMediator>();

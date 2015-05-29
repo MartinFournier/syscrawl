@@ -16,10 +16,10 @@ namespace syscrawl.Commands
 
         public override void Execute()
         {
-            Debug.Log("Hello from the player thing!");
             player.Name = "Booyha-Guy";
-            Debug.Log(level.ToString());
-            player.MoveTo(level.GetEntrance());
+            var entrance = level.GetEntrance();
+            player.MoveTo(entrance);
+            Debug.Log("Command: Player has been moved");
         }
     }
 }

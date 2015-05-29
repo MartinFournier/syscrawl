@@ -19,11 +19,6 @@ namespace syscrawl.Views.Levels
             currentNodes = gameObject.AttachObject("Current Nodes");
             furtherAheadNodes = gameObject.AttachObject("FurtheAhead Nodes");
         }
-
-        void AddNode(Vector3 position)
-        {
-            
-        }
     }
 }
 

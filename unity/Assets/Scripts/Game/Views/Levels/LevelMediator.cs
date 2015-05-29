@@ -6,6 +6,9 @@ using syscrawl.Models;
 using syscrawl.Views.Nodes;
 using syscrawl.Extensions;
 using System.Linq;
+using strange.extensions.context.api;
+using strange.extensions.context.impl;
+using syscrawl.Signals;
 
 namespace syscrawl.Views.Levels
 {
@@ -20,10 +23,19 @@ namespace syscrawl.Views.Levels
         [Inject]
         public IPlayer Player { get; set; }
 
+        [Inject]
+        public GenerateLevelSignal LevelGeneratedSignal { get; set; }
+
         public override void OnRegister()
         {
-            Debug.Log("Level mediator");
+            Debug.Log("OnRegister in Level");
             View.Init();
+
+            LevelGeneratedSignal.AddListener(Thing);
+        }
+
+        void Thing()
+        {
 
             var nodePositions = 
                 new NodePositions(
@@ -52,13 +64,17 @@ namespace syscrawl.Views.Levels
                         break;
 
                 }
+
+                //                var o = ContextView.injectionBinder.GetInstance<NodeWrapperView>();
+
                 var nodeView = 
                     container.AttachSubcomponent<NodeWrapperView>(key.Name);
                 nodeView.transform.position = node.position;
+                var n = nodeView.GetComponent<NodeWrapperView>();
+                n.SetName(key.Name);
+                //                nodeView.Name
+        
             }
-
-
         }
     }
 }
-
