@@ -19,6 +19,7 @@ namespace syscrawl.Commands
             Debug.Log("Hello from the player thing!");
             player.Name = "Booyha-Guy";
             Debug.Log(level.ToString());
+            player.MoveTo(level.GetEntrance());
         }
     }
 }

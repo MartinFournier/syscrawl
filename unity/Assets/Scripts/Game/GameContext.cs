@@ -11,6 +11,8 @@ using syscrawl.Services.Levels;
 using syscrawl.Models.Levels;
 using syscrawl.Commands;
 using syscrawl.Models;
+using syscrawl.Views.Nodes;
+using syscrawl.Views.Levels;
 
 namespace syscrawl
 {
@@ -54,6 +56,11 @@ namespace syscrawl
 
             commandBinder.Bind<GameStartSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<LevelGeneratedSignal>().To<InitializePlayerCommand>();
+
+            mediationBinder.Bind<NodeWrapperView>().To<NodeWrapperMediator>();
+            mediationBinder.Bind<LevelView>().To<LevelMediator>();
+
+            injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using syscrawl.Models.Levels;
+using syscrawl.Signals;
 
 namespace syscrawl.Models
 {
@@ -14,12 +15,16 @@ namespace syscrawl.Models
         Node currentNode;
         Node previousNode;
 
+        [Inject]
+        public PlayerMovedSignal playerMovedSignal { get; set; }
+
         public string Name { get; set; }
 
         public void MoveTo(Node node)
         {
             previousNode = currentNode;
             currentNode = node;
+            playerMovedSignal.Dispatch();
         }
     }
 }

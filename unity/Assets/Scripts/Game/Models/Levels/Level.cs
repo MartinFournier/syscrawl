@@ -10,6 +10,8 @@ namespace syscrawl.Models.Levels
         void Generate(string levelName);
 
         string GetName();
+
+        Node GetEntrance();
     }
 
     public class Level : ILevel
@@ -40,6 +42,11 @@ namespace syscrawl.Models.Levels
         public string GetName()
         {
             return LevelName;
+        }
+
+        public Node GetEntrance()
+        {
+            return Graph.Entrance;
         }
 
         //            Positioning =

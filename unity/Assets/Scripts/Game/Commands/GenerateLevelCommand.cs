@@ -2,28 +2,33 @@
 using strange.extensions.command.impl;
 using syscrawl.Models.Levels;
 using syscrawl.Signals;
+using strange.extensions.context.api;
+using syscrawl.Views.Nodes;
+using syscrawl.Views.Levels;
+using syscrawl.Extensions;
 
 namespace syscrawl.Commands
 {
     public class GenerateLevelCommand : Command
     {
-        //
-        //        [Inject(ContextKeys.CONTEXT_VIEW)]
-        //        public GameObject contextView{ get; set; }
-
-
-        [Inject]
-        public ILevel level { get; set; }
+        
+        [Inject(ContextKeys.CONTEXT_VIEW)]
+        public GameObject ContextView{ get; set; }
 
         [Inject]
-        public LevelGeneratedSignal levelGeneratedSignal { get; set; }
+        public ILevel Level { get; set; }
+
+        [Inject]
+        public LevelGeneratedSignal LevelGeneratedSignal { get; set; }
 
         public override void Execute()
         {
-            level.Generate("YAY PARTY");
-            Debug.Log(level.ToString());
+            ContextView.CreateSubcomponent<LevelView>("Level");
+
+            Level.Generate("YAY PARTY");
+            Debug.Log(Level.ToString());
             Debug.Log("Command: Level has been generated");
-            levelGeneratedSignal.Dispatch();
+            LevelGeneratedSignal.Dispatch();
         }
     }
 }
