@@ -23,7 +23,7 @@ namespace syscrawl.Commands
 
         public override void Execute()
         {
-            ContextView.CreateSubcomponent<LevelView>("Level");
+            ContextView.AttachSubcomponent<LevelView>("Level");
 
             Level.Generate("YAY PARTY");
             Debug.Log(Level.ToString());

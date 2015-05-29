@@ -7,7 +7,6 @@ namespace syscrawl.Models.Levels
         public readonly Vector3 position;
         public readonly GameNodeType type;
 
-
         public GameNode(
             GameNodeType type, 
             Vector3 position)

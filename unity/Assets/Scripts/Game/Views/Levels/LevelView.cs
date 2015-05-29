@@ -1,19 +1,29 @@
 ﻿using System;
 using strange.extensions.mediation.impl;
 using UnityEngine;
+using syscrawl.Extensions;
 
 namespace syscrawl.Views.Levels
 {
     public class LevelView : View
     {
-        GameObject sublevelThing;
+        internal GameObject previousNodes;
+        internal GameObject currentNodes;
+        internal GameObject activeNodes;
+        internal GameObject furtherAheadNodes;
 
-        internal void init()
+        internal void Init()
         {
-            sublevelThing = new GameObject("Sublevel thing");
-            sublevelThing.transform.parent = gameObject.transform;
+            activeNodes = gameObject.AttachObject("Active Nodes");
+            previousNodes = gameObject.AttachObject("Previous Nodes");
+            currentNodes = gameObject.AttachObject("Current Nodes");
+            furtherAheadNodes = gameObject.AttachObject("FurtheAhead Nodes");
         }
+
+        void AddNode(Vector3 position)
+        {
             
+        }
     }
 }
 

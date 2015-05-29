@@ -4,14 +4,20 @@ namespace syscrawl.Extensions
 {
     public static class GameObjectExtensions
     {
-        public static GameObject CreateSubcomponent<T>(
+        public static GameObject AttachObject(
+            this GameObject parentObject, string name)
+        {
+            var go = new GameObject(name);
+            go.transform.parent = parentObject.transform;
+            return go;
+        }
+
+        public static GameObject AttachSubcomponent<T>(
             this GameObject parentObject, string name = null) 
             where T: MonoBehaviour
         {
-            GameObject go = new GameObject();
-            go.name = name;
+            var go = parentObject.AttachObject(name);
             go.AddComponent<T>();
-            go.transform.parent = parentObject.transform;
             return go;
         }
     }

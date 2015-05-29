@@ -8,23 +8,28 @@ namespace syscrawl.Models
         void MoveTo(Node node);
 
         string Name { get; set; }
+
+        Node CurrentNode { get; }
+
+        Node PreviousNode { get; }
     }
 
     public class Player : IPlayer
     {
-        Node currentNode;
-        Node previousNode;
+        public Node CurrentNode { get; private set; }
+
+        public Node PreviousNode { get; private set; }
 
         [Inject]
-        public PlayerMovedSignal playerMovedSignal { get; set; }
+        public PlayerMovedSignal PlayerMovedSignal { get; set; }
 
         public string Name { get; set; }
 
         public void MoveTo(Node node)
         {
-            previousNode = currentNode;
-            currentNode = node;
-            playerMovedSignal.Dispatch();
+            PreviousNode = CurrentNode;
+            CurrentNode = node;
+            PlayerMovedSignal.Dispatch();
         }
     }
 }
