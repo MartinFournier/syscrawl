@@ -9,52 +9,7 @@ namespace syscrawl.Views.Nodes
     {
         //        public NodeType Type { get; private set; }
 
-        /// <summary>
-        /// Uses the wrapper's scale as a helper
-        /// </summary>
-        /// <value>The scale.</value>
-        public Vector3 Scale
-        {
-            get
-            {
-                return transform.localScale;
-            }
-            set
-            {
-                transform.localScale = value;
-            }
-        }
-
-        /// <summary>
-        /// Uses the wrapper's global position as a helper
-        /// </summary>
-        /// <value>The position.</value>
-        public Vector3 Position
-        {
-            get
-            {
-                return transform.position;
-            }
-            set
-            {
-                transform.position = value;
-            }
-        }
-
-        //        public void SetVisible(bool isVisible)
-        //        {
-        //            //TODO: this is a temp hack.
-        //            var renderers =
-        //                gameObject.
-        //                GetComponentsInChildren<MeshRenderer>().
-        //                Where(x => !x.name.Equals("SphereFog(Clone)"));
-        //
-        //            foreach (var r in renderers)
-        //            {
-        //                r.enabled = isVisible;
-        //            }
-        //        }
-
+       
         internal GameObject wrapper;
         internal GameObject fog;
         internal GameObject nodeName;
@@ -77,7 +32,7 @@ namespace syscrawl.Views.Nodes
 
         public void SetName(string name)
         {
-//            nodeNameMesh.text = name;
+            nodeNameMesh.text = name;
         }
 
 

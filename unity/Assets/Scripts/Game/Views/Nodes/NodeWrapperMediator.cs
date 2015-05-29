@@ -7,9 +7,6 @@ namespace syscrawl.Views.Nodes
 {
     public class NodeWrapperMediator : Mediator
     {
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject ContextView{ get; set; }
-
         [Inject]
         public NodeWrapperView View { get; set; }
 
@@ -18,9 +15,9 @@ namespace syscrawl.Views.Nodes
 
         public override void OnRegister()
         {
-            Debug.Log("Register in the meditor");
-            Signal.AddListener(Test);
             View.Init();
+
+            Signal.AddListener(Test);
         }
 
         void Test()
