@@ -77,7 +77,7 @@ namespace syscrawl.Views.Nodes
 
         public void SetName(string name)
         {
-            nodeNameMesh.text = name;
+//            nodeNameMesh.text = name;
         }
 
 

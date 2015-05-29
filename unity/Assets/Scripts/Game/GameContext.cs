@@ -62,6 +62,7 @@ namespace syscrawl
             mediationBinder.Bind<LevelView>().To<LevelMediator>();
 
             injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
+            injectionBinder.Bind<LevelGeneratedSignal>().ToSingleton();
         }
 
     }

@@ -13,13 +13,9 @@ namespace syscrawl.Commands
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject ContextView{ get; set; }
 
-        [Inject]
-        public GenerateLevelSignal GenerateLevelSignal { get; set; }
-
         public override void Execute()
         {
             ContextView.AttachSubcomponent<LevelView>("Level");
-            GenerateLevelSignal.Dispatch();
         }
     }
 }

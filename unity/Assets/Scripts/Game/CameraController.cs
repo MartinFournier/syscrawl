@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using syscrawl.Utils.Lerp;
-using syscrawl.Levels;
 
 namespace syscrawl.Camera
 {

@@ -24,14 +24,22 @@ namespace syscrawl.Views.Levels
         public IPlayer Player { get; set; }
 
         [Inject]
-        public GenerateLevelSignal LevelGeneratedSignal { get; set; }
+        public GenerateLevelSignal GenerateLevelSignal { get; set; }
+
+        [Inject]
+        public LevelGeneratedSignal LevelGeneratedSignal { get; set; }
 
         public override void OnRegister()
         {
-            Debug.Log("OnRegister in Level");
+            Debug.Log("OnRegister in LevelMediator");
+
             View.Init();
 
+
             LevelGeneratedSignal.AddListener(Thing);
+
+
+            GenerateLevelSignal.Dispatch();
         }
 
         void Thing()
