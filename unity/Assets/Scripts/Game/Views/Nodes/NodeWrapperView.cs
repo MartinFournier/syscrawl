@@ -1,9 +1,8 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using syscrawl.Utils;
+using syscrawl.Common.Utils;
 
-namespace syscrawl.Views.Nodes
+namespace syscrawl.Game.Views.Nodes
 {
     public class NodeWrapperView : View
     {

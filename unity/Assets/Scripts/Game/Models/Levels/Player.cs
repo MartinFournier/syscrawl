@@ -1,7 +1,6 @@
-﻿using syscrawl.Models.Levels;
-using syscrawl.Signals;
+﻿using syscrawl.Game.Models.Levels;
 
-namespace syscrawl.Models
+namespace syscrawl.Game.Models
 {
     public interface IPlayer
     {

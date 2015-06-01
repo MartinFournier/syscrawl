@@ -1,7 +1,6 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 
-namespace syscrawl.Views.Nodes
+namespace syscrawl.Game.Views.Nodes
 {
     public class FirewallNodeMediator : Mediator
     {

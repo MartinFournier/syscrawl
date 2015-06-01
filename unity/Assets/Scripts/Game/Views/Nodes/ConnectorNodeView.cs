@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Linq;
 
-namespace syscrawl.Views.Nodes
+namespace syscrawl.Game.Views.Nodes
 {
     public class ConnectorNodeView : View
     {

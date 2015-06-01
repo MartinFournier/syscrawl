@@ -2,7 +2,7 @@
 using strange.extensions.mediation.impl;
 using UnityEngine;
 
-namespace syscrawl.Views.Nodes
+namespace syscrawl.Game.Views.Nodes
 {
     public class FirewallNodeView : View
     {

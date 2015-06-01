@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace syscrawl.Utils
+namespace syscrawl.Common.Utils
 {
     public static class RandomUtils
     {

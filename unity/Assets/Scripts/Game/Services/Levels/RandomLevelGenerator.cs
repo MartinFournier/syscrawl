@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Linq;
 using NGenerics.DataStructures.General;
-using syscrawl.Services;
-using syscrawl.Models;
-using syscrawl.Models.Levels;
+using syscrawl.Game.Models;
+using syscrawl.Game.Models.Levels;
 
-namespace syscrawl.Services.Levels
+namespace syscrawl.Game.Services.Levels
 {
     public class RandomLevelGenerator : ILevelGenerator
     {

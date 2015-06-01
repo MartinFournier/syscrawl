@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using strange.extensions.mediation.impl;
-using syscrawl.Signals;
-using strange.extensions.context.api;
+using syscrawl.Game;
 
-namespace syscrawl.Views.Nodes
+namespace syscrawl.Game.Views.Nodes
 {
     public class NodeWrapperMediator : Mediator
     {

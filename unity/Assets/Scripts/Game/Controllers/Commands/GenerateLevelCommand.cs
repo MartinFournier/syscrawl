@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
 using strange.extensions.command.impl;
-using syscrawl.Models.Levels;
-using syscrawl.Signals;
+using syscrawl.Game.Models.Levels;
 using strange.extensions.context.api;
-using syscrawl.Views.Nodes;
-using syscrawl.Views.Levels;
-using syscrawl.Extensions;
-using syscrawl.Models;
+using syscrawl.Game.Models;
 
-namespace syscrawl.Commands
+namespace syscrawl.Game.Controllers.Commands
 {
     public class GenerateLevelCommand : Command
     {

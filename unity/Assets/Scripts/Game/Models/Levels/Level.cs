@@ -1,7 +1,7 @@
-﻿using syscrawl.Models.Levels;
-using syscrawl.Services.Levels;
+﻿using syscrawl.Game.Models.Levels;
+using syscrawl.Game.Services.Levels;
 
-namespace syscrawl.Models.Levels
+namespace syscrawl.Game.Models.Levels
 {
     public interface ILevel
     {

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System;
 
-namespace syscrawl.Utils.Lerp
+namespace syscrawl.Common.Utils.Lerp
 {
     public class FloatLerp : Lerp<float>
     {

@@ -1,4 +1,4 @@
-﻿namespace syscrawl.Utils.Lerp
+﻿namespace syscrawl.Common.Utils.Lerp
 {
     public interface ILerpData<T>
     {

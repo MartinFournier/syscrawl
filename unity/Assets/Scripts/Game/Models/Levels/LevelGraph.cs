@@ -1,10 +1,10 @@
 ﻿using NGenerics.DataStructures.General;
-using syscrawl.Models.Levels;
+using syscrawl.Game.Models.Levels;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace syscrawl.Models.Levels
+namespace syscrawl.Game.Models.Levels
 {
     public class LevelGraph : Graph<Node>
     {

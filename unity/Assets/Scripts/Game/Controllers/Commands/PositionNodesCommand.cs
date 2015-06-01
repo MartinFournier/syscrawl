@@ -1,12 +1,12 @@
 ﻿using strange.extensions.command.impl;
-using syscrawl.Views.Levels;
+using syscrawl.Game.Views.Levels;
 using UnityEngine;
-using syscrawl.Models.Levels;
-using syscrawl.Models;
-using syscrawl.Views.Nodes;
-using syscrawl.Extensions;
+using syscrawl.Game.Models.Levels;
+using syscrawl.Game.Models;
+using syscrawl.Game.Views.Nodes;
+using syscrawl.Common.Extensions;
 
-namespace syscrawl.Commands
+namespace syscrawl.Game.Controllers.Commands
 {
     public class PositionNodesCommand : Command
     {
@@ -22,8 +22,7 @@ namespace syscrawl.Commands
 
         public override void Execute()
         {
-            Debug.Log("Hi from the positioning command");
-            Debug.Log("Callback from levels");
+            Debug.Log("Command: Positioning");
             var nodePositions = 
                 new NodePositions(
                     Level.GetGraph(),
@@ -36,6 +35,13 @@ namespace syscrawl.Commands
                 var node = nodePositions[key];
                 var container = LevelMediator.GetNodeContainerForType(node.type);
 
+//
+//                var bla = new GameObject();
+//                var view = bla.AddComponent<NodeWrapperView>();
+//                var mediatorTest = bla.GetComponent<NodeWrapperMediator>();
+//
+//                Debug.Log(mediatorTest.View.ToString());
+//
                 var nodeView = 
                     container.AttachSubcomponent<NodeWrapperView>(key.Name);
                 

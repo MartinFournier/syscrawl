@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using syscrawl.Game.Services;
 
 namespace syscrawl.Tests
 {
@@ -8,8 +9,8 @@ namespace syscrawl.Tests
         [Test]
         public void TestSeed()
         {
-            var rng1 = new Services.RandomGenerator("SeedThing");
-            var rng2 = new Services.RandomGenerator("SeedThing");
+            var rng1 = new RandomGenerator("SeedThing");
+            var rng2 = new RandomGenerator("SeedThing");
             var value1 = rng1.Next();
             var value2 = rng2.Next();
             Assert.IsTrue(value1 == value2);

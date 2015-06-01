@@ -6,15 +6,14 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.dispatcher.eventdispatcher.impl;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
-using syscrawl.Signals;
-using syscrawl.Services.Levels;
-using syscrawl.Models.Levels;
-using syscrawl.Commands;
-using syscrawl.Models;
-using syscrawl.Views.Nodes;
-using syscrawl.Views.Levels;
+using syscrawl.Game.Services.Levels;
+using syscrawl.Game.Models.Levels;
+using syscrawl.Game.Controllers.Commands;
+using syscrawl.Game.Models;
+using syscrawl.Game.Views.Nodes;
+using syscrawl.Game.Views.Levels;
 
-namespace syscrawl
+namespace syscrawl.Game
 {
     public class GameContext : MVCSContext
     {
@@ -57,6 +56,7 @@ namespace syscrawl
             commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
             commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
+            //NOTE: Check .InSequence to cleanup
 
             mediationBinder.Bind<NodeWrapperView>().To<NodeWrapperMediator>();
             mediationBinder.Bind<LevelView>().To<LevelMediator>();

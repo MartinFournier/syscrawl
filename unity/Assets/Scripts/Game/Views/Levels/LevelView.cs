@@ -1,8 +1,8 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using syscrawl.Extensions;
+using syscrawl.Common.Extensions;
 
-namespace syscrawl.Views.Levels
+namespace syscrawl.Game.Views.Levels
 {
     public class LevelView : View
     {

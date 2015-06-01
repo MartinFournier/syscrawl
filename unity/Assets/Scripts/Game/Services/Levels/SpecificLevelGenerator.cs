@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using syscrawl.Models.Levels;
-using syscrawl.Services;
+﻿using syscrawl.Game.Models.Levels;
 
-namespace syscrawl.Services.Levels
+namespace syscrawl.Game.Services.Levels
 {
     public class SpecificLevelGenerator : ILevelGenerator
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using syscrawl.Extensions;
+using syscrawl.Common.Extensions;
 
-namespace syscrawl.Models.Levels
+namespace syscrawl.Game.Models.Levels
 {
     public class NodePositionGroup
     {

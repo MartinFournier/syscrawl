@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace syscrawl.Models
+namespace syscrawl.Game.Models
 {
     public class LevelGeneratorConfiguration
     {

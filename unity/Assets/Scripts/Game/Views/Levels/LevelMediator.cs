@@ -1,16 +1,9 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using syscrawl.Models.Levels;
-using syscrawl.Models;
-using syscrawl.Views.Nodes;
-using syscrawl.Extensions;
-using System.Linq;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using syscrawl.Signals;
+using syscrawl.Game.Models.Levels;
+using syscrawl.Game;
 
-namespace syscrawl.Views.Levels
+namespace syscrawl.Game.Views.Levels
 {
     public class LevelMediator : Mediator
     {

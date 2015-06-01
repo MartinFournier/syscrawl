@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace syscrawl.Extensions
+namespace syscrawl.Common.Extensions
 {
     public static class CollectionExtensions
     {

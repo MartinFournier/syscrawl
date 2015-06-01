@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace syscrawl.Extensions
+namespace syscrawl.Common.Extensions
 {
     public static class VectorExtensions
     {

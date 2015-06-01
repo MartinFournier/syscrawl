@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using syscrawl.Utils.Lerp;
+using syscrawl.Common.Utils.Lerp;
 
-namespace syscrawl.Camera
+namespace syscrawl.Game.Camera
 {
     public class CameraController : MonoBehaviour
     {

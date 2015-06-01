@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace syscrawl.Models.Levels
+namespace syscrawl.Game.Models.Levels
 {
     public abstract class Node
     {

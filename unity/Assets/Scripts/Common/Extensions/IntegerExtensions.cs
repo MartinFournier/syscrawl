@@ -1,4 +1,4 @@
-﻿namespace syscrawl.Extensions
+﻿namespace syscrawl.Common.Extensions
 {
     public static class IntegerExtensions
     {

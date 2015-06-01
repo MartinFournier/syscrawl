@@ -1,12 +1,10 @@
-﻿using System;
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
-using syscrawl.Views.Levels;
-using syscrawl.Extensions;
-using syscrawl.Signals;
+using syscrawl.Game.Views.Levels;
+using syscrawl.Common.Extensions;
 
-namespace syscrawl.Commands
+namespace syscrawl.Game.Controllers.Commands
 {
     public class GameStartCommand : Command
     {

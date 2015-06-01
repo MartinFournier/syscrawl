@@ -2,7 +2,7 @@
 using strange.extensions.context.impl;
 using UnityEngine;
 
-namespace syscrawl
+namespace syscrawl.Game
 {
     public class GameRoot : ContextView
     {

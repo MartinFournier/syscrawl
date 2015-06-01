@@ -1,4 +1,4 @@
-﻿namespace syscrawl.Models.Levels
+﻿namespace syscrawl.Game.Models.Levels
 {
     public class FirewallNode : Node
     {

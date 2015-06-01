@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace syscrawl.Utils
+namespace syscrawl.Common.Utils
 {
     public static class Prefabs
     {

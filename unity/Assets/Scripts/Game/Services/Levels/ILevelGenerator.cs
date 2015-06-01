@@ -1,6 +1,6 @@
-﻿using syscrawl.Models.Levels;
+﻿using syscrawl.Game.Models.Levels;
 
-namespace syscrawl.Services.Levels
+namespace syscrawl.Game.Services.Levels
 {
     public interface ILevelGenerator
     {

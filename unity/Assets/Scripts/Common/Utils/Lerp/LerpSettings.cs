@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace syscrawl.Utils.Lerp
+namespace syscrawl.Common.Utils.Lerp
 {
     [Serializable]
     public class LerpSettings
