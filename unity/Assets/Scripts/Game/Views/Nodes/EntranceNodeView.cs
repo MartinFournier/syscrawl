@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace syscrawl.Game.Views.Nodes
 {
-    public class EntranceNodeView : View
+    public class EntranceNodeView : BaseNodeView
     {
-        internal void Init()
+        internal override void Init()
         {
             var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.SetParent(gameObject.transform);

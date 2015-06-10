@@ -49,20 +49,6 @@ namespace syscrawl.Game.Models.Levels
             return Graph.Entrance;
         }
 
-        //            Positioning =
-        //                new Positioning(
-        //                Graph,
-        //                configurations.NodeAngle,
-        //                configurations.NodeDistance);
-        //
-        //            Positioning.Position();
-   
-   
-        //        void Start()
-        //        {
-        //            Positioning.ToggleVisibility();
-        //        }
-
         public override string ToString()
         {
             return string.Format("Level: " + LevelName);

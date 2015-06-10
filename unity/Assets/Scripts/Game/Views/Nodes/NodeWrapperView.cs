@@ -11,8 +11,9 @@ namespace syscrawl.Game.Views.Nodes
         public Node Node { get; private set; }
 
         GameObject wrapper;
-        NodeSphereFog fog;
+        NodeFogView fog;
         NodeNameView nodeName;
+        BaseNodeView view;
 
         internal void Init(Node node)
         {
@@ -21,12 +22,14 @@ namespace syscrawl.Game.Views.Nodes
             wrapper = Prefabs.Instantiate("NodeWrapper", gameObject);
 
             fog = 
-                wrapper.CreateSubcomponent<NodeSphereFog>("Fog", Vector3.zero);
+                wrapper.CreateSubcomponent<NodeFogView>("Fog", Vector3.zero);
             fog.Init();
 
             nodeName = 
                 wrapper.CreateSubcomponent<NodeNameView>("Name", Vector3.zero);
             nodeName.Init(Node.Name);
+
+            view = BaseNodeView.Create(node.type, wrapper, "View");
         }
 
 

@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace syscrawl.Game.Views.Nodes
 {
-    public class ConnectorNodeView : View
+    public class ConnectorNodeView : BaseNodeView
     {
-        internal void Init()
+        internal override void Init()
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.SetParent(gameObject.transform);
-
+            cube.transform.localPosition = Vector3.zero;
             var scale = new Vector3(3, 3, 3);
             cube.transform.localScale = scale;
 
@@ -20,6 +20,7 @@ namespace syscrawl.Game.Views.Nodes
 
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.parent = gameObject.transform;
+            sphere.transform.localPosition = Vector3.zero;
             sphere.transform.localScale = new Vector3(collider.radius * 2, collider.radius * 2, collider.radius * 2);
 
             sphere.GetComponent<Collider>().enabled = false;

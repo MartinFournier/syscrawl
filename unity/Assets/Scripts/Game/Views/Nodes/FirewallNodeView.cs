@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace syscrawl.Game.Views.Nodes
 {
-    public class FirewallNodeView : View
+    public class FirewallNodeView : BaseNodeView
     {
         GameObject Cube { get; set; }
 
@@ -16,10 +16,11 @@ namespace syscrawl.Game.Views.Nodes
             Cube.transform.Rotate(0, 30 * Time.deltaTime, 0);
         }
 
-        internal void Init()
+        internal override void Init()
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.parent = gameObject.transform;
+            cube.transform.localPosition = Vector3.zero;
 
             var material = Resources.Load<Material>("Materials/Nodes/Firewall");
             var renderer = cube.GetComponent<Renderer>();

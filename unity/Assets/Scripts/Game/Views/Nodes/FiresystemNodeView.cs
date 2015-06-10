@@ -4,9 +4,9 @@ using strange.extensions.mediation.impl;
 
 namespace syscrawl.Game.Views.Nodes
 {
-    public class FilesystemNodeView : View
+    public class FilesystemNodeView : BaseNodeView
     {
-        internal void Init()
+        internal override void Init()
         {
             var cube1 = CreateCube();
             var cube2 = CreateCube();
@@ -34,6 +34,7 @@ namespace syscrawl.Game.Views.Nodes
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.SetParent(this.transform);
+            cube.transform.localPosition = Vector3.zero;
             var material = Resources.Load<Material>("Materials/Nodes/Filesystem");
             var cubeRenderer = cube.GetComponent<Renderer>();
             cubeRenderer.material = material;

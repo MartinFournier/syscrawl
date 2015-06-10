@@ -5,7 +5,7 @@ using syscrawl.Common.Utils;
 
 namespace syscrawl.Game.Views.Nodes
 {
-    public class NodeSphereFog : View
+    public class NodeFogView : View
     {
         GameObject fog;
 
