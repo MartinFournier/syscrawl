@@ -6,7 +6,7 @@ using syscrawl.Game.Models;
 using syscrawl.Game.Views.Nodes;
 using syscrawl.Common.Extensions;
 
-namespace syscrawl.Game.Controllers.Commands
+namespace syscrawl.Game.Controllers.Levels
 {
     public class PositionNodesCommand : Command
     {

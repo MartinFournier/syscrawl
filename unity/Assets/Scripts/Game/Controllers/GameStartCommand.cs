@@ -4,7 +4,7 @@ using UnityEngine;
 using syscrawl.Game.Views.Levels;
 using syscrawl.Common.Extensions;
 
-namespace syscrawl.Game.Controllers.Commands
+namespace syscrawl.Game.Controllers
 {
     public class GameStartCommand : Command
     {

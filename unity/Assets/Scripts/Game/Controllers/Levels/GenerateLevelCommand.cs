@@ -4,7 +4,7 @@ using syscrawl.Game.Models.Levels;
 using strange.extensions.context.api;
 using syscrawl.Game.Models;
 
-namespace syscrawl.Game.Controllers.Commands
+namespace syscrawl.Game.Controllers.Levels
 {
     public class GenerateLevelCommand : Command
     {
