@@ -21,8 +21,6 @@ namespace syscrawl.Game.Views.Levels
 
         public override void OnRegister()
         {
-            Debug.Log("OnRegister in LevelMediator");
-
             View.Init();
 
             LevelGeneratedSignal.AddListener(PositionNodes);

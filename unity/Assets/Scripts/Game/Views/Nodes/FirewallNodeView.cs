@@ -29,8 +29,8 @@ namespace syscrawl.Game.Views.Nodes
             var scale = new Vector3(1, 4, 4);
 
             cube.GetComponent<Collider>().enabled = false;
-            var collider = gameObject.AddComponent<SphereCollider>();
-            collider.radius = 3;
+//            var collider = gameObject.AddComponent<SphereCollider>();
+//            collider.radius = 3;
 
             cube.transform.localScale = scale;
 

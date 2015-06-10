@@ -29,29 +29,33 @@ namespace syscrawl.Game.Views.Nodes
                 wrapper.CreateSubcomponent<NodeNameView>("Name", Vector3.zero);
             nodeName.Init(Node.Name);
 
+            //We need a collider on this gameObject if we want to handle Mouse Events
+            var collider = gameObject.AddComponent<SphereCollider>();
+            collider.radius = 3f; // TODO: Find a correct bounding box.
+
             view = BaseNodeView.Create(node.type, wrapper, "View");
         }
 
 
         void OnMouseEnter()
         {
-            //            Debug.Log("Node: Enter (" + Type + ":" + Wrapper.name + ")");
+            Debug.Log("Node: Enter (" + Node.type + ":" + wrapper.name + ")");
         }
 
 
         void OnMouseExit()
         {
-            //            Debug.Log("Node: Node (" + Type + ":" + Wrapper.name + ")");
+            Debug.Log("Node: Node (" + Node.type + ":" + wrapper.name + ")");
         }
 
         void OnMouseDown()
         {
-            //            Debug.Log("Node: MouseDown (" + Type + ":" + Wrapper.name + ")");
+            Debug.Log("Node: MouseDown (" + Node.type + ":" + wrapper.name + ")");
         }
 
         void OnMouseUp()
         {
-            Debug.Log("Node: MouseUp (" + "TYPE SHOULD BE HERE" + ":" + wrapper.name + ")");
+            Debug.Log("Node: MouseUp (" + Node.type + ":" + wrapper.name + ")");
             //            Level.Positioning.MoveTo(this);
         }
 

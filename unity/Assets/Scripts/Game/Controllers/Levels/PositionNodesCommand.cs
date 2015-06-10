@@ -26,13 +26,12 @@ namespace syscrawl.Game.Controllers.Levels
 
         public override void Execute()
         {
-            Debug.Log("Command: Positioning");
             var nodePositions = 
                 new NodePositions(
                     Level.GetGraph(),
                     Player.CurrentNode,
                     Player.PreviousNode,
-                    90f, 5f
+                    90f, 20f
                 );
             foreach (var key in nodePositions.Keys)
             {

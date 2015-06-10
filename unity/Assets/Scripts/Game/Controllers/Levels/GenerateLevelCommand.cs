@@ -28,7 +28,6 @@ namespace syscrawl.Game.Controllers.Levels
             var entrance = Level.GetEntrance();
             Player.MoveTo(entrance);
 
-            Debug.Log("Command: Level has been generated");
             LevelGeneratedSignal.Dispatch();
         }
     }

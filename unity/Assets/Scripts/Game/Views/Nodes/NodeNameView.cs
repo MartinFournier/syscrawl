@@ -16,6 +16,8 @@ namespace syscrawl.Game.Views.Nodes
             nodeName = Prefabs.Instantiate("NodeName", gameObject);
             nodeNameMesh = nodeName.GetComponent<TextMesh>();
             nodeNameMesh.text = name;
+
+            nodeName.transform.localPosition = new Vector3(0, -4, 1);
         }
     }
 }

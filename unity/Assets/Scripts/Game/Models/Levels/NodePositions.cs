@@ -64,12 +64,12 @@ namespace syscrawl.Game.Models.Levels
                 var extraNodes = node.GetConnections(currentNode);
                 var ng = new NodePositionGroup(extraNodes);
                 var pivot = this[node].position;
-                var newPoint = pivot + new Vector3(10, 0, 0);
-
-                Debug.Log("Positioning Node " + node);
-                Debug.Log("From " + pivot + " towards " + newPoint);
-                Debug.Log("NbNodes: " + ng.Count);
-
+                //TODO: The pivot + settings.CenterNodePos needs to be changed
+                var newPoint = 
+                    pivot + new Vector3(
+                        settings.CenterNodePosition.x, 0, 0
+                    );
+                
                 PositionNodesGroup(ng, pivot, 90f, newPoint, GameNodeType.FurtherAhead);
             }
         }
