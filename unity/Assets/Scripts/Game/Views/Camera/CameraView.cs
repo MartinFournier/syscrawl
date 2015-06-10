@@ -3,7 +3,7 @@ using syscrawl.Common.Utils.Lerp;
 
 namespace syscrawl.Game.Camera
 {
-    public class CameraController : MonoBehaviour
+    public class CameraView : MonoBehaviour
     {
         UnityEngine.Camera mainCamera;
 
