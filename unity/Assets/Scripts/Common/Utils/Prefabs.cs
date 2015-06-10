@@ -12,13 +12,23 @@ namespace syscrawl.Common.Utils
             return String.Format(format, name);
         }
 
-        public static GameObject Instantiate(string name)
+        /// <summary>
+        /// Instantiates a prefab using its resource name only.
+        /// Sets the localPosition to a default Vector3.zero value.
+        /// </summary>
+        /// <param name="name">The name of the Prefab (excluding folders).</param>
+        /// <param name="container">The parent object.</param>
+        public static GameObject Instantiate(string name, GameObject container)
         {
-            
             var resourceKey = GetPrefabKey(name);
             var resource = Resources.Load(resourceKey);
             var prefab = UnityEngine.Object.Instantiate(resource);
-            return prefab as GameObject;
+
+            var gameObject = prefab as GameObject;
+            gameObject.transform.parent = container.transform;
+            gameObject.transform.localPosition = Vector3.zero;
+
+            return gameObject;
         }
      
     }

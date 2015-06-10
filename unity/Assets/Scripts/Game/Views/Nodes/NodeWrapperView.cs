@@ -2,6 +2,7 @@
 using UnityEngine;
 using syscrawl.Common.Utils;
 using syscrawl.Game.Models.Levels;
+using syscrawl.Common.Extensions;
 
 namespace syscrawl.Game.Views.Nodes
 {
@@ -9,31 +10,23 @@ namespace syscrawl.Game.Views.Nodes
     {
         public Node Node { get; private set; }
 
-        internal GameObject wrapper;
-        internal GameObject fog;
-        internal GameObject nodeName;
-        internal TextMesh nodeNameMesh;
+        GameObject wrapper;
+        NodeSphereFog fog;
+        NodeNameView nodeName;
 
         internal void Init(Node node)
         {
             Node = node;
 
-            wrapper = Prefabs.Instantiate("NodeWrapper");
-            wrapper.transform.parent = gameObject.transform;
-            wrapper.transform.localPosition = Vector3.zero;
+            wrapper = Prefabs.Instantiate("NodeWrapper", gameObject);
 
-            fog = Prefabs.Instantiate("SphereFog");
-            fog.transform.parent = wrapper.transform;
-            fog.transform.localPosition = Vector3.zero;
-            fog.transform.localScale = new Vector3(10, 10, 10);
-            fog.GetComponent<Collider>().enabled = false;
+            fog = 
+                wrapper.CreateSubcomponent<NodeSphereFog>("Fog", Vector3.zero);
+            fog.Init();
 
-            nodeName = Prefabs.Instantiate("NodeName");
-            nodeNameMesh = nodeName.GetComponent<TextMesh>();
-            nodeName.transform.parent = wrapper.transform;
-            nodeName.transform.localPosition = Vector3.zero;
-
-            nodeNameMesh.text = Node.Name;
+            nodeName = 
+                wrapper.CreateSubcomponent<NodeNameView>("Name", Vector3.zero);
+            nodeName.Init(Node.Name);
         }
 
 

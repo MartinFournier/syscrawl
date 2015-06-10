@@ -13,10 +13,14 @@ namespace syscrawl.Game.Views.Levels
 
         internal void Init()
         {
-            activeNodes = gameObject.AttachObject("Active Nodes");
-            previousNodes = gameObject.AttachObject("Previous Nodes");
-            currentNodes = gameObject.AttachObject("Current Nodes");
-            furtherAheadNodes = gameObject.AttachObject("FurtherAhead Nodes");
+            activeNodes = 
+                gameObject.CreateChildObject("Active Nodes", Vector3.zero);
+            previousNodes = 
+                gameObject.CreateChildObject("Previous Nodes", Vector3.zero);
+            currentNodes = 
+                gameObject.CreateChildObject("Current Nodes", Vector3.zero);
+            furtherAheadNodes = 
+                gameObject.CreateChildObject("FurtherAhead Nodes", Vector3.zero);
         }
     }
 }

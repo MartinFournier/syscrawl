@@ -20,11 +20,11 @@ namespace syscrawl.Game.Controllers.Levels
 
         public override void Execute()
         {
-            var nodeViewGameObject = 
-                Container.AttachSubcomponent<NodeWrapperView>(Node.Name);
-            nodeViewGameObject.transform.localPosition = Position;
-
-            var nodeWrapperView = nodeViewGameObject.GetComponent<NodeWrapperView>();
+            var nodeWrapperView = 
+                Container.CreateSubcomponent<NodeWrapperView>(
+                    Node.Name, Position
+                );
+            
             nodeWrapperView.Init(Node);
         }
 
