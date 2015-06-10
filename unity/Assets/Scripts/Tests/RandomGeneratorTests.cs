@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using syscrawl.Game.Services;
+using syscrawl.Common.Services;
 
 namespace syscrawl.Tests
 {

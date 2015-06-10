@@ -56,7 +56,6 @@ namespace syscrawl.Game
             commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
             commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
-            //NOTE: Check .InSequence to cleanup
 
             mediationBinder.Bind<NodeWrapperView>().To<NodeWrapperMediator>();
             mediationBinder.Bind<LevelView>().To<LevelMediator>();

@@ -1,6 +1,5 @@
 ﻿using System;
 using strange.extensions.context.impl;
-using UnityEngine;
 
 namespace syscrawl.Game
 {

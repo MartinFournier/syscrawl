@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace syscrawl.Game.Services
+namespace syscrawl.Common.Services
 {
     /// <summary>
     /// Since Unity's RNG cannot be instanciated, this uses the .NET one.

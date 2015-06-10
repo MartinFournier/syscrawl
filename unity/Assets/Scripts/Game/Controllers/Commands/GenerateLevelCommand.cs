@@ -16,7 +16,7 @@ namespace syscrawl.Game.Controllers.Commands
         public ILevel Level { get; set; }
 
         [Inject]
-        public IPlayer player { get; set; }
+        public IPlayer Player { get; set; }
 
         [Inject]
         public LevelGeneratedSignal LevelGeneratedSignal { get; set; }
@@ -26,7 +26,7 @@ namespace syscrawl.Game.Controllers.Commands
             Level.Generate("Level1");
 
             var entrance = Level.GetEntrance();
-            player.MoveTo(entrance);
+            Player.MoveTo(entrance);
 
             Debug.Log("Command: Level has been generated");
             LevelGeneratedSignal.Dispatch();
