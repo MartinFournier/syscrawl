@@ -16,7 +16,7 @@ namespace syscrawl.Game.Views.Levels
             activeNodes = gameObject.AttachObject("Active Nodes");
             previousNodes = gameObject.AttachObject("Previous Nodes");
             currentNodes = gameObject.AttachObject("Current Nodes");
-            furtherAheadNodes = gameObject.AttachObject("FurtheAhead Nodes");
+            furtherAheadNodes = gameObject.AttachObject("FurtherAhead Nodes");
         }
     }
 }

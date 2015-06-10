@@ -42,23 +42,23 @@ namespace syscrawl.Game.Camera
         //
         void Update()
         {
-            if (!cameraPositionLerp.IsComplete)
-            {
-                var value = cameraPositionLerp.Evaluate(Time.deltaTime);
-                mainCamera.transform.position = value;
-            }
-
-            if (!cameraZoomLerp.IsComplete)
-            {
-                var value = cameraZoomLerp.Evaluate(Time.deltaTime);
-                mainCamera.orthographicSize = value;
-            }
-
-            if (!cameraUnzoomLerp.IsComplete)
-            {
-                var value = cameraUnzoomLerp.Evaluate(Time.deltaTime);
-                mainCamera.orthographicSize = value;
-            }
+//            if (!cameraPositionLerp.IsComplete)
+//            {
+//                var value = cameraPositionLerp.Evaluate(Time.deltaTime);
+//                mainCamera.transform.position = value;
+//            }
+//
+//            if (!cameraZoomLerp.IsComplete)
+//            {
+//                var value = cameraZoomLerp.Evaluate(Time.deltaTime);
+//                mainCamera.orthographicSize = value;
+//            }
+//
+//            if (!cameraUnzoomLerp.IsComplete)
+//            {
+//                var value = cameraUnzoomLerp.Evaluate(Time.deltaTime);
+//                mainCamera.orthographicSize = value;
+//            }
         }
     }
 }

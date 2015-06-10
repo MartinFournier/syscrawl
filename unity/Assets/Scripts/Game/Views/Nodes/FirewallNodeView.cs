@@ -10,6 +10,9 @@ namespace syscrawl.Game.Views.Nodes
 
         void Update()
         {
+            if (Cube == null)
+                return;
+            
             Cube.transform.Rotate(0, 30 * Time.deltaTime, 0);
         }
 

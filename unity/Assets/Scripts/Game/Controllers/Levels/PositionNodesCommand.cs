@@ -20,6 +20,10 @@ namespace syscrawl.Game.Controllers.Levels
         [Inject]
         public IPlayer Player { get; set; }
 
+
+        [Inject]
+        public CreateNodeSignal CreateNodeSignal { get; set; }
+
         public override void Execute()
         {
             Debug.Log("Command: Positioning");
@@ -34,20 +38,7 @@ namespace syscrawl.Game.Controllers.Levels
             {
                 var node = nodePositions[key];
                 var container = LevelMediator.GetNodeContainerForType(node.type);
-
-//
-//                var bla = new GameObject();
-//                var view = bla.AddComponent<NodeWrapperView>();
-//                var mediatorTest = bla.GetComponent<NodeWrapperMediator>();
-//
-//                Debug.Log(mediatorTest.View.ToString());
-//
-                var nodeView = 
-                    container.AttachSubcomponent<NodeWrapperView>(key.Name);
-                
-                nodeView.transform.position = node.position;
-                var n = nodeView.GetComponent<NodeWrapperView>();
-                n.SetName(key.Name);
+                CreateNodeSignal.Dispatch(key, container, node.position);
             }
         }
     }

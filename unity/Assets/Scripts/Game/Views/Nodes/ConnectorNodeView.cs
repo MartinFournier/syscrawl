@@ -11,12 +11,6 @@ namespace syscrawl.Game.Views.Nodes
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.SetParent(gameObject.transform);
 
-            //            var scale =
-            //                RandomUtils.RandomVectorBetweenRange(
-            //                    level.Settings.NodeMinimumScale,
-            //                    level.Settings.NodeMaximumScale);
-            //
-
             var scale = new Vector3(3, 3, 3);
             cube.transform.localScale = scale;
 

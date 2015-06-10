@@ -57,14 +57,24 @@ namespace syscrawl.Game
             commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
             commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
+            commandBinder.Bind <CreateNodeSignal>().To<CreateNodeCommand>();
 
-            mediationBinder.Bind<NodeWrapperView>().To<NodeWrapperMediator>();
             mediationBinder.Bind<LevelView>().To<LevelMediator>();
 
             injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
             injectionBinder.Bind<LevelGeneratedSignal>().ToSingleton();
         }
 
+        protected override void postBindings()
+        {
+            //Establish our camera. We do this early since it gets injected in places that help us do layout.
+            UnityEngine.Camera cam = (contextView as GameObject).GetComponentInChildren<UnityEngine.Camera>();
+            if (cam == null)
+            {
+                throw new Exception("GameContext couldn't find the game camera");
+            }
+            injectionBinder.Bind<UnityEngine.Camera>().ToValue(cam);
+        }
     }
 }
 
