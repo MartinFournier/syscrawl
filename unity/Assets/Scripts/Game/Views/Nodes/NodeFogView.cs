@@ -28,17 +28,17 @@ namespace syscrawl.Game.Views.Nodes
             } 
         }
 
-        void OnMouseEnter()
-        {
-            HideSphere();
-        }
+        //        void OnMouseEnter()
+        //        {
+        //            HideSphere();
+        //        }
+        //
+        //        void OnMouseExit()
+        //        {
+        //            ShowSphere();
+        //        }
 
-        void OnMouseExit()
-        {
-            ShowSphere();
-        }
-
-        void ShowSphere()
+        public void ShowSphere()
         {
             shaderAlphaCutoutTo = 0;
             lerpTime = settings.AppearTime;
@@ -47,7 +47,7 @@ namespace syscrawl.Game.Views.Nodes
 
         }
 
-        void HideSphere()
+        public void HideSphere()
         {
             shaderAlphaCutoutTo = 1;
             lerpTime = settings.RevealTime;
@@ -106,7 +106,7 @@ namespace syscrawl.Game.Views.Nodes
 
             //TODO: Handle the visiblity.
             sphereRenderer = fog.GetComponent<Renderer>();
-            sphereRenderer.enabled = false;
+            sphereRenderer.enabled = true;
 
             isInitialized = true;
         }

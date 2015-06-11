@@ -26,7 +26,7 @@ namespace syscrawl.Game.Views.Levels
         {
             View.Init();
 
-            LevelGeneratedSignal.AddListener(PositionNodes);
+//            LevelGeneratedSignal.AddListener(PositionNodes);
             PlayerMovedSignal.AddListener(PositionNodes);
 
             GenerateLevelSignal.Dispatch();

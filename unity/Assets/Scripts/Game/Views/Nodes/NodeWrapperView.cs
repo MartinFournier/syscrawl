@@ -43,12 +43,14 @@ namespace syscrawl.Game.Views.Nodes
         void OnMouseEnter()
         {
             Debug.Log("Node: Enter (" + Node.type + ":" + wrapper.name + ")");
+            fog.HideSphere();
         }
 
 
         void OnMouseExit()
         {
             Debug.Log("Node: Node (" + Node.type + ":" + wrapper.name + ")");
+            fog.ShowSphere();
         }
 
         void OnMouseDown()
@@ -60,7 +62,6 @@ namespace syscrawl.Game.Views.Nodes
         {
             Debug.Log("Node: MouseUp (" + Node.type + ":" + wrapper.name + ")");
             PlayerMoveToSignal.Dispatch(Node);
-            //            Level.Positioning.MoveTo(this);
         }
 
         public override string ToString()
