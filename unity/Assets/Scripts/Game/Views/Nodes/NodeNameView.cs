@@ -17,7 +17,7 @@ namespace syscrawl.Game.Views.Nodes
             nodeNameMesh = nodeName.GetComponent<TextMesh>();
             nodeNameMesh.text = name;
 
-            nodeName.transform.localPosition = new Vector3(0, -4, 1);
+            nodeName.transform.localPosition = new Vector3(0, -5, 0);
         }
     }
 }
