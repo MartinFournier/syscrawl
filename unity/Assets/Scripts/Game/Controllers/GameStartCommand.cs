@@ -13,7 +13,7 @@ namespace syscrawl.Game.Controllers
 
         public override void Execute()
         {
-            ContextView.CreateSubcomponent<LevelView>("Level", Vector3.zero);
+            ContextView.CreateSubcomponent<LevelSceneView>("Level", Vector3.zero);
         }
     }
 }

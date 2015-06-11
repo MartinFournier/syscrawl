@@ -11,7 +11,7 @@ namespace syscrawl.Game.Controllers.Levels
     public class PositionNodesCommand : Command
     {
         [Inject]
-        public LevelMediator LevelMediator{ get; set; }
+        public LevelSceneMediator LevelMediator{ get; set; }
 
 
         [Inject]

@@ -61,7 +61,7 @@ namespace syscrawl.Game
             commandBinder.Bind<CreateNodeSignal>().To<CreateNodeCommand>();
             commandBinder.Bind<PlayerMoveToSignal>().To<PlayerMoveToCommand>();
 
-            mediationBinder.Bind<LevelView>().To<LevelMediator>();
+            mediationBinder.Bind<LevelSceneView>().To<LevelSceneMediator>();
 
             injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
             injectionBinder.Bind<LevelGeneratedSignal>().ToSingleton();

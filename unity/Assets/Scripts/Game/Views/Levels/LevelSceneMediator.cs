@@ -5,10 +5,10 @@ using syscrawl.Game;
 
 namespace syscrawl.Game.Views.Levels
 {
-    public class LevelMediator : Mediator
+    public class LevelSceneMediator : Mediator
     {
         [Inject]
-        public LevelView View { get; set; }
+        public LevelSceneView View { get; set; }
 
         [Inject]
         public GenerateLevelSignal GenerateLevelSignal { get; set; }

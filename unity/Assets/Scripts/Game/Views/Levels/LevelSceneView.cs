@@ -4,7 +4,7 @@ using syscrawl.Common.Extensions;
 
 namespace syscrawl.Game.Views.Levels
 {
-    public class LevelView : View
+    public class LevelSceneView : View
     {
         internal GameObject previousNodes;
         internal GameObject currentNodes;
