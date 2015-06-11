@@ -3,6 +3,7 @@ using strange.extensions.command.impl;
 using syscrawl.Game.Models.Levels;
 using strange.extensions.context.api;
 using syscrawl.Game.Models;
+using System.Linq;
 
 namespace syscrawl.Game.Controllers.Levels
 {
@@ -26,7 +27,15 @@ namespace syscrawl.Game.Controllers.Levels
             Level.Generate("Level1");
 
             var entrance = Level.GetEntrance();
-            Player.MoveTo(entrance);
+
+            //TODO: This is debug. 
+            var p = Player as Models.Player;
+            p.CurrentNode = entrance;
+            var first = entrance.GetConnections().First();
+            p.MoveTo(first);
+
+            //Player.MoveTo(entrance);
+      
 
             LevelGeneratedSignal.Dispatch();
         }

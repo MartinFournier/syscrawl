@@ -37,7 +37,7 @@ namespace syscrawl.Game.Controllers.Levels
             {
                 var node = nodePositions[key];
                 var container = LevelMediator.GetNodeContainerForType(node.type);
-                CreateNodeSignal.Dispatch(key, container, node.position);
+                CreateNodeSignal.Dispatch(key, container, node.position, node.type);
             }
         }
     }

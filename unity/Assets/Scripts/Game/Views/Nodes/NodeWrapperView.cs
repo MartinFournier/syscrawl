@@ -18,7 +18,7 @@ namespace syscrawl.Game.Views.Nodes
         NodeNameView nodeName;
         BaseNodeView view;
 
-        internal void Init(Node node)
+        internal void Init(Node node, SceneNodeType nodeType)
         {
             Node = node;
 
@@ -37,6 +37,18 @@ namespace syscrawl.Game.Views.Nodes
             collider.radius = 3f; // TODO: Find a correct bounding box.
 
             view = BaseNodeView.Create(node.type, wrapper, "View");
+
+            if (
+                nodeType == SceneNodeType.FurtherAhead ||
+                nodeType == SceneNodeType.Previous)
+            {
+
+                wrapper.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            }
+            else if (nodeType == SceneNodeType.Active)
+            {
+                wrapper.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            }
         }
 
 

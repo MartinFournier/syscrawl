@@ -15,7 +15,8 @@ namespace syscrawl.Game.Models
 
     public class Player : IPlayer
     {
-        public Node CurrentNode { get; private set; }
+        //TODO: Make set private again, used for debugging.
+        public Node CurrentNode { get; set; }
 
         public Node PreviousNode { get; private set; }
 

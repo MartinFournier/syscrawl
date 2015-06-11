@@ -6,7 +6,7 @@ using syscrawl.Common.Extensions;
 
 namespace syscrawl.Game.Models.Levels
 {
-    public class NodePositions : Dictionary<Node, GameNode>
+    public class NodePositions : Dictionary<Node, SceneNode>
     {
         readonly NodePositionSettings settings;
         readonly LevelGraph graph;
@@ -33,8 +33,8 @@ namespace syscrawl.Game.Models.Levels
         {
             Add(
                 currentNode, 
-                new GameNode(
-                    GameNodeType.Current, 
+                new SceneNode(
+                    SceneNodeType.Current, 
                     settings.Pivot)
             );
 
@@ -46,15 +46,15 @@ namespace syscrawl.Game.Models.Levels
                 settings.Pivot,
                 settings.angle,
                 settings.CenterNodePosition,
-                GameNodeType.Active
+                SceneNodeType.Active
             );
 
             if (previousNode != null)
             {
                 Add(
                     previousNode, 
-                    new GameNode(
-                        GameNodeType.Previous, 
+                    new SceneNode(
+                        SceneNodeType.Previous, 
                         settings.PreviousNodePosition)
                 );
             }
@@ -70,7 +70,7 @@ namespace syscrawl.Game.Models.Levels
                         settings.CenterNodePosition.x, 0, 0
                     );
                 
-                PositionNodesGroup(ng, pivot, 90f, newPoint, GameNodeType.FurtherAhead);
+                PositionNodesGroup(ng, pivot, 90f, newPoint, SceneNodeType.FurtherAhead);
             }
         }
 
@@ -105,14 +105,14 @@ namespace syscrawl.Game.Models.Levels
             Vector3 pivot,
             float maxAngle,
             Vector3 nodePosition,
-            GameNodeType type)
+            SceneNodeType type)
         {
 
             if (nodesGroup.HasCenterNode)
             {
                 Add(
                     nodesGroup.CenterNode, 
-                    new GameNode(type, nodePosition)
+                    new SceneNode(type, nodePosition)
                 );
             }
 
@@ -129,7 +129,7 @@ namespace syscrawl.Game.Models.Levels
             Vector3 pivot,
             float maxAngle,
             Vector3 nodePosition,
-            GameNodeType type
+            SceneNodeType type
         )
         {
             RotateNodes(
@@ -151,7 +151,7 @@ namespace syscrawl.Game.Models.Levels
             Vector3 pivot,
             float maxAngle,
             Vector3 nodePosition,
-            GameNodeType type
+            SceneNodeType type
         )
         {
             var angleDiff = maxAngle / nodes.Count();
@@ -171,7 +171,7 @@ namespace syscrawl.Game.Models.Levels
 
                 Add(
                     node,
-                    new GameNode(type, newPosition)
+                    new SceneNode(type, newPosition)
                 );
 
                 remainingAngle += angleDiff;

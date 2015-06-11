@@ -29,7 +29,7 @@ namespace syscrawl.Game
     {
     }
 
-    public class CreateNodeSignal : Signal<Node, GameObject, Vector3>
+    public class CreateNodeSignal : Signal<Node, GameObject, Vector3, SceneNodeType>
     {
     }
 

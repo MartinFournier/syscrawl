@@ -1,6 +1,6 @@
 ﻿namespace syscrawl.Game.Models.Levels
 {
-    public enum GameNodeType
+    public enum SceneNodeType
     {
         Current,
         Previous,

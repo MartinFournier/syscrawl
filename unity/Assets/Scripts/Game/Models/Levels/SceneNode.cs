@@ -2,13 +2,13 @@
 
 namespace syscrawl.Game.Models.Levels
 {
-    public class GameNode
+    public class SceneNode
     {
         public readonly Vector3 position;
-        public readonly GameNodeType type;
+        public readonly SceneNodeType type;
 
-        public GameNode(
-            GameNodeType type, 
+        public SceneNode(
+            SceneNodeType type, 
             Vector3 position)
         {
             this.type = type;

@@ -18,6 +18,9 @@ namespace syscrawl.Game.Controllers.Levels
         [Inject]
         public Vector3 Position { get; set; }
 
+        [Inject]
+        public SceneNodeType NodeType { get; set; }
+
         public override void Execute()
         {
             var nodeWrapperView = 
@@ -25,7 +28,7 @@ namespace syscrawl.Game.Controllers.Levels
                     Node.Name, Position
                 );
             
-            nodeWrapperView.Init(Node);
+            nodeWrapperView.Init(Node, NodeType);
         }
 
     }

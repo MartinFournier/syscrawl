@@ -38,21 +38,21 @@ namespace syscrawl.Game.Views.Levels
             PositionNodesSignal.Dispatch(this);
         }
 
-        public GameObject GetNodeContainerForType(GameNodeType type)
+        public GameObject GetNodeContainerForType(SceneNodeType type)
         {
             var container = View.activeNodes;
             switch (type)
             {
-                case GameNodeType.Active:
+                case SceneNodeType.Active:
                     container = View.activeNodes;
                     break;
-                case GameNodeType.Current:
+                case SceneNodeType.Current:
                     container = View.currentNodes;
                     break;
-                case GameNodeType.FurtherAhead:
+                case SceneNodeType.FurtherAhead:
                     container = View.furtherAheadNodes;
                     break;
-                case GameNodeType.Previous:
+                case SceneNodeType.Previous:
                     container = View.previousNodes;
                     break;
 

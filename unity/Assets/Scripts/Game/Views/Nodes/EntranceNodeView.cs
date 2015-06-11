@@ -9,6 +9,7 @@ namespace syscrawl.Game.Views.Nodes
         {
             var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.SetParent(gameObject.transform);
+            sphere.transform.localPosition = Vector3.zero;
 
             var material = Resources.Load<Material>("Materials/Nodes/SphereNode");
             var renderer = sphere.GetComponent<Renderer>();
