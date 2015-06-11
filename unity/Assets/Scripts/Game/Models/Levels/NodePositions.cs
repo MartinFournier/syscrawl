@@ -67,10 +67,12 @@ namespace syscrawl.Game.Models.Levels
                 //TODO: The pivot + settings.CenterNodePos needs to be changed
                 var newPoint = 
                     pivot + new Vector3(
-                        settings.CenterNodePosition.x, 0, 0
+                        settings.CenterNodePosition.x / 3, 0, 0
                     );
-                
-                PositionNodesGroup(ng, pivot, 90f, newPoint, SceneNodeType.FurtherAhead);
+                //TODO: Need to rotate second group to everything is a bit skewed
+
+                PositionNodesGroup(
+                    ng, pivot, 90f, newPoint, SceneNodeType.FurtherAhead);
             }
         }
 
