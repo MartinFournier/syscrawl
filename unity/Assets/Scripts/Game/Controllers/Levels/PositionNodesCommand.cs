@@ -5,6 +5,8 @@ using syscrawl.Game.Models.Levels;
 using syscrawl.Game.Models;
 using syscrawl.Game.Views.Nodes;
 using syscrawl.Common.Extensions;
+using System.Linq;
+using System;
 
 namespace syscrawl.Game.Controllers.Levels
 {
@@ -24,6 +26,9 @@ namespace syscrawl.Game.Controllers.Levels
         [Inject]
         public CreateNodeSignal CreateNodeSignal { get; set; }
 
+        [Inject]
+        public CreateNodeConnectionSignal CreateNodeConnectionSignal { get; set; }
+
         public override void Execute()
         {
             var nodePositions = 
@@ -38,6 +43,27 @@ namespace syscrawl.Game.Controllers.Levels
                 var node = nodePositions[key];
                 var container = LevelMediator.GetNodeContainerForType(node.type);
                 CreateNodeSignal.Dispatch(key, container, node.position, node.type);
+
+                if (
+                    node.type == SceneNodeType.Active ||
+                    node.type == SceneNodeType.Current)
+                {
+                    var connections = key.GetConnections();
+                    Debug.Log(connections.Count() + " connections for " + key.ToString());
+                    //TODO: Will cause duplicated lines
+                    foreach (var connection in connections)
+                    {
+                        var data = new CreateNodeConnection
+                        {
+                            From = node.position,
+                            To = nodePositions[connection].position,
+                            Container = container
+                        };
+                        Debug.Log(String.Format("Line from {0} to {1}", data.From, data.To));
+                        CreateNodeConnectionSignal.Dispatch(data);
+                    }
+                }
+                   
             }
         }
     }

@@ -87,6 +87,48 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &104827110
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1199771749}
+    m_Modifications:
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &160179867
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +574,7 @@ Transform:
   - {fileID: 160179868}
   - {fileID: 1092154727}
   - {fileID: 175413770}
+  - {fileID: 1845490602}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1 &1306333990
@@ -746,3 +789,7 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!4 &1845490602 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 460808, guid: a45450a9d3f264a2aa115213eabc3e1e, type: 2}
+  m_PrefabInternal: {fileID: 104827110}

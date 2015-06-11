@@ -27,7 +27,6 @@ namespace syscrawl.Game.Controllers.Levels
             Level.Generate("Level1");
 
             var entrance = Level.GetEntrance();
-
             //TODO: This is debug. 
             var p = Player as Models.Player;
             p.CurrentNode = entrance;

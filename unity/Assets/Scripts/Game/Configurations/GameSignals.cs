@@ -36,4 +36,8 @@ namespace syscrawl.Game
     public class CreateNodeTypeSignal : Signal<NodeType, GameObject>
     {
     }
+
+    public class CreateNodeConnectionSignal : Signal<CreateNodeConnection>
+    {
+    }
 }

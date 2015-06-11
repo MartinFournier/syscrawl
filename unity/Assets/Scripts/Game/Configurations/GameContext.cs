@@ -59,6 +59,7 @@ namespace syscrawl.Game
             commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
             commandBinder.Bind<CreateNodeSignal>().To<CreateNodeCommand>();
+            commandBinder.Bind<CreateNodeConnectionSignal>().To<CreateNodeConnectionCommand>();
             commandBinder.Bind<PlayerMoveToSignal>().To<PlayerMoveToCommand>();
 
             mediationBinder.Bind<LevelSceneView>().To<LevelSceneMediator>();
