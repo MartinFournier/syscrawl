@@ -18,7 +18,6 @@ namespace syscrawl.Game.Camera
         public float cameraZoomTo = 1;
         public float cameraHeight = 25;
 
-        // Use this for initialization
         void Start()
         {
             mainCamera = UnityEngine.Camera.main;
