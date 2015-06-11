@@ -8,6 +8,9 @@ namespace syscrawl.Game.Views.Nodes
 {
     public class NodeWrapperView : View
     {
+        [Inject]
+        public PlayerMoveToSignal PlayerMoveToSignal { get; set; }
+
         public Node Node { get; private set; }
 
         GameObject wrapper;
@@ -56,6 +59,7 @@ namespace syscrawl.Game.Views.Nodes
         void OnMouseUp()
         {
             Debug.Log("Node: MouseUp (" + Node.type + ":" + wrapper.name + ")");
+            PlayerMoveToSignal.Dispatch(Node);
             //            Level.Positioning.MoveTo(this);
         }
 

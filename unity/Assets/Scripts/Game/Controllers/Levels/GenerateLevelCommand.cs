@@ -9,8 +9,8 @@ namespace syscrawl.Game.Controllers.Levels
     public class GenerateLevelCommand : Command
     {
         
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject ContextView{ get; set; }
+        //        [Inject(ContextKeys.CONTEXT_VIEW)]
+        //        public GameObject ContextView{ get; set; }
 
         [Inject]
         public ILevel Level { get; set; }

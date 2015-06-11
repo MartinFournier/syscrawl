@@ -9,6 +9,7 @@ using strange.extensions.command.impl;
 using syscrawl.Game.Services.Levels;
 using syscrawl.Game.Models.Levels;
 using syscrawl.Game.Controllers.Levels;
+using syscrawl.Game.Controllers.Player;
 using syscrawl.Game.Models;
 using syscrawl.Game.Views.Nodes;
 using syscrawl.Game.Views.Levels;
@@ -57,7 +58,8 @@ namespace syscrawl.Game
             commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
             commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
-            commandBinder.Bind <CreateNodeSignal>().To<CreateNodeCommand>();
+            commandBinder.Bind<CreateNodeSignal>().To<CreateNodeCommand>();
+            commandBinder.Bind<PlayerMoveToSignal>().To<PlayerMoveToCommand>();
 
             mediationBinder.Bind<LevelView>().To<LevelMediator>();
 

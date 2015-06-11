@@ -17,6 +17,9 @@ namespace syscrawl.Game.Views.Levels
         public LevelGeneratedSignal LevelGeneratedSignal { get; set; }
 
         [Inject]
+        public PlayerMovedSignal PlayerMovedSignal { get; set; }
+
+        [Inject]
         public PositionNodesSignal PositionNodesSignal { get; set; }
 
         public override void OnRegister()
@@ -24,11 +27,14 @@ namespace syscrawl.Game.Views.Levels
             View.Init();
 
             LevelGeneratedSignal.AddListener(PositionNodes);
+            PlayerMovedSignal.AddListener(PositionNodes);
+
             GenerateLevelSignal.Dispatch();
         }
 
         void PositionNodes()
         {
+            Debug.Log("Positioning nodes");
             PositionNodesSignal.Dispatch(this);
         }
 

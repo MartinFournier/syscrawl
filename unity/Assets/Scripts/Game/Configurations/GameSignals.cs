@@ -21,6 +21,10 @@ namespace syscrawl.Game
     {
     }
 
+    public class PlayerMoveToSignal : Signal<Node>
+    {
+    }
+
     public class PositionNodesSignal : Signal<LevelMediator>
     {
     }
