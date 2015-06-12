@@ -14,6 +14,13 @@ namespace syscrawl.Game.Views.Nodes
         {
             connection = Prefabs.Instantiate("NodeConnection", gameObject);
             line = connection.GetComponent<LineRenderer>();
+
+            if (from.y == 0)
+                from.y += 0.1f;
+
+            if (to.y == 0)
+                to.y += 0.1f;
+
             line.SetPosition(0, from);
             line.SetPosition(1, to);
         }
