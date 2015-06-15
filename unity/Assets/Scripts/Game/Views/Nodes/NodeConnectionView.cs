@@ -1,70 +1,63 @@
 ﻿using System;
 using strange.extensions.mediation.impl;
 using UnityEngine;
-using syscrawl.Common.Utils;
 using System.Collections.Generic;
-using syscrawl.Common.Extensions;
 
 namespace syscrawl.Game.Views.Nodes
 {
     public class NodeConnectionView : View
     {
-        public Vector3 fromVec;
-        public Vector3 toVec;
+        private const bool showDebugInfo = false;
+        private const float width = 0.2f;
+        private const float height = 0.1f;
 
         public void Init(Vector3 from, Vector3 to)
         {
-//            if (to.x != 20f)
-//                return;
-
-            fromVec = from;
-            toVec = to;
             var meshFilter = gameObject.AddComponent<MeshFilter>();
             var meshRenderer = gameObject.AddComponent<MeshRenderer>();
 
-            var width = 0.2f;
-            var height = 0.1f;
-
-            var meshBuilder = new MeshBuilder();
-            var angle = Vector3.Angle(from, to);
-            var length = Vector3.Distance(to, from);
-            var forwardDirection = (to - from).normalized;
-            var forward = forwardDirection * length;
-
-            var upDirection = Quaternion.AngleAxis(-90, forwardDirection) * Vector3.up;
-            var rightDirection = Quaternion.AngleAxis(-90, upDirection) * Vector3.right;
-
-            Vector3 up = upDirection.normalized * width;
-            Vector3 right = rightDirection.normalized * height;
-
-            Vector3 nearCorner = from;
-            Vector3 farCorner = up + right + forward;
-
-            Debug.Log("From: " + from + " To: " + to);
-            Debug.Log(
-                String.Format(
-                    "Forward: {0}; Right: {1}; Up: {2}",
-                    forward, right, up));
-            Debug.Log("NearCorner: " + nearCorner + "; FarCorner: " + farCorner);
-            Debug.Log("Direction: " + forwardDirection);
-            Debug.Log("Angle: " + angle + "; Length: " + length);
-
-            meshBuilder.BuildQuad(nearCorner, right, forward);
-            meshBuilder.BuildQuad(nearCorner, forward, up);
-            meshBuilder.BuildQuad(farCorner, -forward, -right);
-            meshBuilder.BuildQuad(farCorner, -up, -forward);
-
-            var mesh = meshBuilder.CreateMesh();
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
-            mesh.Optimize();
-
+            var mesh = GetConnectionMesh(from, to);
+            mesh.name = "Connection Mesh";
 
             var material = Resources.Load<Material>("Materials/Nodes/Filesystem");
             meshRenderer.material = material;
             meshFilter.mesh = mesh;
         }
 
+        static Mesh GetConnectionMesh(Vector3 from, Vector3 to)
+        {
+            var meshBuilder = new MeshBuilder();
+
+            var length = Math.Abs(Vector3.Distance(to, from));
+            var forwardDirection = (to - from).normalized;
+            var forward = forwardDirection * length;
+            var upDirection = Quaternion.AngleAxis(-90, forwardDirection) * Vector3.up;
+            var rightDirection = Quaternion.AngleAxis(-90, upDirection) * Vector3.right;
+
+            Vector3 up = upDirection.normalized * width;
+            Vector3 right = rightDirection.normalized * height;
+            Vector3 nearCorner = from;
+            Vector3 farCorner = up + right + to;
+
+            if (showDebugInfo)
+            {
+                Debug.Log("From: " + from + " To: " + to);
+                Debug.Log(String.Format("Forward: {0}; Right: {1}; Up: {2}", forward, right, up));
+                Debug.Log("NearCorner: " + nearCorner + "; FarCorner: " + farCorner);
+                Debug.Log("Direction: " + forwardDirection);
+                Debug.Log("Length: " + length);
+            }
+
+            meshBuilder.BuildQuad(nearCorner, right, forward);
+            meshBuilder.BuildQuad(nearCorner, forward, up);
+            meshBuilder.BuildQuad(farCorner, -forward, -right);
+            meshBuilder.BuildQuad(farCorner, -up, -forward);
+            var mesh = meshBuilder.CreateMesh();
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            mesh.Optimize();
+            return mesh;
+        }
     }
 
     //http://jayelinda.com/modelling-by-numbers-part-1a/
@@ -116,16 +109,8 @@ namespace syscrawl.Game.Views.Nodes
             Vector3 widthDirection, 
             Vector3 lengthDirection)
         {
-            Vector3 normal = Vector3.Cross(lengthDirection, widthDirection).normalized;
-//            if (inverseNormal)
-//                normal *= -1; // TODO: heh, super hack.
-
-            Debug.Log(
-                String.Format(
-                    "Offset: {0} | Width: {1} | Length: {2} | Normal: {3}",
-                    offset, widthDirection, lengthDirection, normal
-                )
-            );
+            var normal = 
+                Vector3.Cross(lengthDirection, widthDirection).normalized;
 
             Vertices.Add(offset);
             UVs.Add(new Vector2(0.0f, 0.0f));
