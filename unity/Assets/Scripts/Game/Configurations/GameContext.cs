@@ -14,6 +14,7 @@ using syscrawl.Game.Models;
 using syscrawl.Game.Views.Nodes;
 using syscrawl.Game.Views.Levels;
 using syscrawl.Game.Controllers;
+using syscrawl.Game.Camera;
 
 namespace syscrawl.Game
 {
@@ -77,11 +78,8 @@ namespace syscrawl.Game
         protected override void postBindings()
         {
             //Establish our camera. We do this early since it gets injected in places that help us do layout.
-            UnityEngine.Camera cam = (contextView as GameObject).GetComponentInChildren<UnityEngine.Camera>();
-            if (cam == null)
-            {
-                throw new Exception("GameContext couldn't find the game camera");
-            }
+            var cam = (contextView as GameObject)
+                .GetComponentInChildren<UnityEngine.Camera>();
             injectionBinder.Bind<UnityEngine.Camera>().ToValue(cam);
         }
     }

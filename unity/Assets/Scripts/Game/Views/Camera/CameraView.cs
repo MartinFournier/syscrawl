@@ -5,7 +5,7 @@ namespace syscrawl.Game.Camera
 {
     public class CameraView : MonoBehaviour
     {
-        UnityEngine.Camera mainCamera;
+        public UnityEngine.Camera mainCamera;
 
         Lerp<Vector3> cameraPositionLerp;
         Lerp<float> cameraZoomLerp;
@@ -41,19 +41,19 @@ namespace syscrawl.Game.Camera
         //
         void Update()
         {
-            if (!cameraPositionLerp.IsComplete)
+            if (cameraPositionLerp != null && !cameraPositionLerp.IsComplete)
             {
                 var value = cameraPositionLerp.Evaluate(Time.deltaTime);
                 mainCamera.transform.position = value;
             }
 
-            if (!cameraZoomLerp.IsComplete)
+            if (cameraZoomLerp != null && !cameraZoomLerp.IsComplete)
             {
                 var value = cameraZoomLerp.Evaluate(Time.deltaTime);
                 mainCamera.orthographicSize = value;
             }
 
-            if (!cameraUnzoomLerp.IsComplete)
+            if (cameraUnzoomLerp != null && !cameraUnzoomLerp.IsComplete)
             {
                 var value = cameraUnzoomLerp.Evaluate(Time.deltaTime);
                 mainCamera.orthographicSize = value;
