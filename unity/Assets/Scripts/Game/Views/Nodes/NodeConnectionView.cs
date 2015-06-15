@@ -9,16 +9,21 @@ namespace syscrawl.Game.Views.Nodes
 {
     public class NodeConnectionView : View
     {
+        public Vector3 fromVec;
+        public Vector3 toVec;
+
         public void Init(Vector3 from, Vector3 to)
         {
-            if (to.x != 20f)
-                return;
+//            if (to.x != 20f)
+//                return;
 
+            fromVec = from;
+            toVec = to;
             var meshFilter = gameObject.AddComponent<MeshFilter>();
             var meshRenderer = gameObject.AddComponent<MeshRenderer>();
 
-            var width = 1f;
-            var height = 1f;
+            var width = 0.2f;
+            var height = 0.1f;
 
             var meshBuilder = new MeshBuilder();
             var angle = Vector3.Angle(from, to);
@@ -29,8 +34,8 @@ namespace syscrawl.Game.Views.Nodes
             var upDirection = Quaternion.AngleAxis(-90, forwardDirection) * Vector3.up;
             var rightDirection = Quaternion.AngleAxis(-90, upDirection) * Vector3.right;
 
-            Vector3 up = upDirection.normalized * height;
-            Vector3 right = rightDirection.normalized * width;
+            Vector3 up = upDirection.normalized * width;
+            Vector3 right = rightDirection.normalized * height;
 
             Vector3 nearCorner = from;
             Vector3 farCorner = up + right + forward;
@@ -44,13 +49,10 @@ namespace syscrawl.Game.Views.Nodes
             Debug.Log("Direction: " + forwardDirection);
             Debug.Log("Angle: " + angle + "; Length: " + length);
 
-            meshBuilder.BuildQuad(nearCorner, forward, right);
-            meshBuilder.BuildQuad(nearCorner, right, up);
-            meshBuilder.BuildQuad(nearCorner, up, forward);
-//
-            meshBuilder.BuildQuad(farCorner, -right, -forward);
-            meshBuilder.BuildQuad(farCorner, -up, -right);
-            meshBuilder.BuildQuad(farCorner, -forward, -up);
+            meshBuilder.BuildQuad(nearCorner, right, forward);
+            meshBuilder.BuildQuad(nearCorner, forward, up);
+            meshBuilder.BuildQuad(farCorner, -forward, -right);
+            meshBuilder.BuildQuad(farCorner, -up, -forward);
 
             var mesh = meshBuilder.CreateMesh();
             mesh.RecalculateBounds();
