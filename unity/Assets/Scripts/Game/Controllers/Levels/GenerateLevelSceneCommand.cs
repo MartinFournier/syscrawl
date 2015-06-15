@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace syscrawl.Game.Controllers.Levels
 {
-    public class GenerateLevelCommand : Command
+    public class GenerateLevelSceneCommand : Command
     {
         
         //        [Inject(ContextKeys.CONTEXT_VIEW)]

@@ -50,22 +50,28 @@ namespace syscrawl.Game
 
         protected override void mapBindings()
         {
-            injectionBinder.Bind<ILevelGenerator>().To<SpecificLevelGenerator>();
-
+            //Models
             injectionBinder.Bind<ILevel>().To<Level>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
 
+            //Commands & Signals
             commandBinder.Bind<GameStartSignal>().To<GameStartCommand>();
-            commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelCommand>();
+            commandBinder.Bind<GenerateLevelSignal>().To<GenerateLevelSceneCommand>();
             commandBinder.Bind<PositionNodesSignal>().To<PositionNodesCommand>();
             commandBinder.Bind<CreateNodeSignal>().To<CreateNodeCommand>();
             commandBinder.Bind<CreateNodeConnectionSignal>().To<CreateNodeConnectionCommand>();
             commandBinder.Bind<PlayerMoveToSignal>().To<PlayerMoveToCommand>();
 
-            mediationBinder.Bind<LevelSceneView>().To<LevelSceneMediator>();
-
+            //Singleton signals
             injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
             injectionBinder.Bind<LevelGeneratedSignal>().ToSingleton();
+
+            //Mediation
+            mediationBinder.Bind<LevelSceneView>().To<LevelSceneMediator>();
+
+            //Services
+            injectionBinder.Bind<ILevelGenerator>().To<SpecificLevelGenerator>();
+            injectionBinder.Bind<INodePositionServices>().To<NodePositionServices>().ToSingleton();
         }
 
         protected override void postBindings()
