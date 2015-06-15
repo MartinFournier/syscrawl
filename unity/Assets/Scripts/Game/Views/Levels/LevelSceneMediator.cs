@@ -2,6 +2,7 @@
 using UnityEngine;
 using syscrawl.Game.Models.Levels;
 using syscrawl.Game;
+using syscrawl.Common.Extensions;
 
 namespace syscrawl.Game.Views.Levels
 {
@@ -36,6 +37,14 @@ namespace syscrawl.Game.Views.Levels
         {
             Debug.Log("Positioning nodes");
             PositionNodesSignal.Dispatch(this);
+        }
+
+        public void RemoveNodes()
+        {
+            View.activeNodes.DestroyChildren();
+            View.currentNodes.DestroyChildren();
+            View.furtherAheadNodes.DestroyChildren();
+            View.previousNodes.DestroyChildren();
         }
 
         public GameObject GetNodeContainerForType(SceneNodeType type)

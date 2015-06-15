@@ -38,7 +38,9 @@ namespace syscrawl.Game.Controllers.Levels
                     Level.GetGraph(), 
                     Player.CurrentNode, 
                     Player.PreviousNode);
-            
+
+            LevelMediator.RemoveNodes();
+
             PositionNodes(nodePositions);
         }
 
@@ -47,7 +49,7 @@ namespace syscrawl.Game.Controllers.Levels
             foreach (var node in nodePositions.Keys)
             {
                 var sceneNode = nodePositions[node];
-                PositionNode(node, sceneNode);
+                PositionNode(node, sceneNode, nodePositions);
             }
         }
 
@@ -61,7 +63,6 @@ namespace syscrawl.Game.Controllers.Levels
 
             CreateNodeSignal.Dispatch(
                 node, container, sceneNode.position, sceneNode.type);
-
 
             if (!IsNodeShowingConnections(sceneNode.type))
                 return;

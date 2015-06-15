@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace syscrawl.Common.Extensions
 {
@@ -64,6 +65,16 @@ namespace syscrawl.Common.Extensions
             return go.GetComponent<T>();
         }
 
+        //http://forum.unity3d.com/threads/deleting-all-chidlren-of-an-object.92827/
+        public static void DestroyChildren(this GameObject go)
+        {
+            List<GameObject> children = new List<GameObject>();
+            foreach (Transform tran in go.transform)
+            {      
+                children.Add(tran.gameObject); 
+            }
+            children.ForEach(child => GameObject.Destroy(child));  
+        }
 
       
     }

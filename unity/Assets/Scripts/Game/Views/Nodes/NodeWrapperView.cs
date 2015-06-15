@@ -24,9 +24,10 @@ namespace syscrawl.Game.Views.Nodes
 
             wrapper = Prefabs.Instantiate("NodeWrapper", gameObject);
 
-            fog = 
-                wrapper.CreateSubcomponent<NodeFogView>("Fog", Vector3.zero);
-            fog.Init();
+//            fog = 
+//                wrapper.CreateSubcomponent<NodeFogView>("Fog", Vector3.zero);
+//            fog.Init();
+//            fog.HideSphere();
 
             nodeName = 
                 wrapper.CreateSubcomponent<NodeNameView>("Name", Vector3.zero);
@@ -52,18 +53,18 @@ namespace syscrawl.Game.Views.Nodes
         }
 
 
-        void OnMouseEnter()
-        {
-            Debug.Log("Node: Enter (" + Node.type + ":" + wrapper.name + ")");
-            fog.HideSphere();
-        }
-
-
-        void OnMouseExit()
-        {
-            Debug.Log("Node: Node (" + Node.type + ":" + wrapper.name + ")");
-            fog.ShowSphere();
-        }
+        //        void OnMouseEnter()
+        //        {
+        //            Debug.Log("Node: Enter (" + Node.type + ":" + wrapper.name + ")");
+        //            fog.HideSphere();
+        //        }
+        //
+        //
+        //        void OnMouseExit()
+        //        {
+        //            Debug.Log("Node: Node (" + Node.type + ":" + wrapper.name + ")");
+        //            fog.ShowSphere();
+        //        }
 
         void OnMouseDown()
         {
