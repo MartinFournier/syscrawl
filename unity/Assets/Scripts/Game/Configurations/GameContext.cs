@@ -66,6 +66,7 @@ namespace syscrawl.Game
             //Singleton signals
             injectionBinder.Bind<PlayerMovedSignal>().ToSingleton();
             injectionBinder.Bind<LevelGeneratedSignal>().ToSingleton();
+            injectionBinder.Bind<NodeWrapperClickedSignal>().ToSingleton();
 
             //Mediation
             mediationBinder.Bind<LevelSceneView>().To<LevelSceneMediator>();

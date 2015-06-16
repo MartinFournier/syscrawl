@@ -11,6 +11,9 @@ namespace syscrawl.Game.Views.Nodes
         [Inject]
         public PlayerMoveToSignal PlayerMoveToSignal { get; set; }
 
+        [Inject]
+        public NodeWrapperClickedSignal NodeWrapperClickedSignal { get; set; }
+
         public Node Node { get; private set; }
 
         GameObject wrapper;
@@ -74,7 +77,8 @@ namespace syscrawl.Game.Views.Nodes
         void OnMouseUp()
         {
             Debug.Log("Node: MouseUp (" + Node.type + ":" + wrapper.name + ")");
-            PlayerMoveToSignal.Dispatch(Node);
+//            PlayerMoveToSignal.Dispatch(Node);
+            NodeWrapperClickedSignal.Dispatch(this);
         }
 
         public override string ToString()

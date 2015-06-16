@@ -2,6 +2,7 @@
 using syscrawl.Game.Views.Levels;
 using UnityEngine;
 using syscrawl.Game.Models.Levels;
+using syscrawl.Game.Views.Nodes;
 
 namespace syscrawl.Game
 {
@@ -38,6 +39,10 @@ namespace syscrawl.Game
     }
 
     public class CreateNodeConnectionSignal : Signal<CreateNodeConnection>
+    {
+    }
+
+    public class NodeWrapperClickedSignal : Signal<NodeWrapperView>
     {
     }
 }
