@@ -40,9 +40,9 @@ namespace syscrawl.Common.Utils.Lerp
             }
         }
 
-        public void Activate(T from, T to, Action<T> lerpTarget)
+        public void Activate(T from, T to, Action<T> updateMethod)
         {
-            this.lerpTarget = lerpTarget;
+            this.lerpTarget = updateMethod;
 
             currentTime = 0;
 

@@ -78,10 +78,12 @@ namespace syscrawl.Game
 
         protected override void postBindings()
         {
-            //Establish our camera. We do this early since it gets injected in places that help us do layout.
-            var cam = (contextView as GameObject)
-                .GetComponentInChildren<UnityEngine.Camera>();
+            var context = (contextView as GameObject);
+            var cam = context.GetComponentInChildren<UnityEngine.Camera>();
             injectionBinder.Bind<UnityEngine.Camera>().ToValue(cam);
+
+            var configs = context.GetComponentInChildren<Configs>();
+            injectionBinder.Bind<Configs>().ToValue(configs);
         }
     }
 }

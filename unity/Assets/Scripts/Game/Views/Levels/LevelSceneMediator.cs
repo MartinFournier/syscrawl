@@ -6,11 +6,15 @@ using syscrawl.Common.Extensions;
 using syscrawl.Game.Views.Nodes;
 using System.Linq;
 using syscrawl.Common.Utils.Lerp;
+using syscrawl.Game.Models;
 
 namespace syscrawl.Game.Views.Levels
 {
     public class LevelSceneMediator : Mediator
     {
+        [Inject]
+        public Configs Configs { get; set; }
+
         [Inject]
         public LevelSceneView View { get; set; }
 
@@ -33,8 +37,9 @@ namespace syscrawl.Game.Views.Levels
         {
             View.Init();
 
-            rotationLerp = new QuaternionLerp(new LerpSettings());
-
+            rotationLerp = new QuaternionLerp(Configs.levelRotateSettings);
+            translateLerp = new VectorLerp(new LerpSettings());
+            unrotationLerp = new QuaternionLerp(new LerpSettings());
 //            LevelGeneratedSignal.AddListener(PositionNodes);
             PlayerMovedSignal.AddListener(PositionNodes);
 
@@ -44,33 +49,66 @@ namespace syscrawl.Game.Views.Levels
         }
 
         QuaternionLerp rotationLerp;
+        QuaternionLerp unrotationLerp;
+        VectorLerp translateLerp;
 
         void Update()
         {
             rotationLerp.Update(Time.deltaTime);
+            translateLerp.Update(Time.deltaTime);
+            unrotationLerp.Update(Time.deltaTime);
         }
 
         void NodeClicked(NodeWrapperView wrapper)
         {
             // todo: destination should not be hardcoded
             var destination = new Vector3(20, 0, 0); 
-            RotateLevelToCorrectAngle(wrapper.transform.position, destination);
+
+            RotateLevel(wrapper.transform.position, destination);
         }
 
-        void RotateLevelToCorrectAngle(Vector3 fromPosition, Vector3 toPosition)
+        float lastAngle = 0f;
+
+        void RotateLevel(Vector3 fromPosition, Vector3 toPosition)
         {
             // angle based on 0,0,0 axis
             var angle = Vector3.Angle(toPosition, fromPosition);
             if (fromPosition.z < 0)
                 angle *= -1;
+            lastAngle = angle;
 
-            var initialRotation = gameObject.transform.rotation;
+            var initialRotation = transform.rotation;
             var axisRotation = Quaternion.AngleAxis(angle, Vector3.up);
             var targetRotation = axisRotation * initialRotation;
             rotationLerp.Activate(
                 initialRotation, targetRotation, 
                 x => transform.rotation = x);
+
+//            rotationLerp.LerpCompleted += TranslateLevel;
         }
+
+        void UnrotateLevel()
+        {
+            var initialRotation = gameObject.transform.rotation;
+            var axisRotation = Quaternion.AngleAxis(-lastAngle, Vector3.up);
+            var targetRotation = axisRotation * initialRotation;
+            unrotationLerp.Activate(
+                initialRotation, targetRotation, 
+                x => transform.rotation = x);
+        }
+
+        void TranslateLevel()
+        {
+            translateLerp.Activate(
+                gameObject.transform.position,
+                new Vector3(-20, 0, 0),
+                x => gameObject.transform.position = x
+            );
+
+//            translateLerp.LerpCompleted += PositionNodes;
+//            translateLerp.LerpCompleted += UnrotateLevel;
+        }
+
 
         void PositionNodes()
         {
