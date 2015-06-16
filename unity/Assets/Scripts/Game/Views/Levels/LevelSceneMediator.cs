@@ -47,7 +47,7 @@ namespace syscrawl.Game.Views.Levels
 
         void Update()
         {
-            if (rotationLerp != null && !rotationLerp.IsComplete)
+            if (rotationLerp.IsUpdating())
             {
                 var value = rotationLerp.Evaluate(Time.deltaTime);
                 transform.rotation = value;
@@ -75,6 +75,8 @@ namespace syscrawl.Game.Views.Levels
             Debug.Log(targetRotation);
             Debug.Log(angle);
         }
+
+
 
         void PositionNodes()
         {
