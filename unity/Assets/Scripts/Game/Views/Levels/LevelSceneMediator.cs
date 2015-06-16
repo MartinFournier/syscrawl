@@ -47,40 +47,33 @@ namespace syscrawl.Game.Views.Levels
 
         void Update()
         {
-            if (rotationLerp.IsUpdating())
-            {
-                var value = rotationLerp.Evaluate(Time.deltaTime);
-                transform.rotation = value;
-            }
+            rotationLerp.Update(Time.deltaTime);
         }
 
         void NodeClicked(NodeWrapperView wrapper)
         {
-            // todo: Get view.currentNode first node transform
-            var destination = new Vector3(20, 0, 0); 
             // todo: destination should not be hardcoded
+            var destination = new Vector3(20, 0, 0); 
+            RotateLevelToCorrectAngle(wrapper.transform.position, destination);
+        }
 
-
+        void RotateLevelToCorrectAngle(Vector3 fromPosition, Vector3 toPosition)
+        {
             // angle based on 0,0,0 axis
-            var angle = Vector3.Angle(destination, wrapper.transform.position);
-            if (wrapper.transform.position.z < 0)
+            var angle = Vector3.Angle(toPosition, fromPosition);
+            if (fromPosition.z < 0)
                 angle *= -1;
 
             var initialRotation = gameObject.transform.rotation;
             var axisRotation = Quaternion.AngleAxis(angle, Vector3.up);
             var targetRotation = axisRotation * initialRotation;
-            rotationLerp.Activate(initialRotation, targetRotation);
-
-            Debug.Log(initialRotation);
-            Debug.Log(targetRotation);
-            Debug.Log(angle);
+            rotationLerp.Activate(
+                initialRotation, targetRotation, 
+                x => transform.rotation = x);
         }
-
-
 
         void PositionNodes()
         {
-            Debug.Log("Positioning nodes");
             PositionNodesSignal.Dispatch(this);
         }
 

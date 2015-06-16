@@ -38,24 +38,24 @@ namespace syscrawl.Game.Views.Nodes
 
         public void ShowSphere()
         {
-            materialCutoffLerp.Activate(CurrentShaderAlpha, 0f);
+            materialCutoffLerp.Activate(
+                CurrentShaderAlpha, 0f, 
+                x => sphereRenderer.material.SetFloat("_Cutoff", x));
         }
 
         public void HideSphere()
         {
-            materialCutoffLerp.Activate(CurrentShaderAlpha, 1f);
+            materialCutoffLerp.Activate(
+                CurrentShaderAlpha, 1f,
+                x => sphereRenderer.material.SetFloat("_Cutoff", x));
         }
 
         void Update()
         {
             if (!isInitialized)
                 return;
-
-            if (!materialCutoffLerp.IsComplete)
-            {
-                var value = materialCutoffLerp.Evaluate(Time.deltaTime);
-                sphereRenderer.material.SetFloat("_Cutoff", value);
-            }
+            
+            materialCutoffLerp.Update(Time.deltaTime);
         }
     }
 }

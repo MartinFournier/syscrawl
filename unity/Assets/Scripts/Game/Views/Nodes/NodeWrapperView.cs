@@ -26,12 +26,12 @@ namespace syscrawl.Game.Views.Nodes
             Node = node;
 
             wrapper = Prefabs.Instantiate("NodeWrapper", gameObject);
-
+//
 //            fog = 
 //                wrapper.CreateSubcomponent<NodeFogView>("Fog", Vector3.zero);
 //            fog.Init();
 //            fog.HideSphere();
-
+//
             nodeName = 
                 wrapper.CreateSubcomponent<NodeNameView>("Name", Vector3.zero);
             nodeName.Init(Node.Name);
@@ -55,7 +55,7 @@ namespace syscrawl.Game.Views.Nodes
             }
         }
 
-
+        //
         //        void OnMouseEnter()
         //        {
         //            Debug.Log("Node: Enter (" + Node.type + ":" + wrapper.name + ")");
@@ -68,7 +68,7 @@ namespace syscrawl.Game.Views.Nodes
         //            Debug.Log("Node: Node (" + Node.type + ":" + wrapper.name + ")");
         //            fog.ShowSphere();
         //        }
-
+        //
         void OnMouseDown()
         {
             Debug.Log("Node: MouseDown (" + Node.type + ":" + wrapper.name + ")");
