@@ -22,7 +22,7 @@ namespace syscrawl.Game.Views.Nodes
             sphere.transform.parent = gameObject.transform;
             sphere.transform.localPosition = Vector3.zero;
             sphere.transform.localScale = new Vector3(collider.radius * 2, collider.radius * 2, collider.radius * 2);
-
+            sphere.GetComponent<Renderer>().enabled = false;
             sphere.GetComponent<Collider>().enabled = false;
         }
     }
