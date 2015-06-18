@@ -29,14 +29,16 @@ namespace syscrawl.Game.Models.Levels
             Position();
         }
 
+        void AddNode(Node node, SceneNodeType type, Vector3 position)
+        {
+            this.Add(
+                node, new SceneNode(node, type, position)
+            );
+        }
+
         void Position()
         {
-            Add(
-                currentNode, 
-                new SceneNode(
-                    SceneNodeType.Current, 
-                    settings.Pivot)
-            );
+            AddNode(currentNode, SceneNodeType.Current, settings.Pivot);
 
             var nodes = currentNode.GetConnections(previousNode);
             var nodesGroup = new NodePositionGroup(nodes);
@@ -51,11 +53,9 @@ namespace syscrawl.Game.Models.Levels
 
             if (previousNode != null)
             {
-                Add(
+                AddNode(
                     previousNode, 
-                    new SceneNode(
-                        SceneNodeType.Previous, 
-                        settings.PreviousNodePosition)
+                    SceneNodeType.Previous, settings.PreviousNodePosition
                 );
             }
 
@@ -112,10 +112,7 @@ namespace syscrawl.Game.Models.Levels
 
             if (nodesGroup.HasCenterNode)
             {
-                Add(
-                    nodesGroup.CenterNode, 
-                    new SceneNode(type, nodePosition)
-                );
+                AddNode(nodesGroup.CenterNode, type, nodePosition);
             }
 
             RotateNodesGroup(
@@ -171,10 +168,7 @@ namespace syscrawl.Game.Models.Levels
                 var newPosition =
                     nodePosition.RotatePointAroundPivot(pivot, angles);
 
-                Add(
-                    node,
-                    new SceneNode(type, newPosition)
-                );
+                AddNode(node, type, newPosition);
 
                 remainingAngle += angleDiff;
             }
