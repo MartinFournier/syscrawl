@@ -7,6 +7,8 @@ namespace syscrawl.Game.Camera
     {
         public UnityEngine.Camera mainCamera;
 
+        public Shader replacementShader;
+
         Lerp<Vector3> cameraPositionLerp;
         Lerp<float> cameraZoomLerp;
         Lerp<float> cameraUnzoomLerp;
@@ -26,6 +28,12 @@ namespace syscrawl.Game.Camera
             cameraZoomLerp = new FloatLerp(zoomLerpSettings);
             cameraUnzoomLerp = new FloatLerp(unzoomLerpSettings);
 
+
+            if (replacementShader != null)
+            {
+                mainCamera.SetReplacementShader(replacementShader, "RenderType");
+            }
+                
 //            cameraPositionLerp.LerpActivated += () => 
 //                cameraZoomLerp.Activate(cameraHeight, cameraZoomTo);
 //
