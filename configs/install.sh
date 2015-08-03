@@ -4,6 +4,6 @@ cd configs
 bower install
 nuget install -OutputDirectory ../packages/
 cd ..
-rm -r unity/Assets/Packages/StrangeIoC
-cp -r packages/strangeioc/StrangeIoC/scripts/strange/ unity/Assets/Packages/StrangeIoC
+rm -r syscrawl/Assets/Packages/StrangeIoC
+cp -r packages/strangeioc/StrangeIoC/scripts/strange/ syscrawl/Assets/Packages/StrangeIoC
 echo "Done"
