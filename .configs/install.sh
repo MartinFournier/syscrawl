@@ -2,7 +2,7 @@
 #chmod u+rwx configs/install.sh
 
 CONFIG_FOLDER=".configs"
-PACKAGES_FOLDER=".packages"
+PACKAGES_FOLDER=".3rd"
 PACKAGES_OUTPUT="Assets/Packages"
 
 cd $CONFIG_FOLDER
