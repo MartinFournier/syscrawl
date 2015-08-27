@@ -1,18 +1,5 @@
 {
-  "name": "syscrawl",
-  "version": "0.0.0",
-  "homepage": "https://github.com/MartinFournier/syscrawl",
-  "authors": [
-    "Martin Fournier <martin@mfournier.com>"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "name": "unity3d-strangeioc-boilerplate",
   "dependencies": {
     "strangeioc": "git@github.com:strangeioc/strangeioc.git#ba2193f17d5ef7440da2b68dc174c4f491da9159"
   }
