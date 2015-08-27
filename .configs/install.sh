@@ -1,13 +1,21 @@
 #!/bin/bash
 #chmod u+rwx configs/install.sh
 
-cd .configs
+CONFIG_FOLDER=".configs"
+PACKAGES_FOLDER=".packages"
+
+PACKAGES_OUTPUT="Assets/Packages"
+
+cd $CONFIG_FOLDER
 bower install
-nuget install -OutputDirectory ../.packages/
+nuget install -OutputDirectory ../$PACKAGES_FOLDER/
 cd ..
 
-mkdir -p Assets/Packages/StrangeIoC
-rm -r Assets/Packages/StrangeIoC
-cp -r .packages/strangeioc/StrangeIoC/scripts/strange/ Assets/Packages/StrangeIoC
+
+
+#mkdir -p $PACKAGES_OUTPUT/StrangeIoC
+rm -r $PACKAGES_OUTPUT
+mkdir -p $PACKAGES_OUTPUT
+cp -r $PACKAGES_FOLDER/strangeioc/StrangeIoC/scripts/strange/ $PACKAGES_OUTPUT/StrangeIoC
 
 echo "Done"

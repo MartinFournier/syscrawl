@@ -14,7 +14,7 @@
 ```
 4. And finally run the install script
 ```sh
-  $ ./configs/install.sh
+  $ ./.configs/install.sh
 ```
 
 5. After, sync monodevelop project in unity
